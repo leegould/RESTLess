@@ -7,8 +7,8 @@
              xmlns:cal="http://www.caliburnproject.org"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <WrapPanel Orientation="Vertical">
-        <StackPanel Orientation="Vertical" MinWidth="300" MinHeight="100" Background="LightGray">
+    <DockPanel>
+        <StackPanel Orientation="Vertical" MinWidth="300" MinHeight="100" Background="LightGray" DockPanel.Dock="Top">
             <TextBox Name="UrlTextBox">
                 <TextBox.Style>
                     <Style TargetType="TextBox" xmlns:sys="clr-namespace:System;assembly=mscorlib">
@@ -37,8 +37,8 @@
             </Button>
         </StackPanel>
 
-        <StackPanel Orientation="Vertical" MinWidth="300" MinHeight="200" Background="GhostWhite">
-            <TextBlock Name="RawResultsTextBlock">test</TextBlock>
+        <StackPanel Orientation="Vertical" MinWidth="300" MinHeight="200" Background="GhostWhite" DockPanel.Dock="Top">
+            <TextBlock Name="RawResultsTextBlock"></TextBlock>
         </StackPanel>
-    </WrapPanel>
+    </DockPanel>
 </UserControl>

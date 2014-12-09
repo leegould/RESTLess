@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 
 using Caliburn.Micro;
 
@@ -33,15 +34,19 @@ namespace RESTLess
 
         public void SendButton()
         {
-            var uri = new Uri(url);
+            var uri = new Uri(UrlTextBox);
             RestClient client = new RestClient(uri.GetLeftPart(UriPartial.Authority));
 
             var request = new RestRequest(uri, Method.GET);
 
+            Stopwatch stopWatch = new Stopwatch();
+            stopWatch.Start();
+            
             client.ExecuteAsync(request,
                 r =>
                 {
-                    RawResultsTextBlock = r.StatusCode + r.Content;
+                    stopWatch.Stop();
+                    RawResultsTextBlock = stopWatch.ElapsedMilliseconds.ToString() + "|" + r.StatusCode + "|" + r.Content;
                 });
         }
 
