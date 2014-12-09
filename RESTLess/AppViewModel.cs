@@ -4,7 +4,7 @@ using Caliburn.Micro;
 
 using RestSharp;
 
-namespace RESTLess.WPF
+namespace RESTLess
 {
     public class AppViewModel : PropertyChangedBase
     {

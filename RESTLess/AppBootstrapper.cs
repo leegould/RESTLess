@@ -2,7 +2,7 @@
 
 using Caliburn.Micro;
 
-namespace RESTLess.WPF
+namespace RESTLess
 {
     public class AppBootstrapper : BootstrapperBase
     {

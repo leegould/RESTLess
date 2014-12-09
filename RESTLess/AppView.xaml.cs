@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace RESTLess.WPF
+namespace RESTLess
 {
     /// <summary>
     /// Interaction logic for AppView.xaml

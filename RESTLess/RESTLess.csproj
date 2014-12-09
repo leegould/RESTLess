@@ -7,8 +7,8 @@
     <ProjectGuid>{AEF891ED-D8B0-418C-A24E-D7A83B1145B4}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>RESTLess.WPF</RootNamespace>
-    <AssemblyName>RESTLess.WPF</AssemblyName>
+    <RootNamespace>RESTLess</RootNamespace>
+    <AssemblyName>RESTLess</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
