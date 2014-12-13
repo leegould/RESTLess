@@ -8,7 +8,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <DockPanel>
-        <StackPanel Orientation="Vertical" MinWidth="300" MinHeight="100" Margin="1" Background="LightGray" DockPanel.Dock="Top">
+        <StackPanel Orientation="Vertical" MinWidth="300" HorizontalAlignment="Stretch"  MinHeight="100" Margin="1" Background="LightGray" DockPanel.Dock="Top">
             <Grid>
                 <Grid.Resources>
                     <!-- Brushes for colours/backgrounds -->
@@ -158,36 +158,48 @@
                     <RowDefinition Height="*"></RowDefinition>
                     <RowDefinition Height="*"></RowDefinition>
                     <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
                 </Grid.RowDefinitions>
                 <RadioButton Name="GetChecked" GroupName="RequestMethod" Grid.Row="0" Grid.Column="0" Padding="2" Template="{DynamicResource ToggleButtonLeft}">GET</RadioButton>
                 <RadioButton Name="PostChecked" GroupName="RequestMethod" Grid.Row="0" Grid.Column="1" Padding="2" Template="{DynamicResource ToggleButtonMidLeft}">POST</RadioButton>
                 <RadioButton Name="PutChecked" GroupName="RequestMethod" Grid.Row="0" Grid.Column="2" Padding="2" Template="{DynamicResource ToggleButtonMidRight}">PUT</RadioButton>
                 <RadioButton Name="DeleteChecked" GroupName="RequestMethod" Grid.Row="0" Grid.Column="3" Padding="2" Template="{DynamicResource ToggleButtonRight}">DELETE</RadioButton>
-            <TextBox Name="UrlTextBox" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4">
-                <TextBox.Style>
-                    <Style TargetType="TextBox" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-                        <Style.Resources>
-                            <VisualBrush x:Key="CueBannerBrush" AlignmentX="Left" AlignmentY="Center" Stretch="None">
-                                <VisualBrush.Visual>
-                                    <Label Content="URL" Foreground="Gray" Opacity="75"/>
-                                </VisualBrush.Visual>
-                            </VisualBrush>
-                        </Style.Resources>
-                        <Style.Triggers>
-                            <Trigger Property="Text" Value="{x:Static sys:String.Empty}">
-                                <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
-                            </Trigger>
-                            <Trigger Property="Text" Value="{x:Null}">
-                                <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
-                            </Trigger>
-                            <Trigger Property="IsKeyboardFocused" Value="True">
-                                <Setter Property="Background" Value="White" />
-                            </Trigger>
-                        </Style.Triggers>
-                    </Style>
-                </TextBox.Style>
-            </TextBox>
-            <Button Name="SendButton" Margin="2" Content="Send" Grid.Column="3" Grid.Row="2">
+                <TextBox Name="UrlTextBox" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4">
+                    <TextBox.Style>
+                        <Style TargetType="TextBox" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+                            <Style.Resources>
+                                <VisualBrush x:Key="CueBannerBrush" AlignmentX="Left" AlignmentY="Center" Stretch="None">
+                                    <VisualBrush.Visual>
+                                        <Label Content="URL" Foreground="Gray" Opacity="75"/>
+                                    </VisualBrush.Visual>
+                                </VisualBrush>
+                            </Style.Resources>
+                            <Style.Triggers>
+                                <Trigger Property="Text" Value="{x:Static sys:String.Empty}">
+                                    <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
+                                </Trigger>
+                                <Trigger Property="Text" Value="{x:Null}">
+                                    <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
+                                </Trigger>
+                                <Trigger Property="IsKeyboardFocused" Value="True">
+                                    <Setter Property="Background" Value="White" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBox.Style>
+                </TextBox>
+
+            <DataGrid x:Name="HeadersDataGrid" AutoGenerateColumns="False" RowHeaderWidth="0"
+                        CanUserAddRows="True" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="4">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Binding="{Binding Path=Name}" Header="Header" MinWidth="150">
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Binding="{Binding Path=Value}" Header="Value" MinWidth="150">
+                    </DataGridTextColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+            
+            <Button Name="SendButton" Margin="2" Content="Send" Grid.Column="3" Grid.Row="3">
             </Button>
             </Grid>
         </StackPanel>

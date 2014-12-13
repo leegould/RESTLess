@@ -19,8 +19,15 @@ namespace RESTLess
         private bool putChecked;
         private bool deleteChecked;
 
+        private IObservableCollection<HttpHeader> headers; 
+
         #endregion
 
+
+        public AppViewModel()
+        {
+            HeadersDataGrid = new BindableCollection<HttpHeader>();
+        }
 
         #region Properties
 
@@ -89,6 +96,16 @@ namespace RESTLess
             }
         }
 
+        public IObservableCollection<HttpHeader> HeadersDataGrid
+        {
+            get { return headers; }
+            set
+            {
+                headers = value;
+                NotifyOfPropertyChange(() => HeadersDataGrid);
+            }
+        } 
+
         public bool CanSendButton
         {
             get
@@ -110,6 +127,11 @@ namespace RESTLess
             var method = GetMethod();
 
             var request = new RestRequest(uri, method);
+
+            foreach (var header in HeadersDataGrid)
+            {
+                request.AddHeader(header.Name, header.Value);
+            }
 
             Stopwatch stopWatch = new Stopwatch();
             stopWatch.Start();
