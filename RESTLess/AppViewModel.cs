@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.Composition;
 using System.Diagnostics;
 using Caliburn.Micro;
 
@@ -7,10 +8,13 @@ using Newtonsoft.Json;
 
 namespace RESTLess
 {
+    [Export(typeof(AppViewModel))]
     public class AppViewModel : PropertyChangedBase
     {
         #region Private members
-        
+
+        private readonly IWindowManager windowManager;
+
         private string rawResultsTextBlock;
         private string url;
 
@@ -26,8 +30,10 @@ namespace RESTLess
         #endregion
 
 
-        public AppViewModel()
+        [ImportingConstructor]
+        public AppViewModel(IWindowManager windowManager)
         {
+            this.windowManager = windowManager;
             HeadersDataGrid = new BindableCollection<HttpHeader>();
         }
 

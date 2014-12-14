@@ -49,6 +49,7 @@
       <HintPath>..\packages\RestSharp.105.0.1\lib\net4\RestSharp.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
@@ -83,6 +84,7 @@
       <DependentUpon>AppView.xaml</DependentUpon>
     </Compile>
     <Compile Include="AppViewModel.cs" />
+    <Compile Include="AppWindowManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
