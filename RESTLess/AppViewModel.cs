@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Diagnostics;
-
 using Caliburn.Micro;
 
 using RestSharp;
+using Newtonsoft.Json;
 
 namespace RESTLess
 {
@@ -19,7 +19,9 @@ namespace RESTLess
         private bool putChecked;
         private bool deleteChecked;
 
-        private IObservableCollection<HttpHeader> headers; 
+        private IObservableCollection<HttpHeader> headers;
+
+        private string statusBarTextBlock;
 
         #endregion
 
@@ -114,6 +116,16 @@ namespace RESTLess
             }
         }
 
+        public string StatusBarTextBlock
+        {
+            get { return statusBarTextBlock; }
+            set
+            {
+                statusBarTextBlock = value;
+                NotifyOfPropertyChange(() => StatusBarTextBlock);
+            }
+        }
+
         #endregion
 
 
@@ -136,13 +148,16 @@ namespace RESTLess
             Stopwatch stopWatch = new Stopwatch();
             stopWatch.Start();
 
-            RawResultsTextBlock = "Loading " + request.Method + " " + client.BaseUrl + request.Resource + "\n";
+            StatusBarTextBlock = "Loading " + request.Method + " " + client.BaseUrl.ToString().Substring(0, client.BaseUrl.ToString().Length - 1) + request.Resource;
             
             client.ExecuteAsync(request,
                 r =>
                 {
                     stopWatch.Stop();
-                    RawResultsTextBlock += "Elapsed: " + stopWatch.ElapsedMilliseconds.ToString() + "ms | StatusCode: " + r.ResponseStatus + " " + r.StatusCode + " | Content:" + r.Content;
+                    StatusBarTextBlock = "Status: " + r.ResponseStatus + ". Code:" + r.StatusCode + ". Elapsed: " + stopWatch.ElapsedMilliseconds.ToString() + " ms.";
+
+                    var json = Newtonsoft.Json.Linq.JObject.Parse(r.Content);
+                    RawResultsTextBlock = json.ToString(Formatting.Indented);
                 });
         }
 

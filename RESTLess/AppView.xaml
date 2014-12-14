@@ -207,5 +207,11 @@
         <StackPanel Orientation="Vertical" MinWidth="300" MinHeight="200" Margin="1" Background="GhostWhite" DockPanel.Dock="Top">
             <TextBlock Name="RawResultsTextBlock"></TextBlock>
         </StackPanel>
+        
+        <StatusBar DockPanel.Dock="Bottom">
+            <StatusBarItem>
+                <TextBlock x:Name="StatusBarTextBlock">Test</TextBlock>
+            </StatusBarItem>
+        </StatusBar>
     </DockPanel>
 </UserControl>
