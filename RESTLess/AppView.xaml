@@ -7,213 +7,241 @@
              xmlns:cal="http://www.caliburnproject.org"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <DockPanel>
-        <StackPanel Orientation="Vertical" Margin="1" Background="LightGray" DockPanel.Dock="Top">
-            <Grid>
-                <Grid.Resources>
-                    <!-- Brushes for colours/backgrounds -->
-                    <SolidColorBrush x:Key="FontBrush" Color="#FFFFFF"/>
 
-                    <LinearGradientBrush x:Key="BgRedBrush" StartPoint="0,0" EndPoint="0,1">
-                        <GradientStop Offset="0" Color="#DD6666"/>
-                        <GradientStop Offset="1" Color="#DD0000"/>
-                    </LinearGradientBrush>
+    <StackPanel>
+    
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+    
+        <StackPanel DockPanel.Dock="Left" MinHeight="300" Background="DimGray" Grid.Column="0">
 
-                    <LinearGradientBrush x:Key="BgBlueBrush" StartPoint="0,0" EndPoint="0,1">
-                        <GradientStop Offset="0" Color="#6666DD"/>
-                        <GradientStop Offset="1" Color="#0000DD"/>
-                    </LinearGradientBrush>
+        </StackPanel>
 
-                    <LinearGradientBrush x:Key="BgYellowBrush" StartPoint="0,0" EndPoint="0,1">
-                        <GradientStop Offset="0" Color="#BBBB00"/>
-                        <GradientStop Offset="1" Color="#DDDD00"/>
-                    </LinearGradientBrush>
+        <GridSplitter Grid.Column="0" Width="2" HorizontalAlignment="Right" VerticalAlignment="Stretch" ResizeBehavior="CurrentAndNext"/>
+        
+        <DockPanel Grid.Column="1">
 
-                    <LinearGradientBrush x:Key="BgGreenBrush" StartPoint="0,0" EndPoint="0,1">
-                        <GradientStop Offset="0" Color="#66DD66"/>
-                        <GradientStop Offset="1" Color="#00DD00"/>
-                    </LinearGradientBrush>
+            <StackPanel Orientation="Vertical" Margin="1" Background="LightGray" DockPanel.Dock="Left">
+                <Grid>
+                    <Grid.Resources>
+                        <!-- Brushes for colours/backgrounds -->
+                        <SolidColorBrush x:Key="FontBrush" Color="#FFFFFF"/>
 
-                    <SolidColorBrush x:Key="RedBrush" Color="#ff0000"/>
-                    <SolidColorBrush x:Key="BlueBrush" Color="#0000ff"/>
-                    <SolidColorBrush x:Key="GreenBrush" Color="#00ff00"/>
-                    <SolidColorBrush x:Key="YellowBrush" Color="#ffff00"/>
-                    
-                    <LinearGradientBrush x:Key="CheckedBrush" StartPoint="0,0" EndPoint="0,1">
-                        <GradientStop Offset="0" Color="#CCCCCC"/>
-                        <GradientStop Offset="1" Color="#999999"/>
-                    </LinearGradientBrush>
+                        <LinearGradientBrush x:Key="BgRedBrush" StartPoint="0,0" EndPoint="0,1">
+                            <GradientStop Offset="0" Color="#DD6666"/>
+                            <GradientStop Offset="1" Color="#DD0000"/>
+                        </LinearGradientBrush>
 
-                    <!-- Left Button Template -->
-                    <ControlTemplate x:Key="ToggleButtonLeft" TargetType="{x:Type ToggleButton}">
-                        <Border
+                        <LinearGradientBrush x:Key="BgBlueBrush" StartPoint="0,0" EndPoint="0,1">
+                            <GradientStop Offset="0" Color="#6666DD"/>
+                            <GradientStop Offset="1" Color="#0000DD"/>
+                        </LinearGradientBrush>
+
+                        <LinearGradientBrush x:Key="BgYellowBrush" StartPoint="0,0" EndPoint="0,1">
+                            <GradientStop Offset="0" Color="#BBBB00"/>
+                            <GradientStop Offset="1" Color="#DDDD00"/>
+                        </LinearGradientBrush>
+
+                        <LinearGradientBrush x:Key="BgGreenBrush" StartPoint="0,0" EndPoint="0,1">
+                            <GradientStop Offset="0" Color="#66DD66"/>
+                            <GradientStop Offset="1" Color="#00DD00"/>
+                        </LinearGradientBrush>
+
+                        <SolidColorBrush x:Key="RedBrush" Color="#ff0000"/>
+                        <SolidColorBrush x:Key="BlueBrush" Color="#0000ff"/>
+                        <SolidColorBrush x:Key="GreenBrush" Color="#00ff00"/>
+                        <SolidColorBrush x:Key="YellowBrush" Color="#ffff00"/>
+
+                        <LinearGradientBrush x:Key="CheckedBrush" StartPoint="0,0" EndPoint="0,1">
+                            <GradientStop Offset="0" Color="#CCCCCC"/>
+                            <GradientStop Offset="1" Color="#999999"/>
+                        </LinearGradientBrush>
+
+                        <!-- Left Button Template -->
+                        <ControlTemplate x:Key="ToggleButtonLeft" TargetType="{x:Type ToggleButton}">
+                            <Border
                             Name="Border"
                             Background="{StaticResource CheckedBrush}"
                             BorderBrush="{StaticResource BlueBrush}"
                             BorderThickness="1,1,0,1"
                             CornerRadius="5,0,0,5">
-                            <ContentPresenter
+                                <ContentPresenter
                                 HorizontalAlignment="Center"
                                 Margin="{TemplateBinding Padding}"
                                 VerticalAlignment="Center"
                                 Content="{TemplateBinding Content}"
                                 TextBlock.FontWeight="Bold"
                                 TextBlock.Foreground="{StaticResource FontBrush}"/>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="ToggleButton.IsMouseOver" Value="true">
-                                <Setter TargetName="Border" Property="Background" Value="#808080"/>
-                            </Trigger>
-                            <Trigger Property="IsChecked" Value="true">
-                                <Setter TargetName="Border" Property="Background" Value="{StaticResource BgBlueBrush}"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="ToggleButton.IsMouseOver" Value="true">
+                                    <Setter TargetName="Border" Property="Background" Value="#808080"/>
+                                </Trigger>
+                                <Trigger Property="IsChecked" Value="true">
+                                    <Setter TargetName="Border" Property="Background" Value="{StaticResource BgBlueBrush}"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
 
-                    <!-- Middle Button(s) Template -->
-                    <ControlTemplate x:Key="ToggleButtonMidLeft" TargetType="{x:Type ToggleButton}">
-                        <Border
+                        <!-- Middle Button(s) Template -->
+                        <ControlTemplate x:Key="ToggleButtonMidLeft" TargetType="{x:Type ToggleButton}">
+                            <Border
                             Name="Border"
                             Background="{StaticResource CheckedBrush}"
                             BorderBrush="{StaticResource GreenBrush}"
                             BorderThickness="0,1,0,1"
                             CornerRadius="0">
-                            <ContentPresenter
+                                <ContentPresenter
                                     HorizontalAlignment="Center"
                                     Margin="{TemplateBinding Padding}"
                                     VerticalAlignment="Center"
                                     Content="{TemplateBinding Content}"
                                     TextBlock.FontWeight="Bold"
                                     TextBlock.Foreground="{StaticResource FontBrush}"/>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="ToggleButton.IsMouseOver" Value="true">
-                                <Setter TargetName="Border" Property="Background" Value="#808080"/>
-                            </Trigger>
-                            <Trigger Property="IsChecked" Value="true">
-                                <Setter TargetName="Border" Property="Background" Value="{StaticResource BgGreenBrush}"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="ToggleButton.IsMouseOver" Value="true">
+                                    <Setter TargetName="Border" Property="Background" Value="#808080"/>
+                                </Trigger>
+                                <Trigger Property="IsChecked" Value="true">
+                                    <Setter TargetName="Border" Property="Background" Value="{StaticResource BgGreenBrush}"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
 
-                    <ControlTemplate x:Key="ToggleButtonMidRight" TargetType="{x:Type ToggleButton}">
-                        <Border
+                        <ControlTemplate x:Key="ToggleButtonMidRight" TargetType="{x:Type ToggleButton}">
+                            <Border
                             Name="Border"
                             Background="{StaticResource CheckedBrush}"
                             BorderBrush="{StaticResource YellowBrush}"
                             BorderThickness="0,1,0,1"
                             CornerRadius="0">
-                            <ContentPresenter
+                                <ContentPresenter
                                     HorizontalAlignment="Center"
                                     Margin="{TemplateBinding Padding}"
                                     VerticalAlignment="Center"
                                     Content="{TemplateBinding Content}"
                                     TextBlock.FontWeight="Bold"
                                     TextBlock.Foreground="{StaticResource FontBrush}"/>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="ToggleButton.IsMouseOver" Value="true">
-                                <Setter TargetName="Border" Property="Background" Value="#808080"/>
-                            </Trigger>
-                            <Trigger Property="IsChecked" Value="true">
-                                <Setter TargetName="Border" Property="Background" Value="{StaticResource BgYellowBrush}"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="ToggleButton.IsMouseOver" Value="true">
+                                    <Setter TargetName="Border" Property="Background" Value="#808080"/>
+                                </Trigger>
+                                <Trigger Property="IsChecked" Value="true">
+                                    <Setter TargetName="Border" Property="Background" Value="{StaticResource BgYellowBrush}"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
 
-                    <!-- Right Button Template -->
-                    <ControlTemplate x:Key="ToggleButtonRight" TargetType="{x:Type ToggleButton}">
-                        <Border
+                        <!-- Right Button Template -->
+                        <ControlTemplate x:Key="ToggleButtonRight" TargetType="{x:Type ToggleButton}">
+                            <Border
                             Name="Border"
                             Background="{StaticResource CheckedBrush}"
                             BorderBrush="{StaticResource RedBrush}"
                             BorderThickness="0,1,1,1"
                             CornerRadius="0, 5, 5, 0">
-                            <ContentPresenter
+                                <ContentPresenter
                                     HorizontalAlignment="Center"
                                     Margin="{TemplateBinding Padding}"
                                     VerticalAlignment="Center"
                                     Content="{TemplateBinding Content}"
                                     TextBlock.FontWeight="Bold"
                                     TextBlock.Foreground="{StaticResource FontBrush}"/>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="ToggleButton.IsMouseOver" Value="true">
-                                <Setter TargetName="Border" Property="Background" Value="#808080"/>
-                            </Trigger>
-                            <Trigger Property="IsChecked" Value="true">
-                                <Setter TargetName="Border" Property="Background" Value="{StaticResource BgRedBrush}"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Grid.Resources>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="ToggleButton.IsMouseOver" Value="true">
+                                    <Setter TargetName="Border" Property="Background" Value="#808080"/>
+                                </Trigger>
+                                <Trigger Property="IsChecked" Value="true">
+                                    <Setter TargetName="Border" Property="Background" Value="{StaticResource BgRedBrush}"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Grid.Resources>
 
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"></ColumnDefinition>
-                    <ColumnDefinition Width="*"></ColumnDefinition>
-                    <ColumnDefinition Width="*"></ColumnDefinition>
-                    <ColumnDefinition Width="*"></ColumnDefinition>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"></RowDefinition>
-                    <RowDefinition Height="*"></RowDefinition>
-                    <RowDefinition Height="*"></RowDefinition>
-                    <RowDefinition Height="*"></RowDefinition>
-                </Grid.RowDefinitions>
-                
-                <RadioButton Name="GetChecked" GroupName="RequestMethod" Grid.Row="0" Grid.Column="0" Padding="2" Template="{DynamicResource ToggleButtonLeft}">GET</RadioButton>
-                <RadioButton Name="PostChecked" GroupName="RequestMethod" Grid.Row="0" Grid.Column="1" Padding="2" Template="{DynamicResource ToggleButtonMidLeft}">POST</RadioButton>
-                <RadioButton Name="PutChecked" GroupName="RequestMethod" Grid.Row="0" Grid.Column="2" Padding="2" Template="{DynamicResource ToggleButtonMidRight}">PUT</RadioButton>
-                <RadioButton Name="DeleteChecked" GroupName="RequestMethod" Grid.Row="0" Grid.Column="3" Padding="2" Template="{DynamicResource ToggleButtonRight}">DELETE</RadioButton>
-            
-                <TextBox Name="UrlTextBox" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4" HorizontalAlignment="Stretch">
-                    <TextBox.Style>
-                        <Style TargetType="TextBox" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-                            <Style.Resources>
-                                <VisualBrush x:Key="CueBannerBrush" AlignmentX="Left" AlignmentY="Center" Stretch="None">
-                                    <VisualBrush.Visual>
-                                        <Label Content="URL" Foreground="Gray" Opacity="75"/>
-                                    </VisualBrush.Visual>
-                                </VisualBrush>
-                            </Style.Resources>
-                            <Style.Triggers>
-                                <Trigger Property="Text" Value="{x:Static sys:String.Empty}">
-                                    <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
-                                </Trigger>
-                                <Trigger Property="Text" Value="{x:Null}">
-                                    <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
-                                </Trigger>
-                                <Trigger Property="IsKeyboardFocused" Value="True">
-                                    <Setter Property="Background" Value="White" />
-                                </Trigger>
-                            </Style.Triggers>
-                        </Style>
-                    </TextBox.Style>
-                </TextBox>
-        
-                <DataGrid x:Name="HeadersDataGrid" AutoGenerateColumns="False" RowHeaderWidth="0" HorizontalAlignment="Stretch"
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                    </Grid.RowDefinitions>
+
+                    <RadioButton Name="GetChecked" GroupName="RequestMethod" Grid.Row="0" Grid.Column="0" Padding="2" Template="{DynamicResource ToggleButtonLeft}">GET</RadioButton>
+                    <RadioButton Name="PostChecked" GroupName="RequestMethod" Grid.Row="0" Grid.Column="1" Padding="2" Template="{DynamicResource ToggleButtonMidLeft}">POST</RadioButton>
+                    <RadioButton Name="PutChecked" GroupName="RequestMethod" Grid.Row="0" Grid.Column="2" Padding="2" Template="{DynamicResource ToggleButtonMidRight}">PUT</RadioButton>
+                    <RadioButton Name="DeleteChecked" GroupName="RequestMethod" Grid.Row="0" Grid.Column="3" Padding="2" Template="{DynamicResource ToggleButtonRight}">DELETE</RadioButton>
+
+                    <TextBox Name="UrlTextBox" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4" HorizontalAlignment="Stretch">
+                        <TextBox.Style>
+                            <Style TargetType="TextBox" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+                                <Style.Resources>
+                                    <VisualBrush x:Key="CueBannerBrush" AlignmentX="Left" AlignmentY="Center" Stretch="None">
+                                        <VisualBrush.Visual>
+                                            <Label Content="URL" Foreground="Gray" Opacity="75"/>
+                                        </VisualBrush.Visual>
+                                    </VisualBrush>
+                                </Style.Resources>
+                                <Style.Triggers>
+                                    <Trigger Property="Text" Value="{x:Static sys:String.Empty}">
+                                        <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
+                                    </Trigger>
+                                    <Trigger Property="Text" Value="{x:Null}">
+                                        <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
+                                    </Trigger>
+                                    <Trigger Property="IsKeyboardFocused" Value="True">
+                                        <Setter Property="Background" Value="White" />
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBox.Style>
+                    </TextBox>
+
+                    <DataGrid x:Name="HeadersDataGrid" AutoGenerateColumns="False" RowHeaderWidth="0" HorizontalAlignment="Stretch"
                         CanUserAddRows="True" MinColumnWidth="150" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="4">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Binding="{Binding Path=Name}" Header="Header" Width="*">
-                        </DataGridTextColumn>
-                        <DataGridTextColumn Binding="{Binding Path=Value}" Header="Value" Width="*">
-                        </DataGridTextColumn>
-                    </DataGrid.Columns>
-                </DataGrid>
-        
-                <Button Name="SendButton" Margin="2" Content="Send" Grid.Column="3" Grid.Row="3">
-                </Button>
-            </Grid>
-        </StackPanel>
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Binding="{Binding Path=Name}" Header="Header" Width="*">
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Binding="{Binding Path=Value}" Header="Value" Width="*">
+                            </DataGridTextColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
 
-        <StackPanel Orientation="Vertical" MinWidth="300" MinHeight="200" Margin="1" Background="GhostWhite" DockPanel.Dock="Top">
-            <TextBlock Name="RawResultsTextBlock"></TextBlock>
-        </StackPanel>
+                    <Button Name="SendButton" Margin="2" Content="Send" Grid.Column="3" Grid.Row="3">
+                    </Button>
+                </Grid>
+
+                <Grid MinHeight="200" VerticalAlignment="Stretch">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <TextBlock Name="RawResultsTextBlock" Background="BurlyWood" Grid.Column="0" Grid.Row="0"></TextBlock>
+                </Grid>
+
+            </StackPanel>
+        </DockPanel>
         
-        <StatusBar DockPanel.Dock="Bottom" MaxHeight="25">
+    </Grid>
+        
+        <StatusBar MaxHeight="25">
             <StatusBarItem>
                 <TextBlock x:Name="StatusBarTextBlock">Test</TextBlock>
             </StatusBarItem>
         </StatusBar>
-    </DockPanel>
+
+    </StackPanel>
+
 </UserControl>
