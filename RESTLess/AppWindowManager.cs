@@ -12,7 +12,7 @@ namespace RESTLess
 
             window.SizeToContent = SizeToContent.Manual;
 
-            window.Width = 400;
+            window.Width = 500;
             window.Height = 400;
 
             return window;

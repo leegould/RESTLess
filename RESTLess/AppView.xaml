@@ -6,26 +6,35 @@
              xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity" 
              xmlns:cal="http://www.caliburnproject.org"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="300" d:DesignWidth="500">
 
-    <StackPanel>
-    
-    <Grid>
+    <DockPanel Background="DarkGray">
+
+        <StatusBar MaxHeight="25" DockPanel.Dock="Bottom">
+            <StatusBarItem>
+                <TextBlock x:Name="StatusBarTextBlock">Test</TextBlock>
+            </StatusBarItem>
+        </StatusBar>
+
+        <Grid DockPanel.Dock="Top">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="200"/>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-    
-        <StackPanel DockPanel.Dock="Left" MinHeight="300" Background="DimGray" Grid.Column="0">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel DockPanel.Dock="Left" MinHeight="300" Background="White" Grid.Column="0" Grid.Row="0" VerticalAlignment="Stretch">
 
         </StackPanel>
 
         <GridSplitter Grid.Column="0" Width="2" HorizontalAlignment="Right" VerticalAlignment="Stretch" ResizeBehavior="CurrentAndNext"/>
         
-        <DockPanel Grid.Column="1">
+        <DockPanel Grid.Column="1" Grid.Row="0" VerticalAlignment="Stretch">
 
-            <StackPanel Orientation="Vertical" Margin="1" Background="LightGray" DockPanel.Dock="Left">
-                <Grid>
+                <Grid DockPanel.Dock="Top">
                     <Grid.Resources>
                         <!-- Brushes for colours/backgrounds -->
                         <SolidColorBrush x:Key="FontBrush" Color="#FFFFFF"/>
@@ -208,7 +217,7 @@
                     </TextBox>
 
                     <DataGrid x:Name="HeadersDataGrid" AutoGenerateColumns="False" RowHeaderWidth="0" HorizontalAlignment="Stretch"
-                        CanUserAddRows="True" MinColumnWidth="150" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="4">
+                        CanUserAddRows="True" MinColumnWidth="150" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="4" HorizontalScrollBarVisibility="Hidden">
                         <DataGrid.Columns>
                             <DataGridTextColumn Binding="{Binding Path=Name}" Header="Header" Width="*">
                             </DataGridTextColumn>
@@ -221,27 +230,20 @@
                     </Button>
                 </Grid>
 
-                <Grid MinHeight="200" VerticalAlignment="Stretch">
+                <Grid MinHeight="200" VerticalAlignment="Stretch" DockPanel.Dock="Top">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"></RowDefinition>
                     </Grid.RowDefinitions>
-                    <TextBlock Name="RawResultsTextBlock" Background="BurlyWood" Grid.Column="0" Grid.Row="0"></TextBlock>
+                    <TextBlock Name="RawResultsTextBlock" Background="LightGray" Grid.Column="0" Grid.Row="0" VerticalAlignment="Stretch"></TextBlock>
                 </Grid>
 
-            </StackPanel>
-        </DockPanel>
+            </DockPanel>
         
-    </Grid>
-        
-        <StatusBar MaxHeight="25">
-            <StatusBarItem>
-                <TextBlock x:Name="StatusBarTextBlock">Test</TextBlock>
-            </StatusBarItem>
-        </StatusBar>
+        </Grid>
 
-    </StackPanel>
+    </DockPanel>
 
 </UserControl>
