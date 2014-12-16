@@ -17,6 +17,7 @@ namespace RESTLess
 
         private string rawResultsTextBlock;
         private string url;
+        private string body;
 
         private bool getChecked;
         private bool postChecked;
@@ -47,6 +48,16 @@ namespace RESTLess
                 url = value;
                 NotifyOfPropertyChange(() => UrlTextBox);
                 NotifyOfPropertyChange(() => CanSendButton);
+            }
+        }
+
+        public string BodyTextBox
+        {
+            get { return body; }
+            set
+            {
+                body = value;
+                NotifyOfPropertyChange(BodyTextBox);
             }
         }
 
@@ -151,11 +162,16 @@ namespace RESTLess
                 request.AddHeader(header.Name, header.Value);
             }
 
+            if (method == Method.POST || method == Method.PUT)
+            {
+                request.AddJsonBody(BodyTextBox);
+            }
+
             Stopwatch stopWatch = new Stopwatch();
             stopWatch.Start();
 
-            StatusBarTextBlock = "Loading " + request.Method + " " + client.BaseUrl.ToString().Substring(0, client.BaseUrl.ToString().Length - 1) + request.Resource;
-            
+            StatusBarTextBlock = "Sending " + request.Method + " " + client.BaseUrl.ToString().Substring(0, client.BaseUrl.ToString().Length - 1) + request.Resource;
+
             client.ExecuteAsync(request,
                 r =>
                 {
