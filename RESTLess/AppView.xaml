@@ -192,7 +192,7 @@
                     <RadioButton Name="PutChecked" GroupName="RequestMethod" Grid.Row="0" Grid.Column="2" Padding="2" Template="{DynamicResource ToggleButtonMidRight}">PUT</RadioButton>
                     <RadioButton Name="DeleteChecked" GroupName="RequestMethod" Grid.Row="0" Grid.Column="3" Padding="2" Template="{DynamicResource ToggleButtonRight}">DELETE</RadioButton>
 
-                    <TextBox Name="UrlTextBox" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4" HorizontalAlignment="Stretch">
+                    <TextBox FontSize="20" Name="UrlTextBox" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4" HorizontalAlignment="Stretch">
                         <TextBox.Style>
                             <Style TargetType="TextBox" xmlns:sys="clr-namespace:System;assembly=mscorlib">
                                 <Style.Resources>
@@ -229,8 +229,8 @@
 
                     <TextBox Name="BodyTextBox" TextWrapping="Wrap" AcceptsReturn="True" Height="Auto" Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="3"></TextBox>
                     
-                    <Button Name="SendButton" Margin="2" Content="Send" Grid.Column="3" Grid.Row="4">
-                    </Button>
+                    <Button Name="ResetButton" Margin="2" Content="Reset" Grid.Column="2" Grid.Row="4"></Button>
+                    <Button Name="SendButton" Margin="2" Content="Send" Grid.Column="3" Grid.Row="4"></Button>
                 </Grid>
 
                 <Grid MinHeight="200" VerticalAlignment="Stretch" DockPanel.Dock="Top">
@@ -240,7 +240,9 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"></RowDefinition>
                     </Grid.RowDefinitions>
-                    <TextBlock Name="RawResultsTextBlock" Background="LightGray" Grid.Column="0" Grid.Row="0" VerticalAlignment="Stretch"></TextBlock>
+                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                        <TextBox IsReadOnly="True" Name="RawResultsTextBox" Background="LightGray" Grid.Column="0" Grid.Row="0" VerticalAlignment="Stretch"></TextBox>
+                    </ScrollViewer>
                 </Grid>
 
             </DockPanel>

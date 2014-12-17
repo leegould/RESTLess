@@ -15,7 +15,7 @@ namespace RESTLess
 
         private readonly IWindowManager windowManager;
 
-        private string rawResultsTextBlock;
+        private string rawResultsTextBox;
         private string url;
         private string body;
 
@@ -27,6 +27,10 @@ namespace RESTLess
         private IObservableCollection<HttpHeader> headers;
 
         private string statusBarTextBlock;
+
+        private bool isWaiting;
+
+        private Stopwatch stopWatch;
 
         #endregion
 
@@ -61,13 +65,13 @@ namespace RESTLess
             }
         }
 
-        public string RawResultsTextBlock
+        public string RawResultsTextBox
         {
-            get { return rawResultsTextBlock; }
+            get { return rawResultsTextBox; }
             set
             {
-                rawResultsTextBlock = value;
-                NotifyOfPropertyChange(() => RawResultsTextBlock);
+                rawResultsTextBox = value;
+                NotifyOfPropertyChange(() => RawResultsTextBox);
             }
         }
 
@@ -129,7 +133,15 @@ namespace RESTLess
         {
             get
             {
-                return !string.IsNullOrWhiteSpace(UrlTextBox);
+                return !string.IsNullOrWhiteSpace(UrlTextBox) && !isWaiting;
+            }
+        }
+
+        public bool CanResetButton
+        {
+            get
+            {
+                return isWaiting;
             }
         }
 
@@ -167,26 +179,53 @@ namespace RESTLess
                 request.AddJsonBody(BodyTextBox);
             }
 
-            Stopwatch stopWatch = new Stopwatch();
+            stopWatch = new Stopwatch();
             stopWatch.Start();
 
             StatusBarTextBlock = "Sending " + request.Method + " " + client.BaseUrl.ToString().Substring(0, client.BaseUrl.ToString().Length - 1) + request.Resource;
 
+            isWaiting = true;
+            NotifyOfPropertyChange(() => CanResetButton);
             client.ExecuteAsync(request,
                 r =>
                 {
-                    stopWatch.Stop();
-                    StatusBarTextBlock = "Status: " + r.ResponseStatus + ". Code:" + r.StatusCode + ". Elapsed: " + stopWatch.ElapsedMilliseconds.ToString() + " ms.";
+                    if (isWaiting)
+                    {
+                        stopWatch.Stop();
+                        StatusBarTextBlock = "Status: " + r.ResponseStatus + ". Code:" + r.StatusCode + ". Elapsed: " + stopWatch.ElapsedMilliseconds.ToString() + " ms.";
 
-                    var json = Newtonsoft.Json.Linq.JObject.Parse(r.Content);
-                    RawResultsTextBlock = json.ToString(Formatting.Indented);
+                        var json = Newtonsoft.Json.Linq.JObject.Parse(r.Content);
+                        RawResultsTextBox = json.ToString(Formatting.Indented);
+                        StopSending();
+                    }
                 });
+        }
+
+        public void ResetButton()
+        {
+            StopSending();
+            StatusBarTextBlock = "Cancelled request";
+            RawResultsTextBox = string.Empty;
+
         }
 
         #endregion
 
 
         #region Private Methods
+
+        private void StopSending()
+        {
+            if (stopWatch.IsRunning)
+            {
+                stopWatch.Stop();
+                stopWatch.Reset();
+            }
+
+            isWaiting = false;
+            NotifyOfPropertyChange(() => CanResetButton);
+            NotifyOfPropertyChange(() => CanSendButton);
+        }
 
         private Method GetMethod()
         {
