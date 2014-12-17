@@ -12,8 +12,10 @@ namespace RESTLess
 
             window.SizeToContent = SizeToContent.Manual;
 
-            window.Width = 500;
-            window.Height = 400;
+            window.Width = 800;
+            window.Height = 600;
+
+            window.Title = "RESTLess";
 
             return window;
         }

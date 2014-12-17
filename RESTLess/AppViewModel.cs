@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel.Composition;
 using System.Diagnostics;
+using System.Globalization;
 using Caliburn.Micro;
 
 using RestSharp;
@@ -164,11 +165,11 @@ namespace RESTLess
         {
             var uri = new Uri(UrlTextBox);
             RestClient client = new RestClient(uri.GetLeftPart(UriPartial.Authority));
-
             var method = GetMethod();
 
             var request = new RestRequest(uri, method);
-
+            
+            //request.AddHeader("nocache", DateTime.UtcNow.ToString(CultureInfo.InvariantCulture));
             foreach (var header in HeadersDataGrid)
             {
                 request.AddHeader(header.Name, header.Value);
