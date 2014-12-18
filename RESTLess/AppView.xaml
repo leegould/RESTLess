@@ -35,144 +35,7 @@
         <DockPanel Grid.Column="1" Grid.Row="0" VerticalAlignment="Stretch">
 
                 <Grid DockPanel.Dock="Top">
-                    <Grid.Resources>
-                        <!-- Brushes for colours/backgrounds -->
-                        <SolidColorBrush x:Key="FontBrush" Color="#FFFFFF"/>
-
-                        <LinearGradientBrush x:Key="BgRedBrush" StartPoint="0,0" EndPoint="0,1">
-                            <GradientStop Offset="0" Color="#DD6666"/>
-                            <GradientStop Offset="1" Color="#DD0000"/>
-                        </LinearGradientBrush>
-
-                        <LinearGradientBrush x:Key="BgBlueBrush" StartPoint="0,0" EndPoint="0,1">
-                            <GradientStop Offset="0" Color="#6666DD"/>
-                            <GradientStop Offset="1" Color="#0000DD"/>
-                        </LinearGradientBrush>
-
-                        <LinearGradientBrush x:Key="BgYellowBrush" StartPoint="0,0" EndPoint="0,1">
-                            <GradientStop Offset="0" Color="#BBBB00"/>
-                            <GradientStop Offset="1" Color="#DDDD00"/>
-                        </LinearGradientBrush>
-
-                        <LinearGradientBrush x:Key="BgGreenBrush" StartPoint="0,0" EndPoint="0,1">
-                            <GradientStop Offset="0" Color="#66DD66"/>
-                            <GradientStop Offset="1" Color="#00DD00"/>
-                        </LinearGradientBrush>
-
-                        <SolidColorBrush x:Key="RedBrush" Color="#ff0000"/>
-                        <SolidColorBrush x:Key="BlueBrush" Color="#0000ff"/>
-                        <SolidColorBrush x:Key="GreenBrush" Color="#00ff00"/>
-                        <SolidColorBrush x:Key="YellowBrush" Color="#ffff00"/>
-
-                        <LinearGradientBrush x:Key="CheckedBrush" StartPoint="0,0" EndPoint="0,1">
-                            <GradientStop Offset="0" Color="#CCCCCC"/>
-                            <GradientStop Offset="1" Color="#999999"/>
-                        </LinearGradientBrush>
-
-                        <!-- Left Button Template -->
-                        <ControlTemplate x:Key="ToggleButtonLeft" TargetType="{x:Type ToggleButton}">
-                            <Border
-                            Name="Border"
-                            Background="{StaticResource CheckedBrush}"
-                            BorderBrush="{StaticResource BlueBrush}"
-                            BorderThickness="1,1,0,1"
-                            CornerRadius="5,0,0,5">
-                                <ContentPresenter
-                                HorizontalAlignment="Center"
-                                Margin="{TemplateBinding Padding}"
-                                VerticalAlignment="Center"
-                                Content="{TemplateBinding Content}"
-                                TextBlock.FontWeight="Bold"
-                                TextBlock.Foreground="{StaticResource FontBrush}"/>
-                            </Border>
-                            <ControlTemplate.Triggers>
-                                <Trigger Property="ToggleButton.IsMouseOver" Value="true">
-                                    <Setter TargetName="Border" Property="Background" Value="#808080"/>
-                                </Trigger>
-                                <Trigger Property="IsChecked" Value="true">
-                                    <Setter TargetName="Border" Property="Background" Value="{StaticResource BgBlueBrush}"/>
-                                </Trigger>
-                            </ControlTemplate.Triggers>
-                        </ControlTemplate>
-
-                        <!-- Middle Button(s) Template -->
-                        <ControlTemplate x:Key="ToggleButtonMidLeft" TargetType="{x:Type ToggleButton}">
-                            <Border
-                            Name="Border"
-                            Background="{StaticResource CheckedBrush}"
-                            BorderBrush="{StaticResource GreenBrush}"
-                            BorderThickness="0,1,0,1"
-                            CornerRadius="0">
-                                <ContentPresenter
-                                    HorizontalAlignment="Center"
-                                    Margin="{TemplateBinding Padding}"
-                                    VerticalAlignment="Center"
-                                    Content="{TemplateBinding Content}"
-                                    TextBlock.FontWeight="Bold"
-                                    TextBlock.Foreground="{StaticResource FontBrush}"/>
-                            </Border>
-                            <ControlTemplate.Triggers>
-                                <Trigger Property="ToggleButton.IsMouseOver" Value="true">
-                                    <Setter TargetName="Border" Property="Background" Value="#808080"/>
-                                </Trigger>
-                                <Trigger Property="IsChecked" Value="true">
-                                    <Setter TargetName="Border" Property="Background" Value="{StaticResource BgGreenBrush}"/>
-                                </Trigger>
-                            </ControlTemplate.Triggers>
-                        </ControlTemplate>
-
-                        <ControlTemplate x:Key="ToggleButtonMidRight" TargetType="{x:Type ToggleButton}">
-                            <Border
-                            Name="Border"
-                            Background="{StaticResource CheckedBrush}"
-                            BorderBrush="{StaticResource YellowBrush}"
-                            BorderThickness="0,1,0,1"
-                            CornerRadius="0">
-                                <ContentPresenter
-                                    HorizontalAlignment="Center"
-                                    Margin="{TemplateBinding Padding}"
-                                    VerticalAlignment="Center"
-                                    Content="{TemplateBinding Content}"
-                                    TextBlock.FontWeight="Bold"
-                                    TextBlock.Foreground="{StaticResource FontBrush}"/>
-                            </Border>
-                            <ControlTemplate.Triggers>
-                                <Trigger Property="ToggleButton.IsMouseOver" Value="true">
-                                    <Setter TargetName="Border" Property="Background" Value="#808080"/>
-                                </Trigger>
-                                <Trigger Property="IsChecked" Value="true">
-                                    <Setter TargetName="Border" Property="Background" Value="{StaticResource BgYellowBrush}"/>
-                                </Trigger>
-                            </ControlTemplate.Triggers>
-                        </ControlTemplate>
-
-                        <!-- Right Button Template -->
-                        <ControlTemplate x:Key="ToggleButtonRight" TargetType="{x:Type ToggleButton}">
-                            <Border
-                            Name="Border"
-                            Background="{StaticResource CheckedBrush}"
-                            BorderBrush="{StaticResource RedBrush}"
-                            BorderThickness="0,1,1,1"
-                            CornerRadius="0, 5, 5, 0">
-                                <ContentPresenter
-                                    HorizontalAlignment="Center"
-                                    Margin="{TemplateBinding Padding}"
-                                    VerticalAlignment="Center"
-                                    Content="{TemplateBinding Content}"
-                                    TextBlock.FontWeight="Bold"
-                                    TextBlock.Foreground="{StaticResource FontBrush}"/>
-                            </Border>
-                            <ControlTemplate.Triggers>
-                                <Trigger Property="ToggleButton.IsMouseOver" Value="true">
-                                    <Setter TargetName="Border" Property="Background" Value="#808080"/>
-                                </Trigger>
-                                <Trigger Property="IsChecked" Value="true">
-                                    <Setter TargetName="Border" Property="Background" Value="{StaticResource BgRedBrush}"/>
-                                </Trigger>
-                            </ControlTemplate.Triggers>
-                        </ControlTemplate>
-                    </Grid.Resources>
-
+                    
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"></ColumnDefinition>
                         <ColumnDefinition Width="*"></ColumnDefinition>
@@ -187,11 +50,8 @@
                         <RowDefinition Height="*"></RowDefinition>
                     </Grid.RowDefinitions>
 
-                    <RadioButton Name="GetChecked" GroupName="RequestMethod" Grid.Row="0" Grid.Column="0" Padding="2" Template="{DynamicResource ToggleButtonLeft}">GET</RadioButton>
-                    <RadioButton Name="PostChecked" GroupName="RequestMethod" Grid.Row="0" Grid.Column="1" Padding="2" Template="{DynamicResource ToggleButtonMidLeft}">POST</RadioButton>
-                    <RadioButton Name="PutChecked" GroupName="RequestMethod" Grid.Row="0" Grid.Column="2" Padding="2" Template="{DynamicResource ToggleButtonMidRight}">PUT</RadioButton>
-                    <RadioButton Name="DeleteChecked" GroupName="RequestMethod" Grid.Row="0" Grid.Column="3" Padding="2" Template="{DynamicResource ToggleButtonRight}">DELETE</RadioButton>
-
+                    <ContentControl Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="0" x:Name="MethodViewModel"></ContentControl>
+                    
                     <TextBox FontSize="20" Name="UrlTextBox" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4" HorizontalAlignment="Stretch">
                         <TextBox.Style>
                             <Style TargetType="TextBox" xmlns:sys="clr-namespace:System;assembly=mscorlib">

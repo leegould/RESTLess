@@ -1,11 +1,13 @@
 ﻿using System;
 using System.ComponentModel.Composition;
 using System.Diagnostics;
-using System.Globalization;
+
 using Caliburn.Micro;
 
-using RestSharp;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+
+using RestSharp;
 
 namespace RESTLess
 {
@@ -19,11 +21,6 @@ namespace RESTLess
         private string rawResultsTextBox;
         private string url;
         private string body;
-
-        private bool getChecked;
-        private bool postChecked;
-        private bool putChecked;
-        private bool deleteChecked;
 
         private IObservableCollection<HttpHeader> headers;
 
@@ -41,9 +38,12 @@ namespace RESTLess
         {
             this.windowManager = windowManager;
             HeadersDataGrid = new BindableCollection<HttpHeader>();
+            MethodViewModel = new MethodViewModel();
         }
 
         #region Properties
+
+        public MethodViewModel MethodViewModel { get; set; }
 
         public string UrlTextBox
         {
@@ -75,51 +75,7 @@ namespace RESTLess
                 NotifyOfPropertyChange(() => RawResultsTextBox);
             }
         }
-
-        public bool GetChecked
-        {
-            get { return getChecked; }
-            set
-            {
-                if (value.Equals(getChecked)) return;
-                getChecked = value;
-                NotifyOfPropertyChange(() => GetChecked);
-            }
-        }
-
-        public bool PostChecked
-        {
-            get { return postChecked; }
-            set
-            {
-                if (value.Equals(postChecked)) return;
-                postChecked = value;
-                NotifyOfPropertyChange(() => PostChecked);
-            }
-        }
-
-        public bool PutChecked
-        {
-            get { return putChecked; }
-            set
-            {
-                if (value.Equals(putChecked)) return;
-                putChecked = value;
-                NotifyOfPropertyChange(() => PutChecked);
-            }
-        }
-
-        public bool DeleteChecked
-        {
-            get { return deleteChecked; }
-            set
-            {
-                if (value.Equals(deleteChecked)) return;
-                deleteChecked = value;
-                NotifyOfPropertyChange(() => DeleteChecked);
-            }
-        }
-
+        
         public IObservableCollection<HttpHeader> HeadersDataGrid
         {
             get { return headers; }
@@ -165,7 +121,7 @@ namespace RESTLess
         {
             var uri = new Uri(UrlTextBox);
             RestClient client = new RestClient(uri.GetLeftPart(UriPartial.Authority));
-            var method = GetMethod();
+            var method = MethodViewModel.GetMethod();
 
             var request = new RestRequest(uri, method);
             
@@ -195,7 +151,7 @@ namespace RESTLess
                         stopWatch.Stop();
                         StatusBarTextBlock = "Status: " + r.ResponseStatus + ". Code:" + r.StatusCode + ". Elapsed: " + stopWatch.ElapsedMilliseconds.ToString() + " ms.";
 
-                        var json = Newtonsoft.Json.Linq.JObject.Parse(r.Content);
+                        var json = JObject.Parse(r.Content);
                         RawResultsTextBox = json.ToString(Formatting.Indented);
                         StopSending();
                     }
@@ -227,28 +183,7 @@ namespace RESTLess
             NotifyOfPropertyChange(() => CanResetButton);
             NotifyOfPropertyChange(() => CanSendButton);
         }
-
-        private Method GetMethod()
-        {
-            if (GetChecked)
-            {
-                return Method.GET;
-            }
-            if (PostChecked)
-            {
-                return Method.POST;
-            }
-            if (PutChecked)
-            {
-                return Method.PUT;
-            }
-            if (DeleteChecked)
-            {
-                return Method.DELETE;
-            }
-            return Method.GET;
-        }
-
+        
         #endregion
     }
 }

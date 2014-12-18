@@ -85,6 +85,10 @@
     </Compile>
     <Compile Include="AppViewModel.cs" />
     <Compile Include="AppWindowManager.cs" />
+    <Compile Include="MethodView.xaml.cs">
+      <DependentUpon>MethodView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MethodViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -114,6 +118,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="AppView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MethodView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
