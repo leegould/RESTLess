@@ -1,17 +1,17 @@
 ﻿using System;
-using System.ComponentModel.Composition;
-using System.ComponentModel.Composition.Hosting;
-using System.ComponentModel.Composition.Primitives;
-using System.Linq;
+using System.Collections.Generic;
 using System.Windows;
-
 using Caliburn.Micro;
+using Raven.Client;
+using Raven.Client.Embedded;
+using Raven.Database.Server;
 
 namespace RESTLess
 {
     public class AppBootstrapper : BootstrapperBase
     {
-        private CompositionContainer container;
+        private SimpleContainer container;
+        //private CompositionContainer container;
 
         public AppBootstrapper() 
         {
@@ -20,33 +20,45 @@ namespace RESTLess
 
         protected override void Configure()
         {
-            container = new CompositionContainer(new AggregateCatalog(AssemblySource.Instance.Select(x => new AssemblyCatalog(x)).OfType<ComposablePartCatalog>()));
+            container = new SimpleContainer();
 
-            CompositionBatch batch = new CompositionBatch();
+            NonAdminHttp.EnsureCanListenToWhenInNonAdminContext(8080);
 
-            batch.AddExportedValue<IWindowManager>(new AppWindowManager());
-            //batch.AddExportedValue<IEventAggregator>(new EventAggregator());
-            batch.AddExportedValue(container);
+            IDocumentStore documentStore = new EmbeddableDocumentStore
+            {
+                DataDirectory = "Data",
+                UseEmbeddedHttpServer = true,
+                DefaultDatabase = "RESTLess"
+            };
+            documentStore.Initialize();
 
-            container.Compose(batch);
+            container.Singleton<IWindowManager, AppWindowManager>();
+            container.Singleton<IEventAggregator, EventAggregator>();
+            container.Instance(documentStore);
+            container.PerRequest<IApp, AppViewModel>();
         }
 
-        protected override object GetInstance(Type serviceType, string key)
+        protected override object GetInstance(Type service, string key)
         {
-            string contract = string.IsNullOrEmpty(key) ? AttributedModelServices.GetContractName(serviceType) : key;
-            var exports = container.GetExportedValues<object>(contract);
+            var instance = container.GetInstance(service, key);
+            if (instance != null)
+                return instance;
+            throw new InvalidOperationException("Could not locate any instances.");
+        }
 
-            if (exports.Count() > 0)
-            {
-                return exports.First();
-            }
+        protected override IEnumerable<object> GetAllInstances(Type serviceType)
+        {
+            return container.GetAllInstances(serviceType);
+        }
 
-            throw new Exception(string.Format("Could not locate any instances of contract {0}.", contract));
+        protected override void BuildUp(object instance)
+        {
+            container.BuildUp(instance);
         }
 
         protected override void OnStartup(object sender, StartupEventArgs e)
         {
-            DisplayRootViewFor<AppViewModel>();
+            DisplayRootViewFor<IApp>();
         }
     }
 }

@@ -6,17 +6,19 @@ using Caliburn.Micro;
 
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-
+using Raven.Client;
 using RestSharp;
 
 namespace RESTLess
 {
     [Export(typeof(AppViewModel))]
-    public class AppViewModel : PropertyChangedBase
+    public class AppViewModel : PropertyChangedBase, IApp
     {
         #region Private members
 
         private readonly IWindowManager windowManager;
+
+        private readonly IDocumentStore documentStore;
 
         private string rawResultsTextBox;
         private string url;
@@ -34,9 +36,10 @@ namespace RESTLess
 
 
         [ImportingConstructor]
-        public AppViewModel(IWindowManager windowManager)
+        public AppViewModel(IWindowManager windowManager, IDocumentStore documentStore)
         {
             this.windowManager = windowManager;
+            this.documentStore = documentStore;
             HeadersDataGrid = new BindableCollection<HttpHeader>();
             MethodViewModel = new MethodViewModel();
         }
@@ -143,6 +146,22 @@ namespace RESTLess
 
             isWaiting = true;
             NotifyOfPropertyChange(() => CanResetButton);
+
+            using (var conn = documentStore.OpenSession())
+            {
+                try
+                {
+                    conn.Store(request);
+                    conn.SaveChanges();
+                }
+                catch (Exception ex)
+                {
+                    StatusBarTextBlock = "Cancelled request";
+                    RawResultsTextBox = ex.ToString();
+                    StopSending();
+                }
+            }
+
             client.ExecuteAsync(request,
                 r =>
                 {
@@ -163,7 +182,6 @@ namespace RESTLess
             StopSending();
             StatusBarTextBlock = "Cancelled request";
             RawResultsTextBox = string.Empty;
-
         }
 
         #endregion

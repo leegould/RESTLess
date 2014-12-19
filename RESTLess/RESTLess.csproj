@@ -45,6 +45,15 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.6.0.6\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="Raven.Abstractions">
+      <HintPath>..\packages\RavenDB.Database.3.0.3528\lib\net45\Raven.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Raven.Client.Lightweight">
+      <HintPath>..\packages\RavenDB.Client.3.0.3528\lib\net45\Raven.Client.Lightweight.dll</HintPath>
+    </Reference>
+    <Reference Include="Raven.Database">
+      <HintPath>..\packages\RavenDB.Database.3.0.3528\lib\net45\Raven.Database.dll</HintPath>
+    </Reference>
     <Reference Include="RestSharp">
       <HintPath>..\packages\RestSharp.105.0.1\lib\net4\RestSharp.dll</HintPath>
     </Reference>
@@ -85,6 +94,7 @@
     </Compile>
     <Compile Include="AppViewModel.cs" />
     <Compile Include="AppWindowManager.cs" />
+    <Compile Include="IApp.cs" />
     <Compile Include="MethodView.xaml.cs">
       <DependentUpon>MethodView.xaml</DependentUpon>
     </Compile>
