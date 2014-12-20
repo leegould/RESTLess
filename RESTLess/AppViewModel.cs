@@ -151,7 +151,7 @@ namespace RESTLess
             {
                 try
                 {
-                    conn.Store(request);
+                    conn.Store(new Request { When = DateTime.UtcNow, RestClient = client, RestRequest = request });
                     conn.SaveChanges();
                 }
                 catch (Exception ex)

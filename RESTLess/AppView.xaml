@@ -91,6 +91,7 @@
                     
                     <Button Name="ResetButton" Margin="2" Content="Reset" Grid.Column="2" Grid.Row="4"></Button>
                     <Button Name="SendButton" Margin="2" Content="Send" Grid.Column="3" Grid.Row="4"></Button>
+
                 </Grid>
 
                 <Grid MinHeight="200" VerticalAlignment="Stretch" DockPanel.Dock="Top">
