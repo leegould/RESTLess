@@ -147,11 +147,13 @@ namespace RESTLess
             isWaiting = true;
             NotifyOfPropertyChange(() => CanResetButton);
 
+            Request req = null;
             using (var conn = documentStore.OpenSession())
             {
                 try
                 {
-                    conn.Store(new Request { When = DateTime.UtcNow, RestClient = client, RestRequest = request });
+                    req = new Request {When = DateTime.UtcNow, RestClient = client, RestRequest = request};
+                    conn.Store(req);
                     conn.SaveChanges();
                 }
                 catch (Exception ex)
@@ -173,6 +175,25 @@ namespace RESTLess
                         var json = JObject.Parse(r.Content);
                         RawResultsTextBox = json.ToString(Formatting.Indented);
                         StopSending();
+
+                        using (var conn = documentStore.OpenSession())
+                        {
+                            try
+                            {
+                                conn.Store(new Response
+                                {
+                                    When = DateTime.UtcNow,
+                                    RequestId =  req != null ? req.Id : 0,
+                                    RestResponse = r
+                                });
+                                conn.SaveChanges();
+                            }
+                            catch (Exception ex)
+                            {
+                                StatusBarTextBlock = "Response Error";
+                                RawResultsTextBox = ex.ToString();
+                            }
+                        }
                     }
                 });
         }
