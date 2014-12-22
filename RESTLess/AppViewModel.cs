@@ -1,12 +1,17 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel.Composition;
 using System.Diagnostics;
+using System.Linq;
 
 using Caliburn.Micro;
 
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+
+using Raven.Abstractions.Extensions;
 using Raven.Client;
+
 using RestSharp;
 
 namespace RESTLess
@@ -41,8 +46,12 @@ namespace RESTLess
             this.windowManager = windowManager;
             this.documentStore = documentStore;
             HeadersDataGrid = new BindableCollection<HttpHeader>();
+            HistoryRequests = new ObservableCollection<Request>();
             MethodViewModel = new MethodViewModel();
+
+            LoadHistory();
         }
+
 
         #region Properties
 
@@ -115,6 +124,8 @@ namespace RESTLess
             }
         }
 
+        public ObservableCollection<Request> HistoryRequests { get; set; }
+        
         #endregion
 
 
@@ -152,7 +163,7 @@ namespace RESTLess
             {
                 try
                 {
-                    req = new Request {When = DateTime.UtcNow, RestClient = client, RestRequest = request};
+                    req = new Request(client.BaseUrl.ToString(), request);
                     conn.Store(req);
                     conn.SaveChanges();
                 }
@@ -222,7 +233,24 @@ namespace RESTLess
             NotifyOfPropertyChange(() => CanResetButton);
             NotifyOfPropertyChange(() => CanSendButton);
         }
-        
+
+        private void LoadHistory()
+        {
+            using (var conn = documentStore.OpenSession())
+            {
+                try
+                {
+                    var items = conn.Query<Request>().ToList();
+                    HistoryRequests.AddRange(items);
+                }
+                catch (Exception ex)
+                {
+                    StatusBarTextBlock = "Error loading history.";
+                    RawResultsTextBox = ex.ToString();
+                }
+            }
+        }
+
         #endregion
     }
 }

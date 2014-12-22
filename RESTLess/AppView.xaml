@@ -26,8 +26,25 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <StackPanel DockPanel.Dock="Left" MinHeight="300" Background="White" Grid.Column="0" Grid.Row="0" VerticalAlignment="Stretch">
-
+        <StackPanel DockPanel.Dock="Left" MinHeight="300" Background="Gray" Grid.Column="0" Grid.Row="0" VerticalAlignment="Stretch">
+            
+            <ListBox x:Name="HistoryRequests">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <WrapPanel>
+                            <TextBlock Text='{Binding Path=Id}' />
+                            <TextBlock Text='{Binding Path=BaseUrl}' />
+                            <TextBlock Text='{Binding Path=Path}' />
+                        </WrapPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel />
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+            </ListBox>
+            
         </StackPanel>
 
         <GridSplitter Grid.Column="0" Width="2" HorizontalAlignment="Right" VerticalAlignment="Stretch" ResizeBehavior="CurrentAndNext"/>
