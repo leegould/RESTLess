@@ -30,11 +30,12 @@ namespace RESTLess
         private string body;
 
         private IObservableCollection<HttpHeader> headers;
+        private IObservableCollection<Request> historyRequests; 
 
         private string statusBarTextBlock;
 
         private bool isWaiting;
-
+        
         private Stopwatch stopWatch;
 
         #endregion
@@ -46,7 +47,7 @@ namespace RESTLess
             this.windowManager = windowManager;
             this.documentStore = documentStore;
             HeadersDataGrid = new BindableCollection<HttpHeader>();
-            HistoryRequests = new ObservableCollection<Request>();
+            HistoryRequests = new BindableCollection<Request>();
             MethodViewModel = new MethodViewModel();
 
             LoadHistory();
@@ -124,8 +125,16 @@ namespace RESTLess
             }
         }
 
-        public ObservableCollection<Request> HistoryRequests { get; set; }
-        
+        public IObservableCollection<Request> HistoryRequests
+        {
+            get { return historyRequests; }
+            set
+            {
+                historyRequests = value;
+                NotifyOfPropertyChange(() => HistoryRequests);
+            }
+        }
+
         #endregion
 
 
@@ -174,6 +183,7 @@ namespace RESTLess
                     StopSending();
                 }
             }
+            HistoryRequests.Add(req);
 
             client.ExecuteAsync(request,
                 r =>
