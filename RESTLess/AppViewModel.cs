@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.ObjectModel;
 using System.ComponentModel.Composition;
 using System.Diagnostics;
 using System.Linq;
@@ -9,7 +8,6 @@ using Caliburn.Micro;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-using Raven.Abstractions.Extensions;
 using Raven.Client;
 
 using RestSharp;
@@ -193,8 +191,16 @@ namespace RESTLess
                         stopWatch.Stop();
                         StatusBarTextBlock = "Status: " + r.ResponseStatus + ". Code:" + r.StatusCode + ". Elapsed: " + stopWatch.ElapsedMilliseconds.ToString() + " ms.";
 
-                        var json = JObject.Parse(r.Content);
-                        RawResultsTextBox = json.ToString(Formatting.Indented);
+                        try
+                        {
+                            var json = JObject.Parse(r.Content);
+                            RawResultsTextBox = json.ToString(Formatting.Indented);
+                        }
+                        catch (Exception ex)
+                        {
+                            RawResultsTextBox = ex.ToString();
+                        }
+
                         StopSending();
 
                         using (var conn = documentStore.OpenSession())

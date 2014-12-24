@@ -27,25 +27,40 @@
         </Grid.RowDefinitions>
 
         <StackPanel DockPanel.Dock="Left" MinHeight="300" Background="Gray" Grid.Column="0" Grid.Row="0" VerticalAlignment="Stretch">
-            
-            <ListBox x:Name="HistoryRequests">
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <WrapPanel>
-                            <TextBlock Text='{Binding Path=Id}' />
-                            <TextBlock Text='{Binding Path=BaseUrl}' />
-                            <TextBlock Text='{Binding Path=Path}' />
-                        </WrapPanel>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-                <ListBox.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <StackPanel />
-                    </ItemsPanelTemplate>
-                </ListBox.ItemsPanel>
-            </ListBox>
-            
-        </StackPanel>
+
+                <TabControl>
+
+                    <TabItem>
+                        <TabItem.Header>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="History" Foreground="DarkSlateGray" />
+                            </StackPanel>
+                        </TabItem.Header>
+                        <ListBox x:Name="HistoryRequests">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <WrapPanel>
+                                        <TextBlock Text='{Binding Path=Id}' />
+                                        <TextBlock Text=" "/>
+                                        <TextBlock Text='{Binding Path=Method}' />
+                                        <TextBlock Text=" "/>
+                                        <TextBlock Text='{Binding Path=BaseUrl}' />
+                                        <TextBlock Text='{Binding Path=Path}' />
+                                        <Separator/>
+                                    </WrapPanel>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                            <ListBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel />
+                                </ItemsPanelTemplate>
+                            </ListBox.ItemsPanel>
+                        </ListBox>
+                    </TabItem>
+                    
+                </TabControl>
+
+            </StackPanel>
 
         <GridSplitter Grid.Column="0" Width="2" HorizontalAlignment="Right" VerticalAlignment="Stretch" ResizeBehavior="CurrentAndNext"/>
         
