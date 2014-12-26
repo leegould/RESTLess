@@ -39,15 +39,19 @@
                         <ListBox x:Name="HistoryRequests">
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
-                                    <WrapPanel>
-                                        <TextBlock Text='{Binding Path=Id}' />
-                                        <TextBlock Text=" "/>
-                                        <TextBlock Text='{Binding Path=Method}' />
-                                        <TextBlock Text=" "/>
-                                        <TextBlock Text='{Binding Path=BaseUrl}' />
-                                        <TextBlock Text='{Binding Path=Path}' />
-                                        <Separator/>
-                                    </WrapPanel>
+                                    <StackPanel>
+                                        <WrapPanel>
+                                            <TextBlock Text='{Binding Path=Id}' />
+                                            <TextBlock Text=" "/>
+                                            <TextBlock Text='{Binding Path=Method}' />
+                                            <TextBlock Text=" "/>
+                                            <TextBlock TextWrapping="Wrap" Text='{Binding Path=BaseUrl}' />
+                                        </WrapPanel>
+                                        <WrapPanel>
+                                            <TextBlock Text='{Binding Path=Path}' />
+                                        </WrapPanel>
+                                        <Separator Height="0.5" />
+                                    </StackPanel>
                                 </DataTemplate>
                             </ListBox.ItemTemplate>
                             <ListBox.ItemsPanel>
