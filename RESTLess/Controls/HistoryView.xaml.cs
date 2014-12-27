@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace RESTLess
+namespace RESTLess.Controls
 {
     /// <summary>
-    /// Interaction logic for MethodView.xaml
+    /// Interaction logic for HistoryView.xaml
     /// </summary>
-    public partial class MethodView : UserControl
+    public partial class HistoryView : UserControl
     {
-        public MethodView()
+        public HistoryView()
         {
             InitializeComponent();
         }

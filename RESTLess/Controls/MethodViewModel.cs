@@ -1,8 +1,7 @@
 ﻿using Caliburn.Micro;
-
 using RestSharp;
 
-namespace RESTLess
+namespace RESTLess.Controls
 {
     public class MethodViewModel : PropertyChangedBase
     {

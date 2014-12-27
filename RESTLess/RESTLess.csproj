@@ -86,8 +86,13 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Request.cs" />
-    <Compile Include="Response.cs" />
+    <Compile Include="Controls\HistoryView.xaml.cs">
+      <DependentUpon>HistoryView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\HistoryViewModel.cs" />
+    <Compile Include="Models\HistoryRequest.cs" />
+    <Compile Include="Models\Request.cs" />
+    <Compile Include="Models\Response.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppBootstrapper.cs" />
@@ -97,10 +102,10 @@
     <Compile Include="AppViewModel.cs" />
     <Compile Include="AppWindowManager.cs" />
     <Compile Include="IApp.cs" />
-    <Compile Include="MethodView.xaml.cs">
+    <Compile Include="Controls\MethodView.xaml.cs">
       <DependentUpon>MethodView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MethodViewModel.cs" />
+    <Compile Include="Controls\MethodViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -133,7 +138,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MethodView.xaml">
+    <Page Include="Controls\HistoryView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\MethodView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

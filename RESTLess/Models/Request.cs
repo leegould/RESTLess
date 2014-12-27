@@ -2,13 +2,12 @@
 using System.Collections.Generic;
 using RestSharp;
 
-namespace RESTLess
+namespace RESTLess.Models
 {
     public class Request
     {
         public Request()
         {
-            
         }
 
         public Request(string baseUrl, RestRequest restRequest)
@@ -34,11 +33,6 @@ namespace RESTLess
         public Dictionary<string, string> Headers { get; set; }
 
         public string Path { get; set; }
-
-        //public string FullUrl
-        //{
-        //    get { return (BaseUrl.Length > 0 && BaseUrl.Last() == '/' ? BaseUrl.Substring(0, BaseUrl.Length - 1) : BaseUrl) + Path; }
-        //}
 
         public string Method { get; set; }
     }

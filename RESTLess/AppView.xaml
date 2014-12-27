@@ -36,30 +36,7 @@
                                 <TextBlock Text="History" Foreground="DarkSlateGray" />
                             </StackPanel>
                         </TabItem.Header>
-                        <ListBox x:Name="HistoryRequests">
-                            <ListBox.ItemTemplate>
-                                <DataTemplate>
-                                    <StackPanel>
-                                        <WrapPanel>
-                                            <TextBlock Text='{Binding Path=Id}' />
-                                            <TextBlock Text=" "/>
-                                            <TextBlock Text='{Binding Path=Method}' />
-                                            <TextBlock Text=" "/>
-                                            <TextBlock TextWrapping="Wrap" Text='{Binding Path=BaseUrl}' />
-                                        </WrapPanel>
-                                        <WrapPanel>
-                                            <TextBlock Text='{Binding Path=Path}' />
-                                        </WrapPanel>
-                                        <Separator Height="0.5" />
-                                    </StackPanel>
-                                </DataTemplate>
-                            </ListBox.ItemTemplate>
-                            <ListBox.ItemsPanel>
-                                <ItemsPanelTemplate>
-                                    <StackPanel />
-                                </ItemsPanelTemplate>
-                            </ListBox.ItemsPanel>
-                        </ListBox>
+                        <ContentControl x:Name="HistoryViewModel"></ContentControl>
                     </TabItem>
                     
                 </TabControl>

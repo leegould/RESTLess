@@ -11,6 +11,8 @@ using Newtonsoft.Json.Linq;
 using Raven.Client;
 
 using RestSharp;
+using RESTLess.Controls;
+using RESTLess.Models;
 
 namespace RESTLess
 {
@@ -28,7 +30,6 @@ namespace RESTLess
         private string body;
 
         private IObservableCollection<HttpHeader> headers;
-        private IObservableCollection<Request> historyRequests; 
 
         private string statusBarTextBlock;
 
@@ -45,8 +46,8 @@ namespace RESTLess
             this.windowManager = windowManager;
             this.documentStore = documentStore;
             HeadersDataGrid = new BindableCollection<HttpHeader>();
-            HistoryRequests = new BindableCollection<Request>();
             MethodViewModel = new MethodViewModel();
+            HistoryViewModel = new HistoryViewModel();
 
             LoadHistory();
         }
@@ -55,6 +56,8 @@ namespace RESTLess
         #region Properties
 
         public MethodViewModel MethodViewModel { get; set; }
+
+        public HistoryViewModel HistoryViewModel { get; set; }
 
         public string UrlTextBox
         {
@@ -123,16 +126,6 @@ namespace RESTLess
             }
         }
 
-        public IObservableCollection<Request> HistoryRequests
-        {
-            get { return historyRequests; }
-            set
-            {
-                historyRequests = value;
-                NotifyOfPropertyChange(() => HistoryRequests);
-            }
-        }
-
         #endregion
 
 
@@ -181,7 +174,7 @@ namespace RESTLess
                     StopSending();
                 }
             }
-            HistoryRequests.Add(req);
+            HistoryViewModel.HistoryRequests.Add(req);
 
             client.ExecuteAsync(request,
                 r =>
@@ -257,7 +250,7 @@ namespace RESTLess
                 try
                 {
                     var items = conn.Query<Request>().ToList();
-                    HistoryRequests.AddRange(items);
+                    HistoryViewModel.HistoryRequests.AddRange(items);
                 }
                 catch (Exception ex)
                 {

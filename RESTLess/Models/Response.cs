@@ -1,7 +1,7 @@
 ﻿using System;
 using RestSharp;
 
-namespace RESTLess
+namespace RESTLess.Models
 {
     public class Response
     {
