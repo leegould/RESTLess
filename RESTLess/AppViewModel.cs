@@ -1,15 +1,10 @@
 ﻿using System;
 using System.ComponentModel.Composition;
 using System.Diagnostics;
-using System.Linq;
-
 using Caliburn.Micro;
-
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-
 using Raven.Client;
-
 using RestSharp;
 using RESTLess.Controls;
 using RESTLess.Models;
@@ -40,16 +35,13 @@ namespace RESTLess
         #endregion
 
 
-        [ImportingConstructor]
         public AppViewModel(IWindowManager windowManager, IDocumentStore documentStore)
         {
             this.windowManager = windowManager;
             this.documentStore = documentStore;
             HeadersDataGrid = new BindableCollection<HttpHeader>();
             MethodViewModel = new MethodViewModel();
-            HistoryViewModel = new HistoryViewModel();
-
-            LoadHistory();
+            HistoryViewModel = new HistoryViewModel(documentStore);
         }
 
 
@@ -241,23 +233,6 @@ namespace RESTLess
             isWaiting = false;
             NotifyOfPropertyChange(() => CanResetButton);
             NotifyOfPropertyChange(() => CanSendButton);
-        }
-
-        private void LoadHistory()
-        {
-            using (var conn = documentStore.OpenSession())
-            {
-                try
-                {
-                    var items = conn.Query<Request>().ToList();
-                    HistoryViewModel.HistoryRequests.AddRange(items);
-                }
-                catch (Exception ex)
-                {
-                    StatusBarTextBlock = "Error loading history.";
-                    RawResultsTextBox = ex.ToString();
-                }
-            }
         }
 
         #endregion
