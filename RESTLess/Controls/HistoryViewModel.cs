@@ -8,6 +8,8 @@ namespace RESTLess.Controls
 {
     public class HistoryViewModel : PropertyChangedBase
     {
+        private Request selectedItem;
+
         private readonly IDocumentStore documentStore;
 
         private IObservableCollection<Request> historyRequests;
@@ -19,6 +21,16 @@ namespace RESTLess.Controls
             {
                 historyRequests = value;
                 NotifyOfPropertyChange(() => HistoryRequests);
+            }
+        }
+
+        public Request SelectedItem
+        {
+            get { return selectedItem; }
+            set
+            {
+                selectedItem = value;
+                NotifyOfPropertyChange(() => SelectedItem);
             }
         }
 
