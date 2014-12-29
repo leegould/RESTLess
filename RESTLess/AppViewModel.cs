@@ -1,6 +1,8 @@
 ﻿using System;
+using System.ComponentModel;
 using System.ComponentModel.Composition;
 using System.Diagnostics;
+using AutoMapper;
 using Caliburn.Micro;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -34,7 +36,14 @@ namespace RESTLess
 
         #endregion
 
-
+        static AppViewModel()
+        {
+            Mapper.CreateMap<Request, AppViewModel>()
+                //.ForMember(d => d.HeadersDataGrid, o => o.MapFrom(s => s.Headers))
+                .ForMember(d => d.UrlTextBox, o => o.MapFrom(s => s.BaseUrl))
+                ;
+        }
+        
         public AppViewModel(IWindowManager windowManager, IDocumentStore documentStore)
         {
             this.windowManager = windowManager;
@@ -42,8 +51,8 @@ namespace RESTLess
             HeadersDataGrid = new BindableCollection<HttpHeader>();
             MethodViewModel = new MethodViewModel();
             HistoryViewModel = new HistoryViewModel(documentStore);
+            HistoryViewModel.PropertyChanged += LoadRequestFromHistory;
         }
-
 
         #region Properties
 
@@ -122,7 +131,12 @@ namespace RESTLess
 
 
         #region Public Methods
-        
+
+        private void LoadRequestFromHistory(object sender, PropertyChangedEventArgs e)
+        {
+            Mapper.Map(HistoryViewModel.SelectedItem, this);
+        }
+
         public void SendButton()
         {
             var uri = new Uri(UrlTextBox);

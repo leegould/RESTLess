@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Linq;
 using Caliburn.Micro;
 using Raven.Client;
@@ -6,15 +7,15 @@ using RESTLess.Models;
 
 namespace RESTLess.Controls
 {
-    public class HistoryViewModel : PropertyChangedBase
+    public class HistoryViewModel : PropertyChangedBase, INotifyPropertyChanged
     {
         private Request selectedItem;
 
         private readonly IDocumentStore documentStore;
 
-        private IObservableCollection<Request> historyRequests;
+        private BindableCollection<Request> historyRequests;
 
-        public IObservableCollection<Request> HistoryRequests
+        public BindableCollection<Request> HistoryRequests
         {
             get { return historyRequests; }
             set
