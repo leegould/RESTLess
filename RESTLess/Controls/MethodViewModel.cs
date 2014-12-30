@@ -15,7 +15,7 @@ namespace RESTLess.Controls
             getChecked = true; // default.
         }
 
-        protected bool GetChecked
+        public bool GetChecked
         {
             get { return getChecked; }
             set
@@ -26,7 +26,7 @@ namespace RESTLess.Controls
             }
         }
 
-        protected bool PostChecked
+        public bool PostChecked
         {
             get { return postChecked; }
             set
@@ -37,7 +37,7 @@ namespace RESTLess.Controls
             }
         }
 
-        protected bool PutChecked
+        public bool PutChecked
         {
             get { return putChecked; }
             set
@@ -48,7 +48,7 @@ namespace RESTLess.Controls
             }
         }
 
-        protected bool DeleteChecked
+        public bool DeleteChecked
         {
             get { return deleteChecked; }
             set
@@ -59,86 +59,86 @@ namespace RESTLess.Controls
             }
         }
 
-        //public Method Method
-        //{
-        //    get
-        //    {
-        //        if (GetChecked)
-        //        {
-        //            return Method.GET;
-        //        }
-        //        if (PostChecked)
-        //        {
-        //            return Method.POST;
-        //        }
-        //        if (PutChecked)
-        //        {
-        //            return Method.PUT;
-        //        }
-        //        if (DeleteChecked)
-        //        {
-        //            return Method.DELETE;
-        //        }
-        //        return Method.GET;
-        //    }
-        //    set
-        //    {
-        //        switch (value)
-        //        {
-        //            case Method.GET:
-        //                GetChecked = true;
-        //                break;
-        //            case Method.POST:
-        //                PostChecked = true;
-        //                break;
-        //            case Method.PUT:
-        //                PutChecked = true;
-        //                break;
-        //            case Method.DELETE:
-        //                deleteChecked = true;
-        //                break;
-        //        }
-        //    }
-        //}
-
-        public Method GetMethod()
+        public Method Method
         {
-            if (GetChecked)
+            get
             {
+                if (GetChecked)
+                {
+                    return Method.GET;
+                }
+                if (PostChecked)
+                {
+                    return Method.POST;
+                }
+                if (PutChecked)
+                {
+                    return Method.PUT;
+                }
+                if (DeleteChecked)
+                {
+                    return Method.DELETE;
+                }
                 return Method.GET;
             }
-            if (PostChecked)
+            set
             {
-                return Method.POST;
+                switch (value)
+                {
+                    case Method.GET:
+                        GetChecked = true;
+                        break;
+                    case Method.POST:
+                        PostChecked = true;
+                        break;
+                    case Method.PUT:
+                        PutChecked = true;
+                        break;
+                    case Method.DELETE:
+                        deleteChecked = true;
+                        break;
+                }
             }
-            if (PutChecked)
-            {
-                return Method.PUT;
-            }
-            if (DeleteChecked)
-            {
-                return Method.DELETE;
-            }
-            return Method.GET;
         }
 
-        public void SetMethod(Method method)
-        {
-            switch (method)
-            {
-                case Method.GET:
-                    GetChecked = true;
-                    break;
-                case Method.POST:
-                    PostChecked = true;
-                    break;
-                case Method.PUT:
-                    PutChecked = true;
-                    break;
-                case Method.DELETE:
-                    deleteChecked = true;
-                    break;
-            }
-        }
+        //public Method GetMethod()
+        //{
+        //    if (GetChecked)
+        //    {
+        //        return Method.GET;
+        //    }
+        //    if (PostChecked)
+        //    {
+        //        return Method.POST;
+        //    }
+        //    if (PutChecked)
+        //    {
+        //        return Method.PUT;
+        //    }
+        //    if (DeleteChecked)
+        //    {
+        //        return Method.DELETE;
+        //    }
+        //    return Method.GET;
+        //}
+
+        //public void SetMethod(Method method)
+        //{
+        //    switch (method)
+        //    {
+        //        case Method.GET:
+        //            GetChecked = true;
+        //            break;
+        //        case Method.POST:
+        //            PostChecked = true;
+        //            break;
+        //        case Method.PUT:
+        //            PutChecked = true;
+        //            break;
+        //        case Method.DELETE:
+        //            deleteChecked = true;
+        //            break;
+        //    }
+        //}
     }
 }

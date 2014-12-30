@@ -148,14 +148,14 @@ namespace RESTLess
         private void LoadRequestFromHistory(object sender, PropertyChangedEventArgs e)
         {
             Mapper.Map(HistoryViewModel.SelectedItem, this);
-            MethodViewModel.SetMethod((Method)Enum.Parse(typeof(Method), HistoryViewModel.SelectedItem.Method));
+            MethodViewModel.Method = (Method)Enum.Parse(typeof(Method), HistoryViewModel.SelectedItem.Method);
         }
 
         public void SendButton()
         {
             var uri = new Uri(UrlTextBox);
             RestClient client = new RestClient(uri.GetLeftPart(UriPartial.Authority));
-            var method = MethodViewModel.GetMethod();
+            var method = MethodViewModel.Method;
 
             var request = new RestRequest(uri, method);
             

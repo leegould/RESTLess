@@ -53,7 +53,7 @@ namespace RESTLess.Controls
                 }
                 catch (Exception ex)
                 {
-                    // TODO : event aggregator to pass exception messages to main window?
+                    // TODO : pass exception messages to main window?
                     //RawResultsTextBox = ex.ToString();
                 }
             }
