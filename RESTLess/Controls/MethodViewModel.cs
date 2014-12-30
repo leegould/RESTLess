@@ -15,7 +15,7 @@ namespace RESTLess.Controls
             getChecked = true; // default.
         }
 
-        public bool GetChecked
+        protected bool GetChecked
         {
             get { return getChecked; }
             set
@@ -26,7 +26,7 @@ namespace RESTLess.Controls
             }
         }
 
-        public bool PostChecked
+        protected bool PostChecked
         {
             get { return postChecked; }
             set
@@ -37,7 +37,7 @@ namespace RESTLess.Controls
             }
         }
 
-        public bool PutChecked
+        protected bool PutChecked
         {
             get { return putChecked; }
             set
@@ -48,7 +48,7 @@ namespace RESTLess.Controls
             }
         }
 
-        public bool DeleteChecked
+        protected bool DeleteChecked
         {
             get { return deleteChecked; }
             set
@@ -58,6 +58,48 @@ namespace RESTLess.Controls
                 NotifyOfPropertyChange(() => DeleteChecked);
             }
         }
+
+        //public Method Method
+        //{
+        //    get
+        //    {
+        //        if (GetChecked)
+        //        {
+        //            return Method.GET;
+        //        }
+        //        if (PostChecked)
+        //        {
+        //            return Method.POST;
+        //        }
+        //        if (PutChecked)
+        //        {
+        //            return Method.PUT;
+        //        }
+        //        if (DeleteChecked)
+        //        {
+        //            return Method.DELETE;
+        //        }
+        //        return Method.GET;
+        //    }
+        //    set
+        //    {
+        //        switch (value)
+        //        {
+        //            case Method.GET:
+        //                GetChecked = true;
+        //                break;
+        //            case Method.POST:
+        //                PostChecked = true;
+        //                break;
+        //            case Method.PUT:
+        //                PutChecked = true;
+        //                break;
+        //            case Method.DELETE:
+        //                deleteChecked = true;
+        //                break;
+        //        }
+        //    }
+        //}
 
         public Method GetMethod()
         {
@@ -78,6 +120,25 @@ namespace RESTLess.Controls
                 return Method.DELETE;
             }
             return Method.GET;
+        }
+
+        public void SetMethod(Method method)
+        {
+            switch (method)
+            {
+                case Method.GET:
+                    GetChecked = true;
+                    break;
+                case Method.POST:
+                    PostChecked = true;
+                    break;
+                case Method.PUT:
+                    PutChecked = true;
+                    break;
+                case Method.DELETE:
+                    deleteChecked = true;
+                    break;
+            }
         }
     }
 }

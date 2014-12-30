@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.Composition;
 using System.Diagnostics;
@@ -39,11 +40,23 @@ namespace RESTLess
         static AppViewModel()
         {
             Mapper.CreateMap<Request, AppViewModel>()
-                //.ForMember(d => d.HeadersDataGrid, o => o.MapFrom(s => s.Headers))
-                .ForMember(d => d.UrlTextBox, o => o.MapFrom(s => s.BaseUrl))
+                .ForMember(d => d.HeadersDataGrid, o => o.MapFrom(s => CreateHeadersFromDict(s.Headers)))
+                .ForMember(d => d.UrlTextBox, o => o.MapFrom(s => s.BaseUrl + s.Path.Substring(1)))
+                .ForMember(d => d.BodyTextBox, o => o.MapFrom(s => s.Body))
+                //.ForMember(d => d.MethodViewModel.Method, o => o.MapFrom(s => (Method)Enum.Parse(typeof(Method), s.Method)))
                 ;
         }
-        
+
+        private static IObservableCollection<HttpHeader> CreateHeadersFromDict(Dictionary<string, string> dictionary)
+        {
+            var items = new BindableCollection<HttpHeader>();
+            foreach (var item in dictionary)
+            {
+                items.Add(new HttpHeader {Name = item.Key, Value = item.Value});
+            }
+            return items;
+        }
+
         public AppViewModel(IWindowManager windowManager, IDocumentStore documentStore)
         {
             this.windowManager = windowManager;
@@ -135,6 +148,7 @@ namespace RESTLess
         private void LoadRequestFromHistory(object sender, PropertyChangedEventArgs e)
         {
             Mapper.Map(HistoryViewModel.SelectedItem, this);
+            MethodViewModel.SetMethod((Method)Enum.Parse(typeof(Method), HistoryViewModel.SelectedItem.Method));
         }
 
         public void SendButton()
@@ -169,7 +183,7 @@ namespace RESTLess
             {
                 try
                 {
-                    req = new Request(client.BaseUrl.ToString(), request);
+                    req = new Request(client.BaseUrl.ToString(), request, body);
                     conn.Store(req);
                     conn.SaveChanges();
                 }

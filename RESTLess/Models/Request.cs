@@ -10,7 +10,7 @@ namespace RESTLess.Models
         {
         }
 
-        public Request(string baseUrl, RestRequest restRequest)
+        public Request(string baseUrl, RestRequest restRequest, string body)
         {
             When = DateTime.UtcNow;
             BaseUrl = baseUrl;
@@ -22,6 +22,8 @@ namespace RESTLess.Models
             {
                 Headers.Add(param.Name, param.Value.ToString());
             }
+
+            Body = body;
         }
 
         public int Id { get; set; }
@@ -35,5 +37,7 @@ namespace RESTLess.Models
         public string Path { get; set; }
 
         public string Method { get; set; }
+
+        public string Body { get; set; }
     }
 }
