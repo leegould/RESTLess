@@ -41,7 +41,7 @@ namespace RESTLess
         {
             Mapper.CreateMap<Request, AppViewModel>()
                 .ForMember(d => d.HeadersDataGrid, o => o.MapFrom(s => CreateHeadersFromDict(s.Headers)))
-                .ForMember(d => d.UrlTextBox, o => o.MapFrom(s => s.BaseUrl + s.Path.Substring(1)))
+                .ForMember(d => d.UrlTextBox, o => o.MapFrom(s => s.Url + s.Path.Substring(1)))
                 .ForMember(d => d.BodyTextBox, o => o.MapFrom(s => s.Body))
                 //.ForMember(d => d.MethodViewModel.Method, o => o.MapFrom(s => (Method)Enum.Parse(typeof(Method), s.Method)))
                 ;
@@ -183,7 +183,7 @@ namespace RESTLess
             {
                 try
                 {
-                    req = new Request(client.BaseUrl.ToString(), request, body);
+                    req = new Request(client.BaseUrl, request, body);
                     conn.Store(req);
                     conn.SaveChanges();
                 }

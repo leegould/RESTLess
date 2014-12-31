@@ -10,10 +10,10 @@ namespace RESTLess.Models
         {
         }
 
-        public Request(string baseUrl, RestRequest restRequest, string body)
+        public Request(Uri baseUrl, RestRequest restRequest, string body)
         {
             When = DateTime.UtcNow;
-            BaseUrl = baseUrl;
+            Url = baseUrl;
             Path = restRequest.Resource;
             Method = restRequest.Method.ToString();
 
@@ -30,7 +30,15 @@ namespace RESTLess.Models
 
         public DateTime When { get; set; }
 
-        public string BaseUrl { get; set; }
+        public Uri Url { get; set; }
+
+        //public string Scheme
+        //{
+        //    get
+        //    {
+        //        return Url != null ? Url.Scheme : null;
+        //    }
+        //}
 
         public Dictionary<string, string> Headers { get; set; }
 

@@ -59,7 +59,25 @@
                             <TextBlock Text='{Binding Path=Method}' Foreground="White" TextAlignment="Center" HorizontalAlignment="Center" />
                         </Border>
                         <TextBlock Text=" "/>
-                        <TextBlock TextWrapping="Wrap" Text='{Binding Path=BaseUrl}' />
+                        <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
+                            <Image Width="11" Height="15" Margin="0,0,3,0">
+                                <Image.Style>
+                                    <Style TargetType="{x:Type Image}">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Path=Url.Scheme}" Value="http">
+                                                <Setter Property="Image.Source" Value="../Images/http.png"/>
+                                                <Setter Property="ToolTip" Value="HTTP"></Setter>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding Path=Url.Scheme}" Value="https">
+                                                <Setter Property="Image.Source" Value="../Images/https.png"/>
+                                                <Setter Property="ToolTip" Value="HTTPS"></Setter>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Image.Style>
+                            </Image>
+                            <TextBlock TextWrapping="Wrap" Text='{Binding Path=Url.Host}' />
+                        </StackPanel>
                     </WrapPanel>
                     <WrapPanel>
                         <TextBlock Text='{Binding Path=Path}' />
