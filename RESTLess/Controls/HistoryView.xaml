@@ -77,6 +77,40 @@
                                 </Image.Style>
                             </Image>
                             <TextBlock TextWrapping="Wrap" Text='{Binding Path=Url.Host}' />
+                            <TextBlock>
+                                <TextBlock.Style>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Style.Setters>
+                                            <Setter Property="Text" Value=":"></Setter>
+                                        </Style.Setters>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Path=Url.Port}" Value="80">
+                                                <Setter Property="Text" Value=""/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding Path=Url.Port}" Value="443">
+                                                <Setter Property="Text" Value=""/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                            <TextBlock>
+                                <TextBlock.Style>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Style.Setters>
+                                            <Setter Property="Text" Value="{Binding Path=Url.Port}"></Setter>
+                                        </Style.Setters>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Path=Url.Port}" Value="80">
+                                                <Setter Property="Text" Value=""/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding Path=Url.Port}" Value="443">
+                                                <Setter Property="Text" Value=""/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>                            
                         </StackPanel>
                     </WrapPanel>
                     <WrapPanel>
