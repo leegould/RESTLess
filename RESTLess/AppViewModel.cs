@@ -145,12 +145,6 @@ namespace RESTLess
 
         #region Public Methods
 
-        private void LoadRequestFromHistory(object sender, PropertyChangedEventArgs e)
-        {
-            Mapper.Map(HistoryViewModel.SelectedItem, this);
-            MethodViewModel.Method = (Method)Enum.Parse(typeof(Method), HistoryViewModel.SelectedItem.Method);
-        }
-
         public void SendButton()
         {
             var uri = new Uri(UrlTextBox);
@@ -249,6 +243,12 @@ namespace RESTLess
 
 
         #region Private Methods
+
+        private void LoadRequestFromHistory(object sender, PropertyChangedEventArgs e)
+        {
+            Mapper.Map(HistoryViewModel.SelectedItem, this);
+            MethodViewModel.Method = (Method)Enum.Parse(typeof(Method), HistoryViewModel.SelectedItem.Method);
+        }
 
         private void StopSending()
         {

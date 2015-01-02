@@ -100,45 +100,5 @@ namespace RESTLess.Controls
                 }
             }
         }
-
-        //public Method GetMethod()
-        //{
-        //    if (GetChecked)
-        //    {
-        //        return Method.GET;
-        //    }
-        //    if (PostChecked)
-        //    {
-        //        return Method.POST;
-        //    }
-        //    if (PutChecked)
-        //    {
-        //        return Method.PUT;
-        //    }
-        //    if (DeleteChecked)
-        //    {
-        //        return Method.DELETE;
-        //    }
-        //    return Method.GET;
-        //}
-
-        //public void SetMethod(Method method)
-        //{
-        //    switch (method)
-        //    {
-        //        case Method.GET:
-        //            GetChecked = true;
-        //            break;
-        //        case Method.POST:
-        //            PostChecked = true;
-        //            break;
-        //        case Method.PUT:
-        //            PutChecked = true;
-        //            break;
-        //        case Method.DELETE:
-        //            deleteChecked = true;
-        //            break;
-        //    }
-        //}
     }
 }

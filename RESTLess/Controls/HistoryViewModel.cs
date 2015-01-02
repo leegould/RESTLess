@@ -7,7 +7,7 @@ using RESTLess.Models;
 
 namespace RESTLess.Controls
 {
-    public class HistoryViewModel : PropertyChangedBase, INotifyPropertyChanged
+    public class HistoryViewModel : PropertyChangedBase
     {
         private Request selectedItem;
 
