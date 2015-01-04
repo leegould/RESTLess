@@ -96,6 +96,7 @@
       <DependentUpon>HistoryView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\HistoryViewModel.cs" />
+    <Compile Include="Models\Messages\HistorySelectedMessage.cs" />
     <Compile Include="Models\Request.cs" />
     <Compile Include="Models\Response.cs" />
   </ItemGroup>

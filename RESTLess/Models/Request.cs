@@ -8,6 +8,7 @@ namespace RESTLess.Models
     {
         public Request()
         {
+            
         }
 
         public Request(Uri baseUrl, RestRequest restRequest, string body)
@@ -31,14 +32,6 @@ namespace RESTLess.Models
         public DateTime When { get; set; }
 
         public Uri Url { get; set; }
-
-        //public string Scheme
-        //{
-        //    get
-        //    {
-        //        return Url != null ? Url.Scheme : null;
-        //    }
-        //}
 
         public Dictionary<string, string> Headers { get; set; }
 

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.ComponentModel.Composition;
 using System.Diagnostics;
 using AutoMapper;
@@ -11,13 +10,16 @@ using Raven.Client;
 using RestSharp;
 using RESTLess.Controls;
 using RESTLess.Models;
+using RESTLess.Models.Messages;
 
 namespace RESTLess
 {
     [Export(typeof(AppViewModel))]
-    public class AppViewModel : PropertyChangedBase, IApp
+    public class AppViewModel : PropertyChangedBase, IApp, IHandle<HistorySelectedMessage>
     {
         #region Private members
+
+        private readonly IEventAggregator eventAggregator;
 
         private readonly IWindowManager windowManager;
 
@@ -42,9 +44,7 @@ namespace RESTLess
             Mapper.CreateMap<Request, AppViewModel>()
                 .ForMember(d => d.HeadersDataGrid, o => o.MapFrom(s => CreateHeadersFromDict(s.Headers)))
                 .ForMember(d => d.UrlTextBox, o => o.MapFrom(s => s.Url + s.Path.Substring(1)))
-                .ForMember(d => d.BodyTextBox, o => o.MapFrom(s => s.Body))
-                //.ForMember(d => d.MethodViewModel.Method, o => o.MapFrom(s => (Method)Enum.Parse(typeof(Method), s.Method)))
-                ;
+                .ForMember(d => d.BodyTextBox, o => o.MapFrom(s => s.Body));
         }
 
         private static IObservableCollection<HttpHeader> CreateHeadersFromDict(Dictionary<string, string> dictionary)
@@ -57,14 +57,15 @@ namespace RESTLess
             return items;
         }
 
-        public AppViewModel(IWindowManager windowManager, IDocumentStore documentStore)
+        public AppViewModel(IEventAggregator eventAggregator, IWindowManager windowManager, IDocumentStore documentStore)
         {
+            this.eventAggregator = eventAggregator;
+            eventAggregator.Subscribe(this);
             this.windowManager = windowManager;
             this.documentStore = documentStore;
             HeadersDataGrid = new BindableCollection<HttpHeader>();
             MethodViewModel = new MethodViewModel();
-            HistoryViewModel = new HistoryViewModel(documentStore);
-            HistoryViewModel.PropertyChanged += LoadRequestFromHistory;
+            HistoryViewModel = new HistoryViewModel(eventAggregator, documentStore);
         }
 
         #region Properties
@@ -122,7 +123,7 @@ namespace RESTLess
             }
         }
 
-        public bool CanResetButton
+        public bool CanStopButton
         {
             get
             {
@@ -170,7 +171,7 @@ namespace RESTLess
             StatusBarTextBlock = "Sending " + request.Method + " " + client.BaseUrl.ToString().Substring(0, client.BaseUrl.ToString().Length - 1) + request.Resource;
 
             isWaiting = true;
-            NotifyOfPropertyChange(() => CanResetButton);
+            NotifyOfPropertyChange(() => CanStopButton);
 
             Request req = null;
             using (var conn = documentStore.OpenSession())
@@ -232,23 +233,30 @@ namespace RESTLess
                 });
         }
 
-        public void ResetButton()
+        public void StopButton()
         {
             StopSending();
             StatusBarTextBlock = "Cancelled request";
             RawResultsTextBox = string.Empty;
         }
 
+        public void ClearButton()
+        {
+            UrlTextBox = string.Empty;
+            BodyTextBox = string.Empty;
+            HeadersDataGrid.Clear();
+        }
+
+        public void Handle(HistorySelectedMessage historyRequest)
+        {
+            Mapper.Map(historyRequest.Request, this);
+            MethodViewModel.Method = (Method)Enum.Parse(typeof(Method), historyRequest.Request.Method);
+        }
+
         #endregion
 
 
         #region Private Methods
-
-        private void LoadRequestFromHistory(object sender, PropertyChangedEventArgs e)
-        {
-            Mapper.Map(HistoryViewModel.SelectedItem, this);
-            MethodViewModel.Method = (Method)Enum.Parse(typeof(Method), HistoryViewModel.SelectedItem.Method);
-        }
 
         private void StopSending()
         {
@@ -259,7 +267,7 @@ namespace RESTLess
             }
 
             isWaiting = false;
-            NotifyOfPropertyChange(() => CanResetButton);
+            NotifyOfPropertyChange(() => CanStopButton);
             NotifyOfPropertyChange(() => CanSendButton);
         }
 

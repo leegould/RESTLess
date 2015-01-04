@@ -1,17 +1,19 @@
 ﻿using System;
-using System.ComponentModel;
 using System.Linq;
 using Caliburn.Micro;
 using Raven.Client;
 using RESTLess.Models;
+using RESTLess.Models.Messages;
 
 namespace RESTLess.Controls
 {
     public class HistoryViewModel : PropertyChangedBase
     {
-        private Request selectedItem;
+        private readonly IEventAggregator eventAggregator;
 
         private readonly IDocumentStore documentStore;
+        
+        private Request selectedItem;
 
         private BindableCollection<Request> historyRequests;
 
@@ -31,12 +33,14 @@ namespace RESTLess.Controls
             set
             {
                 selectedItem = value;
+                eventAggregator.PublishOnUIThread(new HistorySelectedMessage { Request = value });
                 NotifyOfPropertyChange(() => SelectedItem);
             }
         }
 
-        public HistoryViewModel(IDocumentStore documentStore)
+        public HistoryViewModel(IEventAggregator eventAggregator, IDocumentStore documentStore)
         {
+            this.eventAggregator = eventAggregator;
             this.documentStore = documentStore;
             HistoryRequests = new BindableCollection<Request>();
             LoadHistory();
@@ -53,8 +57,8 @@ namespace RESTLess.Controls
                 }
                 catch (Exception ex)
                 {
-                    // TODO : pass exception messages to main window?
-                    //RawResultsTextBox = ex.ToString();
+                    // TODO : pass exception messages to main window - add to event aggregator
+                    // eventAggregator.PublishOnUIThread(ex); // <- Wrap in a specific exception class
                 }
             }
         }
