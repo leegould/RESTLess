@@ -189,7 +189,7 @@ namespace RESTLess
                     StopSending();
                 }
             }
-            HistoryViewModel.HistoryRequests.Add(req);
+            eventAggregator.PublishOnUIThread(new RequestSavedMessage() { Request = req });
 
             client.ExecuteAsync(request,
                 r =>

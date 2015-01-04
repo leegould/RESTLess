@@ -97,6 +97,7 @@
     </Compile>
     <Compile Include="Controls\HistoryViewModel.cs" />
     <Compile Include="Models\Messages\HistorySelectedMessage.cs" />
+    <Compile Include="Models\Messages\RequestSavedMessage.cs" />
     <Compile Include="Models\Request.cs" />
     <Compile Include="Models\Response.cs" />
   </ItemGroup>

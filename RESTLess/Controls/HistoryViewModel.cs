@@ -7,7 +7,7 @@ using RESTLess.Models.Messages;
 
 namespace RESTLess.Controls
 {
-    public class HistoryViewModel : PropertyChangedBase
+    public class HistoryViewModel : PropertyChangedBase, IHandle<RequestSavedMessage>
     {
         private readonly IEventAggregator eventAggregator;
 
@@ -41,9 +41,15 @@ namespace RESTLess.Controls
         public HistoryViewModel(IEventAggregator eventAggregator, IDocumentStore documentStore)
         {
             this.eventAggregator = eventAggregator;
+            eventAggregator.Subscribe(this);
             this.documentStore = documentStore;
             HistoryRequests = new BindableCollection<Request>();
             LoadHistory();
+        }
+
+        public void Handle(RequestSavedMessage message)
+        {
+            HistoryRequests.Add(message.Request);
         }
 
         private void LoadHistory()
@@ -52,7 +58,7 @@ namespace RESTLess.Controls
             {
                 try
                 {
-                    var items = conn.Query<Request>().ToList();
+                    var items = conn.Query<Request>().Take(20).ToList();
                     HistoryRequests.AddRange(items);
                 }
                 catch (Exception ex)
