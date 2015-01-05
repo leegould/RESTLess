@@ -21,7 +21,10 @@ namespace RESTLess.Models
             Headers = new Dictionary<string, string>();
             foreach (var param in restRequest.Parameters)
             {
-                Headers.Add(param.Name, param.Value.ToString());
+                if (param.Value != null && !Headers.ContainsKey(param.Name))
+                {
+                    Headers.Add(param.Name, param.Value.ToString());
+                }
             }
 
             Body = body;

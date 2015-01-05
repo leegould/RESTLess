@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Windows;
 using Caliburn.Micro;
 using Raven.Client;
 using Raven.Client.Embedded;
+using Raven.Client.Indexes;
 using Raven.Database.Server;
 
 namespace RESTLess
@@ -31,6 +33,8 @@ namespace RESTLess
                 DefaultDatabase = "RESTLess"
             };
             documentStore.Initialize();
+            
+            IndexCreation.CreateIndexesAsync(Assembly.GetExecutingAssembly(), documentStore).Wait();
 
             container.Singleton<IWindowManager, AppWindowManager>();
             container.Singleton<IEventAggregator, EventAggregator>();

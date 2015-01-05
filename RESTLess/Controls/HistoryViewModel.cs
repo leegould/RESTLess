@@ -2,6 +2,8 @@
 using System.Linq;
 using Caliburn.Micro;
 using Raven.Client;
+using Raven.Client.Linq;
+
 using RESTLess.Models;
 using RESTLess.Models.Messages;
 
@@ -9,6 +11,8 @@ namespace RESTLess.Controls
 {
     public class HistoryViewModel : PropertyChangedBase, IHandle<RequestSavedMessage>
     {
+        private const string RequestsIndexName = "Requests/All";
+
         private readonly IEventAggregator eventAggregator;
 
         private readonly IDocumentStore documentStore;
@@ -49,7 +53,7 @@ namespace RESTLess.Controls
 
         public void Handle(RequestSavedMessage message)
         {
-            HistoryRequests.Add(message.Request);
+            HistoryRequests.Insert(0, message.Request);
         }
 
         private void LoadHistory()
@@ -58,7 +62,7 @@ namespace RESTLess.Controls
             {
                 try
                 {
-                    var items = conn.Query<Request>().Take(20).ToList();
+                    var items = conn.Query<Request>().Take(20); // TODO : order by date.
                     HistoryRequests.AddRange(items);
                 }
                 catch (Exception ex)

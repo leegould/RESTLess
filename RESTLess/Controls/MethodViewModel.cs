@@ -1,17 +1,25 @@
-﻿using Caliburn.Micro;
+﻿using System;
+
+using Caliburn.Micro;
 using RestSharp;
+
+using RESTLess.Models.Messages;
 
 namespace RESTLess.Controls
 {
-    public class MethodViewModel : PropertyChangedBase
+    public class MethodViewModel : PropertyChangedBase, IHandle<HistorySelectedMessage>
     {
+        private readonly IEventAggregator eventAggregator;
+        
         private bool getChecked;
         private bool postChecked;
         private bool putChecked;
         private bool deleteChecked;
 
-        public MethodViewModel()
+        public MethodViewModel(IEventAggregator eventAggregator)
         {
+            this.eventAggregator = eventAggregator;
+            eventAggregator.Subscribe(this);
             getChecked = true; // default.
         }
 
@@ -22,6 +30,10 @@ namespace RESTLess.Controls
             {
                 if (value.Equals(getChecked)) return;
                 getChecked = value;
+                if (value)
+                {
+                    eventAggregator.PublishOnUIThread(new MethodSelectedMessage { Method = Method.GET });
+                }
                 NotifyOfPropertyChange(() => GetChecked);
             }
         }
@@ -33,6 +45,10 @@ namespace RESTLess.Controls
             {
                 if (value.Equals(postChecked)) return;
                 postChecked = value;
+                if (value)
+                {
+                    eventAggregator.PublishOnUIThread(new MethodSelectedMessage { Method = Method.POST });
+                }                
                 NotifyOfPropertyChange(() => PostChecked);
             }
         }
@@ -44,6 +60,10 @@ namespace RESTLess.Controls
             {
                 if (value.Equals(putChecked)) return;
                 putChecked = value;
+                if (value)
+                {
+                    eventAggregator.PublishOnUIThread(new MethodSelectedMessage { Method = Method.PUT });
+                }
                 NotifyOfPropertyChange(() => PutChecked);
             }
         }
@@ -55,49 +75,31 @@ namespace RESTLess.Controls
             {
                 if (value.Equals(deleteChecked)) return;
                 deleteChecked = value;
+                if (value)
+                {
+                    eventAggregator.PublishOnUIThread(new MethodSelectedMessage { Method = Method.DELETE });
+                }
                 NotifyOfPropertyChange(() => DeleteChecked);
             }
         }
 
-        public Method Method
+        public void Handle(HistorySelectedMessage message)
         {
-            get
+            var method = (Method)Enum.Parse(typeof(Method), message.Request.Method);
+            switch (method)
             {
-                if (GetChecked)
-                {
-                    return Method.GET;
-                }
-                if (PostChecked)
-                {
-                    return Method.POST;
-                }
-                if (PutChecked)
-                {
-                    return Method.PUT;
-                }
-                if (DeleteChecked)
-                {
-                    return Method.DELETE;
-                }
-                return Method.GET;
-            }
-            set
-            {
-                switch (value)
-                {
-                    case Method.GET:
-                        GetChecked = true;
-                        break;
-                    case Method.POST:
-                        PostChecked = true;
-                        break;
-                    case Method.PUT:
-                        PutChecked = true;
-                        break;
-                    case Method.DELETE:
-                        deleteChecked = true;
-                        break;
-                }
+                case Method.GET:
+                    GetChecked = true;
+                    break;
+                case Method.POST:
+                    PostChecked = true;
+                    break;
+                case Method.PUT:
+                    PutChecked = true;
+                    break;
+                case Method.DELETE:
+                    DeleteChecked = true;
+                    break;
             }
         }
     }

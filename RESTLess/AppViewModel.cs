@@ -15,7 +15,7 @@ using RESTLess.Models.Messages;
 namespace RESTLess
 {
     [Export(typeof(AppViewModel))]
-    public class AppViewModel : PropertyChangedBase, IApp, IHandle<HistorySelectedMessage>
+    public class AppViewModel : PropertyChangedBase, IApp, IHandle<HistorySelectedMessage>, IHandle<MethodSelectedMessage>
     {
         #region Private members
 
@@ -36,6 +36,8 @@ namespace RESTLess
         private bool isWaiting;
         
         private Stopwatch stopWatch;
+
+        private Method selectedMethod;
 
         #endregion
 
@@ -64,8 +66,9 @@ namespace RESTLess
             this.windowManager = windowManager;
             this.documentStore = documentStore;
             HeadersDataGrid = new BindableCollection<HttpHeader>();
-            MethodViewModel = new MethodViewModel();
+            MethodViewModel = new MethodViewModel(eventAggregator);
             HistoryViewModel = new HistoryViewModel(eventAggregator, documentStore);
+            selectedMethod = Method.GET;
         }
 
         #region Properties
@@ -150,7 +153,7 @@ namespace RESTLess
         {
             var uri = new Uri(UrlTextBox);
             RestClient client = new RestClient(uri.GetLeftPart(UriPartial.Authority));
-            var method = MethodViewModel.Method;
+            var method = selectedMethod;
 
             var request = new RestRequest(uri, method);
             
@@ -160,7 +163,7 @@ namespace RESTLess
                 request.AddHeader(header.Name, header.Value);
             }
 
-            if (method == Method.POST || method == Method.PUT)
+            if (method == Method.POST || method == Method.PUT && !string.IsNullOrWhiteSpace(BodyTextBox))
             {
                 request.AddJsonBody(BodyTextBox);
             }
@@ -189,7 +192,7 @@ namespace RESTLess
                     StopSending();
                 }
             }
-            eventAggregator.PublishOnUIThread(new RequestSavedMessage() { Request = req });
+            eventAggregator.PublishOnUIThread(new RequestSavedMessage { Request = req });
 
             client.ExecuteAsync(request,
                 r =>
@@ -250,11 +253,15 @@ namespace RESTLess
         public void Handle(HistorySelectedMessage historyRequest)
         {
             Mapper.Map(historyRequest.Request, this);
-            MethodViewModel.Method = (Method)Enum.Parse(typeof(Method), historyRequest.Request.Method);
+            //MethodViewModel.Method = (Method)Enum.Parse(typeof(Method), historyRequest.Request.Method);
+        }
+
+        public void Handle(MethodSelectedMessage message)
+        {
+            selectedMethod = message.Method;
         }
 
         #endregion
-
 
         #region Private Methods
 
