@@ -100,7 +100,9 @@
                         </DataGrid.Columns>
                     </DataGrid>
 
-                    <TextBox Name="BodyTextBox" TextWrapping="Wrap" AcceptsReturn="True" Height="Auto" Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="3"></TextBox>
+                    <StackPanel x:Name="BodyIsVisible" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="4">
+                        <TextBox Name="BodyTextBox" TextWrapping="Wrap" AcceptsReturn="True" Height="Auto" BorderThickness="1" BorderBrush="SlateGray"></TextBox>
+                    </StackPanel>
                     
                     <Button Name="ClearButton" Margin="2" Content="Clear" Grid.Column="0" Grid.Row="4"></Button>
                     <Button Name="StopButton" Margin="2" Content="Stop" Grid.Column="2" Grid.Row="4"></Button>

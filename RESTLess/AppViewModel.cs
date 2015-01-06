@@ -39,6 +39,8 @@ namespace RESTLess
 
         private Method selectedMethod;
 
+        private bool bodyIsVisible;
+
         #endregion
 
         static AppViewModel()
@@ -69,6 +71,7 @@ namespace RESTLess
             MethodViewModel = new MethodViewModel(eventAggregator);
             HistoryViewModel = new HistoryViewModel(eventAggregator, documentStore);
             selectedMethod = Method.GET;
+            BodyIsVisible = false;
         }
 
         #region Properties
@@ -141,6 +144,20 @@ namespace RESTLess
             {
                 statusBarTextBlock = value;
                 NotifyOfPropertyChange(() => StatusBarTextBlock);
+            }
+        }
+
+        public bool BodyIsVisible
+        {
+            get { return bodyIsVisible; }
+            set
+            {
+                bodyIsVisible = value;
+                if (!bodyIsVisible)
+                {
+                    BodyTextBox = string.Empty;
+                }
+                NotifyOfPropertyChange(() => BodyIsVisible);
             }
         }
 
@@ -259,6 +276,7 @@ namespace RESTLess
         public void Handle(MethodSelectedMessage message)
         {
             selectedMethod = message.Method;
+            BodyIsVisible = message.Method == Method.POST || message.Method == Method.PUT;
         }
 
         #endregion
