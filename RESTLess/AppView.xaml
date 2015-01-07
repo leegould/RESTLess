@@ -110,15 +110,37 @@
 
                 </Grid>
 
+                <Separator Height="1" HorizontalAlignment="Stretch" Width="Auto" DockPanel.Dock="Top" Background="Black"></Separator>
+            
                 <Grid MinHeight="200" VerticalAlignment="Stretch" DockPanel.Dock="Top">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
+                        <RowDefinition Height="25"></RowDefinition>
                         <RowDefinition Height="*"></RowDefinition>
                     </Grid.RowDefinitions>
-                    <ScrollViewer VerticalScrollBarVisibility="Auto">
-                        <TextBox IsReadOnly="True" Name="RawResultsTextBox" Background="LightGray" Grid.Column="0" Grid.Row="0" VerticalAlignment="Stretch"></TextBox>
+                    <Grid Grid.Column="0" Grid.Row="0" >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="2*"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Viewbox Grid.Column="0" Stretch="Fill" Margin="1,0,1,1">
+                            <TextBlock Name="ResponseStatusTextBlock" Background="LightGray" MinWidth="1"/>
+                        </Viewbox>
+                        <Viewbox Grid.Column="1" Stretch="Fill" Margin="1,0,1,1">
+                            <TextBlock Name="ResponseWhenTextBlock" Background="LightGray" MinWidth="1"/>
+                        </Viewbox>
+                        <Viewbox Grid.Column="2" Stretch="Fill" Margin="1,0,1,1">
+                            <TextBlock Name="ResponseElapsedTextBlock" Background="LightGray" MinWidth="1"/>
+                        </Viewbox>
+                    </Grid>
+                    <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Column="0" Grid.Row="1">
+                        <TextBox IsReadOnly="True" Name="RawResultsTextBox" Background="LightGray" VerticalAlignment="Stretch"></TextBox>
                     </ScrollViewer>
                 </Grid>
 

@@ -29,6 +29,10 @@ namespace RESTLess
         private string url;
         private string body;
 
+        private string responseStatusTextBlock;
+        private string responseWhenTextBlock;
+        private string responseElapsedTextBlock;
+
         private IObservableCollection<HttpHeader> headers;
 
         private string statusBarTextBlock;
@@ -110,7 +114,46 @@ namespace RESTLess
                 NotifyOfPropertyChange(() => RawResultsTextBox);
             }
         }
-        
+
+        public string ResponseStatusTextBlock
+        {
+            get
+            {
+                return responseStatusTextBlock;
+            }
+            set
+            {
+                responseStatusTextBlock = value;
+                NotifyOfPropertyChange(() => ResponseStatusTextBlock);
+            }
+        }
+
+        public string ResponseWhenTextBlock
+        {
+            get
+            {
+                return responseWhenTextBlock;
+            }
+            set
+            {
+                responseWhenTextBlock = value;
+                NotifyOfPropertyChange(() => ResponseWhenTextBlock);
+            }
+        }
+
+        public string ResponseElapsedTextBlock
+        {
+            get
+            {
+                return responseElapsedTextBlock;
+            }
+            set
+            {
+                responseElapsedTextBlock = value;
+                NotifyOfPropertyChange(() => ResponseElapsedTextBlock);
+            }
+        }
+
         public IObservableCollection<HttpHeader> HeadersDataGrid
         {
             get { return headers; }
@@ -223,6 +266,9 @@ namespace RESTLess
                         {
                             var json = JObject.Parse(r.Content);
                             RawResultsTextBox = json.ToString(Formatting.Indented);
+                            ResponseElapsedTextBlock = stopWatch.ElapsedMilliseconds.ToString() + " ms.";
+                            ResponseStatusTextBlock = r.ResponseStatus.ToString();
+                            ResponseWhenTextBlock = DateTime.UtcNow.ToString();
                         }
                         catch (Exception ex)
                         {
@@ -258,6 +304,9 @@ namespace RESTLess
             StopSending();
             StatusBarTextBlock = "Cancelled request";
             RawResultsTextBox = string.Empty;
+            ResponseElapsedTextBlock = string.Empty;
+            ResponseStatusTextBlock = string.Empty;
+            ResponseWhenTextBlock = string.Empty;
         }
 
         public void ClearButton()
