@@ -13,7 +13,6 @@ namespace RESTLess
     public class AppBootstrapper : BootstrapperBase
     {
         private SimpleContainer container;
-        //private CompositionContainer container;
 
         public AppBootstrapper() 
         {

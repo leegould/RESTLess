@@ -267,7 +267,7 @@ namespace RESTLess
                             var json = JObject.Parse(r.Content);
                             RawResultsTextBox = json.ToString(Formatting.Indented);
                             ResponseElapsedTextBlock = stopWatch.ElapsedMilliseconds.ToString() + " ms.";
-                            ResponseStatusTextBlock = r.ResponseStatus.ToString();
+                            ResponseStatusTextBlock = (int)r.StatusCode + " " + r.StatusCode.ToString();
                             ResponseWhenTextBlock = DateTime.UtcNow.ToString();
                         }
                         catch (Exception ex)
