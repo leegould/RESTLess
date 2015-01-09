@@ -17,35 +17,31 @@
         </StatusBar>
 
         <Grid DockPanel.Dock="Top">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="250"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="250"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
 
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
 
-        <StackPanel DockPanel.Dock="Left" MinHeight="300" Background="Gray" Grid.Column="0" Grid.Row="0" VerticalAlignment="Stretch">
+            <TabControl Background="Gray" Grid.Column="0" Grid.Row="0" Padding="0">
 
-                <TabControl>
-
-                    <TabItem>
-                        <TabItem.Header>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="History" Foreground="DarkSlateGray" />
-                            </StackPanel>
-                        </TabItem.Header>
-                        <ContentControl x:Name="HistoryViewModel"></ContentControl>
-                    </TabItem>
+                <TabItem>
+                    <TabItem.Header>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="History" Foreground="DarkSlateGray" />
+                        </StackPanel>
+                    </TabItem.Header>
+                    <ContentControl x:Name="HistoryViewModel"> </ContentControl>
+                </TabItem>
                     
-                </TabControl>
+            </TabControl>
 
-            </StackPanel>
-
-        <GridSplitter Grid.Column="0" Width="2" HorizontalAlignment="Right" VerticalAlignment="Stretch" ResizeBehavior="CurrentAndNext"/>
+            <GridSplitter Grid.Column="0" Width="2" HorizontalAlignment="Right" VerticalAlignment="Stretch" ResizeBehavior="CurrentAndNext"/>
         
-        <DockPanel Grid.Column="1" Grid.Row="0" VerticalAlignment="Stretch">
+            <DockPanel Grid.Column="1" Grid.Row="0" VerticalAlignment="Stretch">
 
                 <Grid DockPanel.Dock="Top">
                     
