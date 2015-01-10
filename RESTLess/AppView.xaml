@@ -6,7 +6,7 @@
              xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity" 
              xmlns:cal="http://www.caliburnproject.org"
              mc:Ignorable="d" 
-             d:DesignHeight="400" d:DesignWidth="600">
+             d:DesignHeight="600" d:DesignWidth="800">
 
     <DockPanel Background="DarkGray">
 
@@ -96,8 +96,31 @@
                         </DataGrid.Columns>
                     </DataGrid>
 
-                    <StackPanel x:Name="BodyIsVisible" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="4">
-                        <TextBox Name="BodyTextBox" TextWrapping="Wrap" AcceptsReturn="True" Height="Auto" BorderThickness="1" BorderBrush="SlateGray"></TextBox>
+                    <StackPanel x:Name="BodyIsVisible" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="4" CanHorizontallyScroll="True" CanVerticallyScroll="True">
+                        <TextBox Name="BodyTextBox" MinHeight="100" TextWrapping="Wrap" AcceptsReturn="True" Height="Auto" BorderThickness="1" BorderBrush="SlateGray">
+                            <TextBox.Style>
+                                <Style TargetType="TextBox" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+                                    <Style.Resources>
+                                        <VisualBrush x:Key="CueBannerBrush" AlignmentX="Center" AlignmentY="Center" Stretch="None">
+                                            <VisualBrush.Visual>
+                                                <Label Content="Request Body" Foreground="Gray" Opacity="75" FontSize="20"/>
+                                            </VisualBrush.Visual>
+                                        </VisualBrush>
+                                    </Style.Resources>
+                                    <Style.Triggers>
+                                        <Trigger Property="Text" Value="{x:Static sys:String.Empty}">
+                                            <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
+                                        </Trigger>
+                                        <Trigger Property="Text" Value="{x:Null}">
+                                            <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
+                                        </Trigger>
+                                        <Trigger Property="IsKeyboardFocused" Value="True">
+                                            <Setter Property="Background" Value="White" />
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBox.Style>
+                        </TextBox>
                     </StackPanel>
                     
                     <Button Name="ClearButton" Margin="2" Content="Clear" Grid.Column="0" Grid.Row="4"></Button>
@@ -105,6 +128,8 @@
                     <Button Name="SendButton" Margin="2" Content="Send" Grid.Column="3" Grid.Row="4"></Button>
 
                 </Grid>
+
+                <!--<GridSplitter Grid.Column="0" Grid.Row="0" Width="2" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" ResizeBehavior="CurrentAndNext"/>-->
 
                 <Separator Height="1" HorizontalAlignment="Stretch" Width="Auto" DockPanel.Dock="Top" Background="Black"></Separator>
             
@@ -139,11 +164,11 @@
                         <TextBox IsReadOnly="True" Name="RawResultsTextBox" Background="LightGray" VerticalAlignment="Stretch"></TextBox>
                     </ScrollViewer>
                 </Grid>
-
-            </DockPanel>
         
-        </Grid>
+            </DockPanel>
 
+        </Grid>
+            
     </DockPanel>
 
 </UserControl>
