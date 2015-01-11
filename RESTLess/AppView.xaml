@@ -8,13 +8,14 @@
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="800">
 
-    <DockPanel Background="DarkGray">
-
+    <DockPanel>
         <StatusBar MaxHeight="25" DockPanel.Dock="Bottom">
             <StatusBarItem>
                 <TextBlock x:Name="StatusBarTextBlock">Test</TextBlock>
             </StatusBarItem>
         </StatusBar>
+        
+    <Grid Background="DarkGray" DockPanel.Dock="Top">
 
         <Grid DockPanel.Dock="Top">
             <Grid.ColumnDefinitions>
@@ -41,69 +42,44 @@
 
             <GridSplitter Grid.Column="0" Width="2" HorizontalAlignment="Right" VerticalAlignment="Stretch" ResizeBehavior="CurrentAndNext"/>
         
-            <DockPanel Grid.Column="1" Grid.Row="0" VerticalAlignment="Stretch">
+            <!--<DockPanel Grid.Column="1" Grid.Row="0" VerticalAlignment="Stretch">-->
 
-                <Grid DockPanel.Dock="Top">
+            <Grid Grid.Column="1" Grid.Row="0" Background="LightGray">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="225"/>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <StackPanel Grid.Column="0" Grid.Row="0">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                        </Grid.RowDefinitions>
+
+                        <ContentControl Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="0" x:Name="MethodViewModel"></ContentControl>
                     
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"></ColumnDefinition>
-                        <ColumnDefinition Width="*"></ColumnDefinition>
-                        <ColumnDefinition Width="*"></ColumnDefinition>
-                        <ColumnDefinition Width="*"></ColumnDefinition>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*"></RowDefinition>
-                        <RowDefinition Height="*"></RowDefinition>
-                        <RowDefinition Height="*"></RowDefinition>
-                        <RowDefinition Height="*"></RowDefinition>
-                        <RowDefinition Height="*"></RowDefinition>
-                    </Grid.RowDefinitions>
-
-                    <ContentControl Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="0" x:Name="MethodViewModel"></ContentControl>
-                    
-                    <TextBox FontSize="20" Name="UrlTextBox" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4" HorizontalAlignment="Stretch">
-                        <TextBox.Style>
-                            <Style TargetType="TextBox" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-                                <Style.Resources>
-                                    <VisualBrush x:Key="CueBannerBrush" AlignmentX="Left" AlignmentY="Center" Stretch="None">
-                                        <VisualBrush.Visual>
-                                            <Label Content="URL" Foreground="Gray" Opacity="75"/>
-                                        </VisualBrush.Visual>
-                                    </VisualBrush>
-                                </Style.Resources>
-                                <Style.Triggers>
-                                    <Trigger Property="Text" Value="{x:Static sys:String.Empty}">
-                                        <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
-                                    </Trigger>
-                                    <Trigger Property="Text" Value="{x:Null}">
-                                        <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
-                                    </Trigger>
-                                    <Trigger Property="IsKeyboardFocused" Value="True">
-                                        <Setter Property="Background" Value="White" />
-                                    </Trigger>
-                                </Style.Triggers>
-                            </Style>
-                        </TextBox.Style>
-                    </TextBox>
-
-                    <DataGrid x:Name="HeadersDataGrid" AutoGenerateColumns="False" RowHeaderWidth="0" HorizontalAlignment="Stretch"
-                        CanUserAddRows="True" MinColumnWidth="150" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="4" HorizontalScrollBarVisibility="Hidden">
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Binding="{Binding Path=Name}" Header="Header" Width="*">
-                            </DataGridTextColumn>
-                            <DataGridTextColumn Binding="{Binding Path=Value}" Header="Value" Width="*">
-                            </DataGridTextColumn>
-                        </DataGrid.Columns>
-                    </DataGrid>
-
-                    <StackPanel x:Name="BodyIsVisible" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="4" CanHorizontallyScroll="True" CanVerticallyScroll="True">
-                        <TextBox Name="BodyTextBox" MinHeight="100" TextWrapping="Wrap" AcceptsReturn="True" Height="Auto" BorderThickness="1" BorderBrush="SlateGray">
+                        <TextBox FontSize="20" Name="UrlTextBox" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4" HorizontalAlignment="Stretch">
                             <TextBox.Style>
                                 <Style TargetType="TextBox" xmlns:sys="clr-namespace:System;assembly=mscorlib">
                                     <Style.Resources>
-                                        <VisualBrush x:Key="CueBannerBrush" AlignmentX="Center" AlignmentY="Center" Stretch="None">
+                                        <VisualBrush x:Key="CueBannerBrush" AlignmentX="Left" AlignmentY="Center" Stretch="None">
                                             <VisualBrush.Visual>
-                                                <Label Content="Request Body" Foreground="Gray" Opacity="75" FontSize="20"/>
+                                                <Label Content="URL" Foreground="Gray" Opacity="75"/>
                                             </VisualBrush.Visual>
                                         </VisualBrush>
                                     </Style.Resources>
@@ -121,54 +97,90 @@
                                 </Style>
                             </TextBox.Style>
                         </TextBox>
-                    </StackPanel>
+
+                        <DataGrid x:Name="HeadersDataGrid" AutoGenerateColumns="False" RowHeaderWidth="0" HorizontalAlignment="Stretch"
+                            CanUserAddRows="True" MinColumnWidth="150" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="4" HorizontalScrollBarVisibility="Hidden">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Binding="{Binding Path=Name}" Header="Header" Width="*">
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Binding="{Binding Path=Value}" Header="Value" Width="*">
+                                </DataGridTextColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+
+                        <StackPanel x:Name="BodyIsVisible" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="4" CanHorizontallyScroll="True" CanVerticallyScroll="True">
+                            <TextBox Name="BodyTextBox" MinHeight="100" TextWrapping="Wrap" AcceptsReturn="True" Height="Auto" BorderThickness="1" BorderBrush="SlateGray">
+                                <TextBox.Style>
+                                    <Style TargetType="TextBox" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+                                        <Style.Resources>
+                                            <VisualBrush x:Key="CueBannerBrush" AlignmentX="Center" AlignmentY="Center" Stretch="None">
+                                                <VisualBrush.Visual>
+                                                    <Label Content="Request Body" Foreground="Gray" Opacity="75" FontSize="20"/>
+                                                </VisualBrush.Visual>
+                                            </VisualBrush>
+                                        </Style.Resources>
+                                        <Style.Triggers>
+                                            <Trigger Property="Text" Value="{x:Static sys:String.Empty}">
+                                                <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
+                                            </Trigger>
+                                            <Trigger Property="Text" Value="{x:Null}">
+                                                <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
+                                            </Trigger>
+                                            <Trigger Property="IsKeyboardFocused" Value="True">
+                                                <Setter Property="Background" Value="White" />
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBox.Style>
+                            </TextBox>
+                        </StackPanel>
                     
-                    <Button Name="ClearButton" Margin="2" Content="Clear" Grid.Column="0" Grid.Row="4"></Button>
-                    <Button Name="StopButton" Margin="2" Content="Stop" Grid.Column="2" Grid.Row="4"></Button>
-                    <Button Name="SendButton" Margin="2" Content="Send" Grid.Column="3" Grid.Row="4"></Button>
+                        <Button Name="ClearButton" Margin="2" Content="Clear" Grid.Column="0" Grid.Row="4"></Button>
+                        <Button Name="StopButton" Margin="2" Content="Stop" Grid.Column="2" Grid.Row="4"></Button>
+                        <Button Name="SendButton" Margin="2" Content="Send" Grid.Column="3" Grid.Row="4"></Button>
 
-                </Grid>
+                    </Grid>
+                </StackPanel>
+                
+                <GridSplitter Grid.Column="0" Grid.Row="1" Width="Auto" Height="2" HorizontalAlignment="Stretch" VerticalAlignment="Center" ResizeBehavior="PreviousAndNext"/>
 
-                <!--<GridSplitter Grid.Column="0" Grid.Row="0" Width="2" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" ResizeBehavior="CurrentAndNext"/>-->
-
-                <Separator Height="1" HorizontalAlignment="Stretch" Width="Auto" DockPanel.Dock="Top" Background="Black"></Separator>
-            
-                <Grid MinHeight="200" VerticalAlignment="Stretch" DockPanel.Dock="Top">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"></ColumnDefinition>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="25"></RowDefinition>
-                        <RowDefinition Height="*"></RowDefinition>
-                    </Grid.RowDefinitions>
-                    <Grid Grid.Column="0" Grid.Row="0" >
+                <!--<StackPanel Grid.Column="0" Grid.Row="2" Height="Auto" HorizontalAlignment="Stretch">-->
+                    <Grid MinHeight="200" Grid.Column="0" Grid.Row="2">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"></ColumnDefinition>
-                            <ColumnDefinition Width="2*"></ColumnDefinition>
                             <ColumnDefinition Width="*"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
+                            <RowDefinition Height="25"></RowDefinition>
                             <RowDefinition Height="*"></RowDefinition>
                         </Grid.RowDefinitions>
-                        <WrapPanel Grid.Column="0" Background="LightGray" Margin="1,0,1,1">
-                            <TextBlock Name="ResponseStatusTextBlock" Background="LightGray" Margin="5" />
-                        </WrapPanel>
-                        <WrapPanel Orientation="Horizontal" Grid.Column="1" Background="LightGray" Margin="1,0,1,1">
-                            <TextBlock Name="ResponseWhenTextBlock" Background="LightGray" Margin="5"/>
-                        </WrapPanel>
-                        <WrapPanel Orientation="Horizontal" Grid.Column="2" Background="LightGray" Margin="1,0,1,1">
-                            <TextBlock Name="ResponseElapsedTextBlock" Background="LightGray" Margin="5"/>
-                        </WrapPanel>
+                        <Grid Grid.Column="0" Grid.Row="0" >
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="2*"></ColumnDefinition>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <WrapPanel Grid.Column="0" Background="DarkGray" Margin="1,0,1,1">
+                                <TextBlock Name="ResponseStatusTextBlock" Background="DarkGray" Margin="5" />
+                            </WrapPanel>
+                            <WrapPanel Orientation="Horizontal" Grid.Column="1" Background="DarkGray" Margin="1,0,1,1">
+                                <TextBlock Name="ResponseWhenTextBlock" Background="DarkGray" Margin="5"/>
+                            </WrapPanel>
+                            <WrapPanel Orientation="Horizontal" Grid.Column="2" Background="DarkGray" Margin="1,0,1,1">
+                                <TextBlock Name="ResponseElapsedTextBlock" Background="DarkGray" Margin="5"/>
+                            </WrapPanel>
+                        </Grid>
+                        <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Column="0" Grid.Row="1" VerticalAlignment="Stretch">
+                            <TextBox IsReadOnly="True" Name="RawResultsTextBox" Background="DarkGray" VerticalAlignment="Stretch"></TextBox>
+                        </ScrollViewer>
                     </Grid>
-                    <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Column="0" Grid.Row="1">
-                        <TextBox IsReadOnly="True" Name="RawResultsTextBox" Background="LightGray" VerticalAlignment="Stretch"></TextBox>
-                    </ScrollViewer>
-                </Grid>
-        
-            </DockPanel>
+                <!--</StackPanel>-->
+            </Grid>
 
         </Grid>
             
+    </Grid>
     </DockPanel>
-
 </UserControl>
