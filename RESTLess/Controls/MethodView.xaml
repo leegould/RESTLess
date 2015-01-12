@@ -7,38 +7,6 @@
              d:DesignHeight="25" d:DesignWidth="300">
     <Grid MinWidth="300" MinHeight="25">
         <Grid.Resources>
-            <!-- Brushes for colours/backgrounds -->
-            <SolidColorBrush x:Key="FontBrush" Color="#FFFFFF"/>
-
-            <LinearGradientBrush x:Key="BgRedBrush" StartPoint="0,0" EndPoint="0,1">
-                <GradientStop Offset="0" Color="#DD6666"/>
-                <GradientStop Offset="1" Color="#DD0000"/>
-            </LinearGradientBrush>
-
-            <LinearGradientBrush x:Key="BgBlueBrush" StartPoint="0,0" EndPoint="0,1">
-                <GradientStop Offset="0" Color="#6666DD"/>
-                <GradientStop Offset="1" Color="#0000DD"/>
-            </LinearGradientBrush>
-
-            <LinearGradientBrush x:Key="BgYellowBrush" StartPoint="0,0" EndPoint="0,1">
-                <GradientStop Offset="0" Color="#BBBB00"/>
-                <GradientStop Offset="1" Color="#DDDD00"/>
-            </LinearGradientBrush>
-
-            <LinearGradientBrush x:Key="BgGreenBrush" StartPoint="0,0" EndPoint="0,1">
-                <GradientStop Offset="0" Color="#66DD66"/>
-                <GradientStop Offset="1" Color="#00DD00"/>
-            </LinearGradientBrush>
-
-            <SolidColorBrush x:Key="RedBrush" Color="#ff0000"/>
-            <SolidColorBrush x:Key="BlueBrush" Color="#0000ff"/>
-            <SolidColorBrush x:Key="GreenBrush" Color="#00ff00"/>
-            <SolidColorBrush x:Key="YellowBrush" Color="#ffff00"/>
-
-            <LinearGradientBrush x:Key="CheckedBrush" StartPoint="0,0" EndPoint="0,1">
-                <GradientStop Offset="0" Color="#CCCCCC"/>
-                <GradientStop Offset="1" Color="#999999"/>
-            </LinearGradientBrush>
 
             <!-- Left Button Template -->
             <ControlTemplate x:Key="ToggleButtonLeft" TargetType="{x:Type ToggleButton}">

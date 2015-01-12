@@ -6,9 +6,15 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
+                
+                <!-- Bootstrapper -->
                 <ResourceDictionary>
-                    <wpf:AppBootstrapper x:Key="Bootstrapper" />
+                    <wpf:AppBootstrapper x:Key="Bootstrapper"/>
                 </ResourceDictionary>
+
+                <!-- Common Brushes and styles -->
+                <ResourceDictionary Source="Assets/CommonResources.xaml" />
+                
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
