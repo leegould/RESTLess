@@ -162,10 +162,10 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\https.png" />
+    <Resource Include="Assets\Images\https.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\http.png" />
+    <Resource Include="Assets\Images\http.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\AutoMapper.3.3.0\tools\AutoMapper.targets" Condition="Exists('..\packages\AutoMapper.3.3.0\tools\AutoMapper.targets')" />
