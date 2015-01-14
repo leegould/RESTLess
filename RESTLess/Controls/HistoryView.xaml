@@ -6,97 +6,92 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <ListBox x:Name="HistoryRequests" ItemsSource="{Binding HistoryRequests}" 
-             SelectedItem="{Binding SelectedItem, Mode=TwoWay}">
+             SelectedItem="{Binding SelectedItem, Mode=TwoWay}" HorizontalContentAlignment="Stretch">
 
         <ListBox.ItemTemplate>
             <DataTemplate>
-                <StackPanel>
-                    <WrapPanel>
-                        <!--<TextBlock Text='{Binding Path=Id}' />
-                        <TextBlock Text=" "/>-->
-                        <Border BorderThickness="0" BorderBrush="White" CornerRadius="5">
-                            <Border.Style>
-                                <Style TargetType="Border">
-                                    <Setter Property="MinWidth" Value="40"/>
-                                    <Setter Property="MinHeight" Value="18" />
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding Path=Method}" Value="GET">
-                                            <Setter Property="Background" Value="{StaticResource BgBlueBrush}"/>
-                                        </DataTrigger>
-                                        <DataTrigger Binding="{Binding Path=Method}" Value="POST">
-                                            <Setter Property="Background" Value="{StaticResource BgGreenBrush}"/>
-                                        </DataTrigger>
-                                        <DataTrigger Binding="{Binding Path=Method}" Value="PUT">
-                                            <Setter Property="Background" Value="{StaticResource BgYellowBrush}"/>
-                                        </DataTrigger>
-                                        <DataTrigger Binding="{Binding Path=Method}" Value="DELETE">
-                                            <Setter Property="Background" Value="{StaticResource BgRedBrush}"/>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Border.Style>
-                            <TextBlock Text='{Binding Path=Method}' Foreground="White" TextAlignment="Center" HorizontalAlignment="Center" />
-                        </Border>
-                        <TextBlock Text=" "/>
-                        <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
-                            <Image Width="11" Height="15" Margin="0,0,3,0">
-                                <Image.Style>
-                                    <Style TargetType="{x:Type Image}">
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding Path=Url.Scheme}" Value="http">
-                                                <Setter Property="Image.Source" Value="../Assets/Images/http.png"/>
-                                                <Setter Property="ToolTip" Value="HTTP"></Setter>
-                                            </DataTrigger>
-                                            <DataTrigger Binding="{Binding Path=Url.Scheme}" Value="https">
-                                                <Setter Property="Image.Source" Value="../Assets/Images/https.png"/>
-                                                <Setter Property="ToolTip" Value="HTTPS"></Setter>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </Image.Style>
-                            </Image>
-                            <TextBlock TextWrapping="Wrap" Text='{Binding Path=Url.Host}' />
-                            <TextBlock>
-                                <TextBlock.Style>
-                                    <Style TargetType="{x:Type TextBlock}">
-                                        <Style.Setters>
-                                            <Setter Property="Text" Value=":"></Setter>
-                                        </Style.Setters>
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding Path=Url.Port}" Value="80">
-                                                <Setter Property="Text" Value=""/>
-                                            </DataTrigger>
-                                            <DataTrigger Binding="{Binding Path=Url.Port}" Value="443">
-                                                <Setter Property="Text" Value=""/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBlock.Style>
-                            </TextBlock>
-                            <TextBlock>
-                                <TextBlock.Style>
-                                    <Style TargetType="{x:Type TextBlock}">
-                                        <Style.Setters>
-                                            <Setter Property="Text" Value="{Binding Path=Url.Port}"></Setter>
-                                        </Style.Setters>
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding Path=Url.Port}" Value="80">
-                                                <Setter Property="Text" Value=""/>
-                                            </DataTrigger>
-                                            <DataTrigger Binding="{Binding Path=Url.Port}" Value="443">
-                                                <Setter Property="Text" Value=""/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBlock.Style>
-                            </TextBlock>                            
-                        </StackPanel>
-                    </WrapPanel>
-                    <WrapPanel>
-                        <TextBlock Text='{Binding Path=Path}' />
-                    </WrapPanel>
-                    <Separator Height="0.5" />
-                </StackPanel>
+                <Border BorderThickness="5 0 0 0">
+                    <Border.Style>
+                        <Style TargetType="Border">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Path=Method}" Value="GET">
+                                    <Setter Property="BorderBrush" Value="{StaticResource BlueBrush}"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Path=Method}" Value="POST">
+                                    <Setter Property="BorderBrush" Value="{StaticResource GreenBrush}"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Path=Method}" Value="PUT">
+                                    <Setter Property="BorderBrush" Value="{StaticResource YellowBrush}"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Path=Method}" Value="DELETE">
+                                    <Setter Property="BorderBrush" Value="{StaticResource RedBrush}"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Border.Style>
+                    <Border BorderThickness="0 0 1 0.5" BorderBrush="DarkGray" Padding="1" HorizontalAlignment="Stretch">
+                    
+                        <WrapPanel MinHeight="20">
+                            <TextBlock Text=" "/>
+                            <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
+                                <Image Width="11" Height="15" Margin="0,0,3,0">
+                                    <Image.Style>
+                                        <Style TargetType="{x:Type Image}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Path=Url.Scheme}" Value="http">
+                                                    <Setter Property="Image.Source" Value="../Assets/Images/http.png"/>
+                                                    <Setter Property="ToolTip" Value="HTTP"></Setter>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding Path=Url.Scheme}" Value="https">
+                                                    <Setter Property="Image.Source" Value="../Assets/Images/https.png"/>
+                                                    <Setter Property="ToolTip" Value="HTTPS"></Setter>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Image.Style>
+                                </Image>
+                                <TextBlock TextWrapping="Wrap" Text='{Binding Path=Url.Host}' />
+                                <TextBlock>
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Style.Setters>
+                                                <Setter Property="Text" Value=":"></Setter>
+                                            </Style.Setters>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Path=Url.Port}" Value="80">
+                                                    <Setter Property="Text" Value=""/>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding Path=Url.Port}" Value="443">
+                                                    <Setter Property="Text" Value=""/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                                <TextBlock>
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Style.Setters>
+                                                <Setter Property="Text" Value="{Binding Path=Url.Port}"></Setter>
+                                            </Style.Setters>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Path=Url.Port}" Value="80">
+                                                    <Setter Property="Text" Value=""/>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding Path=Url.Port}" Value="443">
+                                                    <Setter Property="Text" Value=""/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+
+                                <TextBlock Text='{Binding Path=Path}' />
+                            </StackPanel>
+                        </WrapPanel>
+
+                    </Border>
+                </Border>
             </DataTemplate>
         </ListBox.ItemTemplate>
         <ListBox.ItemsPanel>
