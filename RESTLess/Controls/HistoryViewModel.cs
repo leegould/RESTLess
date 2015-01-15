@@ -62,7 +62,7 @@ namespace RESTLess.Controls
             {
                 try
                 {
-                    var items = conn.Query<Request>().Take(20); // TODO : order by date.
+                    var items = conn.Query<Request>().Take(50).OrderByDescending(x => x.When); // TODO : order by date.
                     HistoryRequests.AddRange(items);
                 }
                 catch (Exception ex)

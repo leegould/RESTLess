@@ -32,6 +32,8 @@
                     <Border BorderThickness="0 0 1 0.5" BorderBrush="DarkGray" Padding="1" HorizontalAlignment="Stretch">
                     
                         <WrapPanel MinHeight="20">
+                            <!--<TextBlock Text='{Binding Path=Id}'/>-->
+
                             <TextBlock Text=" "/>
                             <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
                                 <Image Width="11" Height="15" Margin="0,0,3,0">
