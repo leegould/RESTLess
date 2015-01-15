@@ -56,13 +56,13 @@ namespace RESTLess.Controls
             HistoryRequests.Insert(0, message.Request);
         }
 
-        private void LoadHistory()
+        private async void LoadHistory()
         {
-            using (var conn = documentStore.OpenSession())
+            using (var conn = documentStore.OpenAsyncSession())
             {
                 try
                 {
-                    var items = conn.Query<Request>().Take(50).OrderByDescending(x => x.When); // TODO : order by date.
+                    var items = await conn.Query<Request>(RequestsIndexName).Take(50).OrderByDescending(x => x.When).ToListAsync();
                     HistoryRequests.AddRange(items);
                 }
                 catch (Exception ex)
