@@ -15,6 +15,10 @@ namespace RESTLess.Controls
         private bool postChecked;
         private bool putChecked;
         private bool deleteChecked;
+        private bool patchChecked;
+        private bool headChecked;
+        private bool optionsChecked;
+        private bool mergeChecked;
 
         public MethodViewModel(IEventAggregator eventAggregator)
         {
@@ -83,6 +87,66 @@ namespace RESTLess.Controls
             }
         }
 
+        public bool PatchChecked
+        {
+            get { return patchChecked; }
+            set
+            {
+                if (value.Equals(patchChecked)) return;
+                patchChecked = value;
+                if (value)
+                {
+                    eventAggregator.PublishOnUIThread(new MethodSelectedMessage { Method = Method.PATCH });
+                }
+                NotifyOfPropertyChange(() => PatchChecked);
+            }
+        }
+
+        public bool HeadChecked
+        {
+            get { return headChecked; }
+            set
+            {
+                if (value.Equals(headChecked)) return;
+                headChecked = value;
+                if (value)
+                {
+                    eventAggregator.PublishOnUIThread(new MethodSelectedMessage { Method = Method.HEAD });
+                }
+                NotifyOfPropertyChange(() => HeadChecked);
+            }
+        }
+
+        public bool OptionsChecked
+        {
+            get { return optionsChecked; }
+            set
+            {
+                if (value.Equals(optionsChecked)) return;
+                optionsChecked = value;
+                if (value)
+                {
+                    eventAggregator.PublishOnUIThread(new MethodSelectedMessage { Method = Method.OPTIONS });
+                }
+                NotifyOfPropertyChange(() => OptionsChecked);
+            }
+        }
+
+        public bool MergeChecked
+        {
+            get { return mergeChecked; }
+            set
+            {
+                if (value.Equals(mergeChecked)) return;
+                mergeChecked = value;
+                if (value)
+                {
+                    eventAggregator.PublishOnUIThread(new MethodSelectedMessage { Method = Method.MERGE });
+                }
+                NotifyOfPropertyChange(() => MergeChecked);
+            }
+        }
+
         public void Handle(HistorySelectedMessage message)
         {
             var method = (Method)Enum.Parse(typeof(Method), message.Request.Method);
@@ -99,6 +163,18 @@ namespace RESTLess.Controls
                     break;
                 case Method.DELETE:
                     DeleteChecked = true;
+                    break;
+                case Method.PATCH:
+                    PatchChecked = true;
+                    break;
+                case Method.HEAD:
+                    HeadChecked = true;
+                    break;
+                case Method.OPTIONS:
+                    OptionsChecked = true;
+                    break;
+                case Method.MERGE:
+                    MergeChecked = true;
                     break;
             }
         }

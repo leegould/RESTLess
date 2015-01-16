@@ -15,7 +15,7 @@
                             Background="{StaticResource CheckedBrush}"
                             BorderBrush="{StaticResource BlueBrush}"
                             BorderThickness="1,1,0,1"
-                            CornerRadius="5,0,0,5">
+                            CornerRadius="0">
                     <ContentPresenter
                                 HorizontalAlignment="Center"
                                 Margin="{TemplateBinding Padding}"
@@ -35,7 +35,7 @@
             </ControlTemplate>
 
             <!-- Middle Button(s) Template -->
-            <ControlTemplate x:Key="ToggleButtonMidLeft" TargetType="{x:Type ToggleButton}">
+            <ControlTemplate x:Key="ToggleButtonPost" TargetType="{x:Type ToggleButton}">
                 <Border
                             Name="Border"
                             Background="{StaticResource CheckedBrush}"
@@ -60,7 +60,7 @@
                 </ControlTemplate.Triggers>
             </ControlTemplate>
 
-            <ControlTemplate x:Key="ToggleButtonMidRight" TargetType="{x:Type ToggleButton}">
+            <ControlTemplate x:Key="ToggleButtonPut" TargetType="{x:Type ToggleButton}">
                 <Border
                             Name="Border"
                             Background="{StaticResource CheckedBrush}"
@@ -85,14 +85,13 @@
                 </ControlTemplate.Triggers>
             </ControlTemplate>
 
-            <!-- Right Button Template -->
-            <ControlTemplate x:Key="ToggleButtonRight" TargetType="{x:Type ToggleButton}">
+            <ControlTemplate x:Key="ToggleButtonDelete" TargetType="{x:Type ToggleButton}">
                 <Border
                             Name="Border"
                             Background="{StaticResource CheckedBrush}"
                             BorderBrush="{StaticResource RedBrush}"
-                            BorderThickness="0,1,1,1"
-                            CornerRadius="0, 5, 5, 0">
+                            BorderThickness="0,1,0,1"
+                            CornerRadius="0">
                     <ContentPresenter
                                     HorizontalAlignment="Center"
                                     Margin="{TemplateBinding Padding}"
@@ -110,9 +109,114 @@
                     </Trigger>
                 </ControlTemplate.Triggers>
             </ControlTemplate>
+
+            <ControlTemplate x:Key="ToggleButtonPatch" TargetType="{x:Type ToggleButton}">
+                <Border
+                            Name="Border"
+                            Background="{StaticResource CheckedBrush}"
+                            BorderBrush="{StaticResource PurpleBrush}"
+                            BorderThickness="0,1,0,1"
+                            CornerRadius="0">
+                    <ContentPresenter
+                                    HorizontalAlignment="Center"
+                                    Margin="{TemplateBinding Padding}"
+                                    VerticalAlignment="Center"
+                                    Content="{TemplateBinding Content}"
+                                    TextBlock.FontWeight="Bold"
+                                    TextBlock.Foreground="{StaticResource FontBrush}"/>
+                </Border>
+                <ControlTemplate.Triggers>
+                    <Trigger Property="ToggleButton.IsMouseOver" Value="true">
+                        <Setter TargetName="Border" Property="Background" Value="#808080"/>
+                    </Trigger>
+                    <Trigger Property="IsChecked" Value="true">
+                        <Setter TargetName="Border" Property="Background" Value="{StaticResource BgPurpleBrush}"/>
+                    </Trigger>
+                </ControlTemplate.Triggers>
+            </ControlTemplate>
+
+            <ControlTemplate x:Key="ToggleButtonHead" TargetType="{x:Type ToggleButton}">
+                <Border
+                            Name="Border"
+                            Background="{StaticResource CheckedBrush}"
+                            BorderBrush="{StaticResource GreyBrush}"
+                            BorderThickness="0,1,0,1"
+                            CornerRadius="0">
+                    <ContentPresenter
+                                    HorizontalAlignment="Center"
+                                    Margin="{TemplateBinding Padding}"
+                                    VerticalAlignment="Center"
+                                    Content="{TemplateBinding Content}"
+                                    TextBlock.FontWeight="Bold"
+                                    TextBlock.Foreground="{StaticResource FontBrush}"/>
+                </Border>
+                <ControlTemplate.Triggers>
+                    <Trigger Property="ToggleButton.IsMouseOver" Value="true">
+                        <Setter TargetName="Border" Property="Background" Value="#808080"/>
+                    </Trigger>
+                    <Trigger Property="IsChecked" Value="true">
+                        <Setter TargetName="Border" Property="Background" Value="{StaticResource BgGreyBrush}"/>
+                    </Trigger>
+                </ControlTemplate.Triggers>
+            </ControlTemplate>
+
+            <ControlTemplate x:Key="ToggleButtonOptions" TargetType="{x:Type ToggleButton}">
+                <Border
+                            Name="Border"
+                            Background="{StaticResource CheckedBrush}"
+                            BorderBrush="{StaticResource LBlueBrush}"
+                            BorderThickness="0,1,0,1"
+                            CornerRadius="0">
+                    <ContentPresenter
+                                    HorizontalAlignment="Center"
+                                    Margin="{TemplateBinding Padding}"
+                                    VerticalAlignment="Center"
+                                    Content="{TemplateBinding Content}"
+                                    TextBlock.FontWeight="Bold"
+                                    TextBlock.Foreground="{StaticResource FontBrush}"/>
+                </Border>
+                <ControlTemplate.Triggers>
+                    <Trigger Property="ToggleButton.IsMouseOver" Value="true">
+                        <Setter TargetName="Border" Property="Background" Value="#808080"/>
+                    </Trigger>
+                    <Trigger Property="IsChecked" Value="true">
+                        <Setter TargetName="Border" Property="Background" Value="{StaticResource BgLBlueBrush}"/>
+                    </Trigger>
+                </ControlTemplate.Triggers>
+            </ControlTemplate>
+
+            <!-- Right Button Template -->
+            <ControlTemplate x:Key="ToggleButtonRight" TargetType="{x:Type ToggleButton}">
+                <Border
+                            Name="Border"
+                            Background="{StaticResource CheckedBrush}"
+                            BorderBrush="{StaticResource BrownBrush}"
+                            BorderThickness="0,1,1,1"
+                            CornerRadius="0">
+                    <ContentPresenter
+                                    HorizontalAlignment="Center"
+                                    Margin="{TemplateBinding Padding}"
+                                    VerticalAlignment="Center"
+                                    Content="{TemplateBinding Content}"
+                                    TextBlock.FontWeight="Bold"
+                                    TextBlock.Foreground="{StaticResource FontBrush}"/>
+                </Border>
+                <ControlTemplate.Triggers>
+                    <Trigger Property="ToggleButton.IsMouseOver" Value="true">
+                        <Setter TargetName="Border" Property="Background" Value="#808080"/>
+                    </Trigger>
+                    <Trigger Property="IsChecked" Value="true">
+                        <Setter TargetName="Border" Property="Background" Value="{StaticResource BgBrownBrush}"/>
+                    </Trigger>
+                </ControlTemplate.Triggers>
+            </ControlTemplate>
         </Grid.Resources>
 
         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
             <ColumnDefinition Width="*"></ColumnDefinition>
             <ColumnDefinition Width="*"></ColumnDefinition>
             <ColumnDefinition Width="*"></ColumnDefinition>
@@ -123,9 +227,12 @@
         </Grid.RowDefinitions>
 
         <RadioButton Name="GetChecked" GroupName="RequestMethod" Grid.Row="0" Grid.Column="0" Padding="2" Template="{DynamicResource ToggleButtonLeft}">GET</RadioButton>
-        <RadioButton Name="PostChecked" GroupName="RequestMethod" Grid.Row="0" Grid.Column="1" Padding="2" Template="{DynamicResource ToggleButtonMidLeft}">POST</RadioButton>
-        <RadioButton Name="PutChecked" GroupName="RequestMethod" Grid.Row="0" Grid.Column="2" Padding="2" Template="{DynamicResource ToggleButtonMidRight}">PUT</RadioButton>
-        <RadioButton Name="DeleteChecked" GroupName="RequestMethod" Grid.Row="0" Grid.Column="3" Padding="2" Template="{DynamicResource ToggleButtonRight}">DELETE</RadioButton>
-
+        <RadioButton Name="PostChecked" GroupName="RequestMethod" Grid.Row="0" Grid.Column="1" Padding="2" Template="{DynamicResource ToggleButtonPost}">POST</RadioButton>
+        <RadioButton Name="PutChecked" GroupName="RequestMethod" Grid.Row="0" Grid.Column="2" Padding="2" Template="{DynamicResource ToggleButtonPut}">PUT</RadioButton>
+        <RadioButton Name="DeleteChecked" GroupName="RequestMethod" Grid.Row="0" Grid.Column="3" Padding="2" Template="{DynamicResource ToggleButtonDelete}">DELETE</RadioButton>
+        <RadioButton Name="PatchChecked" GroupName="RequestMethod" Grid.Row="0" Grid.Column="4" Padding="2" Template="{DynamicResource ToggleButtonPatch}">PATCH</RadioButton>
+        <RadioButton Name="HeadChecked" GroupName="RequestMethod" Grid.Row="0" Grid.Column="5" Padding="2" Template="{DynamicResource ToggleButtonHead}">HEAD</RadioButton>
+        <RadioButton Name="OptionsChecked" GroupName="RequestMethod" Grid.Row="0" Grid.Column="6" Padding="2" Template="{DynamicResource ToggleButtonOptions}">OPTIONS</RadioButton>
+        <RadioButton Name="MergeChecked" GroupName="RequestMethod" Grid.Row="0" Grid.Column="7" Padding="2" Template="{DynamicResource ToggleButtonRight}">MERGE</RadioButton>
     </Grid>
 </UserControl>

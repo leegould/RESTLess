@@ -15,7 +15,7 @@
     </LinearGradientBrush>
 
     <LinearGradientBrush x:Key="BgYellowBrush" StartPoint="0,0" EndPoint="0,1">
-        <GradientStop Offset="0" Color="#BBBB00"/>
+        <GradientStop Offset="0" Color="#CCCC00"/>
         <GradientStop Offset="1" Color="#DDDD00"/>
     </LinearGradientBrush>
 
@@ -24,10 +24,34 @@
         <GradientStop Offset="1" Color="#00DD00"/>
     </LinearGradientBrush>
 
+    <LinearGradientBrush x:Key="BgPurpleBrush" StartPoint="0,0" EndPoint="0,1">
+        <GradientStop Offset="0" Color="#880088"/>
+        <GradientStop Offset="1" Color="#AA00AA"/>
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="BgLBlueBrush" StartPoint="0,0" EndPoint="0,1">
+        <GradientStop Offset="0" Color="#006666"/>
+        <GradientStop Offset="1" Color="#004444"/>
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="BgBrownBrush" StartPoint="0,0" EndPoint="0,1">
+        <GradientStop Offset="0" Color="#AA6600"/>
+        <GradientStop Offset="1" Color="#885500"/>
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="BgGreyBrush" StartPoint="0,0" EndPoint="0,1">
+        <GradientStop Offset="0" Color="#888888"/>
+        <GradientStop Offset="1" Color="#666666"/>
+    </LinearGradientBrush>
+
     <SolidColorBrush x:Key="RedBrush" Color="#ff0000"/>
     <SolidColorBrush x:Key="BlueBrush" Color="#0000ff"/>
     <SolidColorBrush x:Key="GreenBrush" Color="#00ff00"/>
     <SolidColorBrush x:Key="YellowBrush" Color="#ffff00"/>
+    <SolidColorBrush x:Key="PurpleBrush" Color="#990099"/>
+    <SolidColorBrush x:Key="LBlueBrush" Color="#006666"/>
+    <SolidColorBrush x:Key="BrownBrush" Color="#995500"/>
+    <SolidColorBrush x:Key="GreyBrush" Color="#777777"/>
 
     <LinearGradientBrush x:Key="CheckedBrush" StartPoint="0,0" EndPoint="0,1">
         <GradientStop Offset="0" Color="#CCCCCC"/>
