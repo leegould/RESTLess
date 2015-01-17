@@ -223,7 +223,7 @@ namespace RESTLess
                 request.AddHeader(header.Name, header.Value);
             }
 
-            if (method == Method.POST || method == Method.PUT && !string.IsNullOrWhiteSpace(BodyTextBox))
+            if (UseBody(method) && !string.IsNullOrWhiteSpace(BodyTextBox))
             {
                 request.AddJsonBody(BodyTextBox);
             }
@@ -325,12 +325,17 @@ namespace RESTLess
         public void Handle(MethodSelectedMessage message)
         {
             selectedMethod = message.Method;
-            BodyIsVisible = message.Method == Method.POST || message.Method == Method.PUT;
+            BodyIsVisible = UseBody(message.Method);
         }
 
         #endregion
 
         #region Private Methods
+
+        private static bool UseBody(Method method)
+        {
+            return method != Method.GET && method != Method.HEAD && method != Method.OPTIONS;
+        }
 
         private void StopSending()
         {
