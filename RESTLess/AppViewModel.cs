@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Diagnostics;
+using System.Linq;
+using System.Net;
 using AutoMapper;
 using Caliburn.Micro;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Raven.Client;
+using Raven.Client.Linq;
 using RestSharp;
 using RESTLess.Controls;
 using RESTLess.Models;
@@ -262,18 +265,9 @@ namespace RESTLess
                         stopWatch.Stop();
                         StatusBarTextBlock = "Status: " + r.ResponseStatus + ". Code:" + r.StatusCode + ". Elapsed: " + stopWatch.ElapsedMilliseconds.ToString() + " ms.";
 
-                        try
-                        {
-                            var json = JObject.Parse(r.Content);
-                            RawResultsTextBox = json.ToString(Formatting.Indented);
-                            ResponseElapsedTextBlock = stopWatch.ElapsedMilliseconds.ToString() + " ms.";
-                            ResponseStatusTextBlock = (int)r.StatusCode + " " + r.StatusCode.ToString();
-                            ResponseWhenTextBlock = DateTime.UtcNow.ToString();
-                        }
-                        catch (Exception ex)
-                        {
-                            RawResultsTextBox = ex.ToString();
-                        }
+                        Response response = new Response(req != null ? req.Id : 0, r);
+
+                        DisplayResponse(response);
 
                         StopSending();
 
@@ -281,12 +275,7 @@ namespace RESTLess
                         {
                             try
                             {
-                                conn.Store(new Response
-                                {
-                                    When = DateTime.UtcNow,
-                                    RequestId =  req != null ? req.Id : 0,
-                                    RestResponse = r
-                                });
+                                conn.Store(response);
                                 conn.SaveChanges();
                             }
                             catch (Exception ex)
@@ -319,7 +308,15 @@ namespace RESTLess
         public void Handle(HistorySelectedMessage historyRequest)
         {
             Mapper.Map(historyRequest.Request, this);
-            //MethodViewModel.Method = (Method)Enum.Parse(typeof(Method), historyRequest.Request.Method);
+
+            using (var docstore = documentStore.OpenSession())
+            {
+                var response = docstore.Query<Response>().FirstOrDefault(x => x.RequestId == historyRequest.Request.Id);
+                if (response != null)
+                {
+                    DisplayResponse(response);
+                }
+            }
         }
 
         public void Handle(MethodSelectedMessage message)
@@ -332,9 +329,20 @@ namespace RESTLess
 
         #region Private Methods
 
-        private static bool UseBody(Method method)
+        private void DisplayResponse(Response response)
         {
-            return method != Method.GET && method != Method.HEAD && method != Method.OPTIONS;
+            try 
+            { 
+                var json = JObject.Parse(response.Content);
+                RawResultsTextBox = json.ToString(Formatting.Indented);
+                ResponseElapsedTextBlock = stopWatch.ElapsedMilliseconds + " ms.";
+                ResponseStatusTextBlock = response.StatusCode + " " + response.StatusCodeDescription;
+                ResponseWhenTextBlock = response.When.ToString();
+            }
+            catch (Exception ex)
+            {
+                RawResultsTextBox = ex.ToString();
+            }
         }
 
         private void StopSending()
@@ -348,6 +356,15 @@ namespace RESTLess
             isWaiting = false;
             NotifyOfPropertyChange(() => CanStopButton);
             NotifyOfPropertyChange(() => CanSendButton);
+        }
+
+        #endregion
+
+        #region Static Methods
+
+        private static bool UseBody(Method method)
+        {
+            return method != Method.GET && method != Method.HEAD && method != Method.OPTIONS;
         }
 
         #endregion
