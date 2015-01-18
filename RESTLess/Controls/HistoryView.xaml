@@ -26,6 +26,18 @@
                                 <DataTrigger Binding="{Binding Path=Method}" Value="DELETE">
                                     <Setter Property="BorderBrush" Value="{StaticResource RedBrush}"/>
                                 </DataTrigger>
+                                <DataTrigger Binding="{Binding Path=Method}" Value="PATCH">
+                                    <Setter Property="BorderBrush" Value="{StaticResource PurpleBrush}"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Path=Method}" Value="HEAD">
+                                    <Setter Property="BorderBrush" Value="{StaticResource GreyBrush}"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Path=Method}" Value="OPTIONS">
+                                    <Setter Property="BorderBrush" Value="{StaticResource LBlueBrush}"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Path=Method}" Value="MERGE">
+                                    <Setter Property="BorderBrush" Value="{StaticResource BrownBrush}"/>
+                                </DataTrigger>
                             </Style.Triggers>
                         </Style>
                     </Border.Style>

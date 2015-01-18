@@ -265,7 +265,7 @@ namespace RESTLess
                         stopWatch.Stop();
                         StatusBarTextBlock = "Status: " + r.ResponseStatus + ". Code:" + r.StatusCode + ". Elapsed: " + stopWatch.ElapsedMilliseconds.ToString() + " ms.";
 
-                        Response response = new Response(req != null ? req.Id : 0, r);
+                        Response response = new Response(req != null ? req.Id : 0, r, stopWatch.ElapsedMilliseconds);
 
                         DisplayResponse(response);
 
@@ -335,7 +335,7 @@ namespace RESTLess
             { 
                 var json = JObject.Parse(response.Content);
                 RawResultsTextBox = json.ToString(Formatting.Indented);
-                ResponseElapsedTextBlock = stopWatch.ElapsedMilliseconds + " ms.";
+                ResponseElapsedTextBlock =  response.Elapsed + " ms.";
                 ResponseStatusTextBlock = response.StatusCode + " " + response.StatusCodeDescription;
                 ResponseWhenTextBlock = response.When.ToString();
             }
