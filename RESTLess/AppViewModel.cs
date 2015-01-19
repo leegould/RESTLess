@@ -332,12 +332,32 @@ namespace RESTLess
         private void DisplayResponse(Response response)
         {
             try 
-            { 
-                var json = JObject.Parse(response.Content);
-                RawResultsTextBox = json.ToString(Formatting.Indented);
+            {
+                if (!string.IsNullOrWhiteSpace(response.Content))
+                {
+                    var json = JObject.Parse(response.Content);
+                    RawResultsTextBox = json.ToString(Formatting.Indented);
+                }
                 ResponseElapsedTextBlock =  response.Elapsed + " ms.";
                 ResponseStatusTextBlock = response.StatusCode + " " + response.StatusCodeDescription;
-                ResponseWhenTextBlock = response.When.ToString();
+
+                var whentext = response.When.ToString();
+                var ago = DateTime.UtcNow.Subtract(response.When);
+                if (ago.TotalMinutes > 1)
+                {
+                    string agotext;
+                    if (ago.Days > 1)
+                    {
+                        agotext = " (" + ago.Days + " days ago)";
+                    }
+                    else
+                    {
+                        agotext = " (" + ago.Minutes + " m " + ago.Seconds + " s ago)";
+                    }
+                    whentext += agotext;
+                }
+
+                ResponseWhenTextBlock = whentext;
             }
             catch (Exception ex)
             {
