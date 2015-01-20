@@ -338,6 +338,11 @@ namespace RESTLess
                     var json = JObject.Parse(response.Content);
                     RawResultsTextBox = json.ToString(Formatting.Indented);
                 }
+                else
+                {
+                    RawResultsTextBox = string.Empty;
+                }
+
                 ResponseElapsedTextBlock =  response.Elapsed + " ms.";
                 ResponseStatusTextBlock = response.StatusCode + " " + response.StatusCodeDescription;
 
@@ -345,16 +350,7 @@ namespace RESTLess
                 var ago = DateTime.UtcNow.Subtract(response.When);
                 if (ago.TotalMinutes > 1)
                 {
-                    string agotext;
-                    if (ago.Days > 1)
-                    {
-                        agotext = " (" + ago.Days + " days ago)";
-                    }
-                    else
-                    {
-                        agotext = " (" + ago.Minutes + " m " + ago.Seconds + " s ago)";
-                    }
-                    whentext += agotext;
+                    whentext += " (-" + ago.ToString(@"d\.h\:mm\:ss") + ")";
                 }
 
                 ResponseWhenTextBlock = whentext;
