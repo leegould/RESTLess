@@ -97,6 +97,8 @@
     </Compile>
     <Compile Include="Controls\HistoryViewModel.cs" />
     <Compile Include="Indexes\Requests_All.cs" />
+    <Compile Include="Indexes\RequestsGroupedAll.cs" />
+    <Compile Include="Indexes\Responses_All.cs" />
     <Compile Include="Models\Messages\ChangeMethodMessage.cs" />
     <Compile Include="Models\Messages\HistorySelectedMessage.cs" />
     <Compile Include="Models\Messages\MethodSelectedMessage.cs" />
