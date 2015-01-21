@@ -41,8 +41,6 @@
             </TabControl>
 
             <GridSplitter Grid.Column="0" Width="2" HorizontalAlignment="Right" VerticalAlignment="Stretch" ResizeBehavior="CurrentAndNext"/>
-        
-            <!--<DockPanel Grid.Column="1" Grid.Row="0" VerticalAlignment="Stretch">-->
 
             <Grid Grid.Column="1" Grid.Row="0" Background="LightGray">
                 <Grid.ColumnDefinitions>
@@ -135,10 +133,6 @@
                             </TextBox>
                         </StackPanel>
                     
-                        <Button Name="ClearButton" Margin="2" Content="Clear" Grid.Column="0" Grid.Row="4"></Button>
-                        <Button Name="StopButton" Margin="2" Content="Stop" Grid.Column="2" Grid.Row="4"></Button>
-                        <Button Name="SendButton" Margin="2" Content="Send" Grid.Column="3" Grid.Row="4"></Button>
-
                     </Grid>
                 </StackPanel>
                 
@@ -150,25 +144,32 @@
                             <ColumnDefinition Width="*"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="28"></RowDefinition>
+                            <RowDefinition Height="56"></RowDefinition>
                             <RowDefinition Height="*"></RowDefinition>
                         </Grid.RowDefinitions>
                         <Grid Grid.Column="0" Grid.Row="0" >
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"></ColumnDefinition>
-                                <ColumnDefinition Width="2*"></ColumnDefinition>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
                                 <ColumnDefinition Width="*"></ColumnDefinition>
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="*"></RowDefinition>
+                                <RowDefinition Height="*"></RowDefinition>
                             </Grid.RowDefinitions>
-                            <WrapPanel Grid.Column="0" Background="DarkGray" Margin="1,0,1,1">
+
+                            <Button Name="ClearButton" Margin="2" Content="Clear" Grid.Column="0" Grid.Row="0"></Button>
+                            <Button Name="StopButton" Margin="2" Content="Stop" Grid.Column="2" Grid.Row="0"></Button>
+                            <Button Name="SendButton" Margin="2" Content="Send" Grid.Column="3" Grid.Row="0"></Button>
+
+                            <WrapPanel Grid.Column="0" Grid.Row="1" Background="DarkGray" Margin="1,0,1,1">
                                 <TextBlock Name="ResponseStatusTextBlock" Background="DarkGray" Margin="5" />
                             </WrapPanel>
-                            <WrapPanel Orientation="Horizontal" Grid.Column="1" Background="DarkGray" Margin="1,0,1,1">
+                            <WrapPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Background="DarkGray" Margin="1,0,1,1">
                                 <TextBlock Name="ResponseWhenTextBlock" Background="DarkGray" Margin="5"/>
                             </WrapPanel>
-                            <WrapPanel Orientation="Horizontal" Grid.Column="2" Background="DarkGray" Margin="1,0,1,1">
+                            <WrapPanel Orientation="Horizontal" Grid.Column="3" Grid.Row="1" Background="DarkGray" Margin="1,0,1,1">
                                 <TextBlock Name="ResponseElapsedTextBlock" Background="DarkGray" Margin="5"/>
                             </WrapPanel>
                         </Grid>

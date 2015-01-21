@@ -316,6 +316,14 @@ namespace RESTLess
                 {
                     DisplayResponse(response);
                 }
+                else
+                {
+                    ResponseElapsedTextBlock = string.Empty;
+                    ResponseStatusTextBlock = string.Empty;
+                    ResponseWhenTextBlock = string.Empty;
+                    RawResultsTextBox = "No Response";
+
+                }
             }
         }
 
