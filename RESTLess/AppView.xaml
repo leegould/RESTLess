@@ -44,8 +44,9 @@
                             <TextBlock Text="Grouped" Foreground="DarkSlateGray"/>
                         </StackPanel>
                     </TabItem.Header>
-                    
+                    <ContentControl x:Name="GroupedViewModel"></ContentControl>
                 </TabItem>
+                
             </TabControl>
 
             <GridSplitter Grid.Column="0" Width="2" HorizontalAlignment="Right" VerticalAlignment="Stretch" ResizeBehavior="CurrentAndNext"/>
