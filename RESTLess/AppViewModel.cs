@@ -77,7 +77,7 @@ namespace RESTLess
             HeadersDataGrid = new BindableCollection<HttpHeader>();
             MethodViewModel = new MethodViewModel(eventAggregator);
             HistoryViewModel = new HistoryViewModel(eventAggregator, documentStore);
-            GroupedViewModel = new GroupedViewModel();
+            GroupedViewModel = new GroupedViewModel(eventAggregator, documentStore);
             selectedMethod = Method.GET;
             BodyIsVisible = false;
         }
