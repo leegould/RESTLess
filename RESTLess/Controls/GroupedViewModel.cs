@@ -21,9 +21,9 @@ namespace RESTLess.Controls
 
         private Request selectedItem;
 
-        private BindableCollection<Request> groupedRequests;
+        private BindableCollection<ResultGrouped> groupedRequests;
 
-        public BindableCollection<Request> GroupedRequests
+        public BindableCollection<ResultGrouped> GroupedRequests
         {
             get { return groupedRequests; }
             set
@@ -49,7 +49,7 @@ namespace RESTLess.Controls
             this.eventAggregator = eventAggregator;
             eventAggregator.Subscribe(this);
             this.documentStore = documentStore;
-            GroupedRequests = new BindableCollection<Request>();
+            GroupedRequests = new BindableCollection<ResultGrouped>();
             LoadGrouped();
         }
 
@@ -59,10 +59,10 @@ namespace RESTLess.Controls
             {
                 try
                 {
-                    var items = await conn.Query<Request>(IndexName).Take(100).ToListAsync();
+                    var items = await conn.Query<ResultGrouped>(IndexName).Take(100).ToListAsync();
                     GroupedRequests.AddRange(items);
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     // TODO : pass exception messages to main window - add to event aggregator
                     // eventAggregator.PublishOnUIThread(ex); // <- Wrap in a specific exception class

@@ -122,6 +122,7 @@
       <DependentUpon>MethodView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\MethodViewModel.cs" />
+    <Compile Include="Models\ResultGrouped.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

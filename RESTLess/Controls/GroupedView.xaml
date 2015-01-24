@@ -6,24 +6,6 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <TreeView ItemsSource="{Binding GroupedRequests}">
-        <TreeView.ItemTemplate>
-            <HierarchicalDataTemplate>
-                <TextBlock Text="{Binding Path=Id}"></TextBlock>
-            </HierarchicalDataTemplate>
-        </TreeView.ItemTemplate>
-        <!--<TreeViewItem Header="https://www.domain.com">
-            <TreeViewItem Header="/path1">
-                <TreeViewItem Header="/path2">
-                    <TreeViewItem Header="?q=querystring"></TreeViewItem>
-                </TreeViewItem>
-            </TreeViewItem>
-        </TreeViewItem>
-        <TreeViewItem Header="https://www.domain2.com">
-            <TreeViewItem Header="/path1">
-                <TreeViewItem Header="/path2">
-                    <TreeViewItem Header="?q=querystring"></TreeViewItem>
-                </TreeViewItem>
-            </TreeViewItem>
-        </TreeViewItem>-->
+        
     </TreeView>
 </UserControl>

@@ -65,7 +65,7 @@ namespace RESTLess.Controls
                     var items = await conn.Query<Request>(RequestsIndexName).Take(50).OrderByDescending(x => x.When).ToListAsync();
                     HistoryRequests.AddRange(items);
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     // TODO : pass exception messages to main window - add to event aggregator
                     // eventAggregator.PublishOnUIThread(ex); // <- Wrap in a specific exception class
