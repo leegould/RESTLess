@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace RESTLess.Models
+﻿namespace RESTLess.Models
 {
     public class ResultGrouped
     {
@@ -9,17 +7,5 @@ namespace RESTLess.Models
         public string Url { get; set; }
 
         public string Path { get; set; }
-
-        public IList<string> PathSplit
-        {
-            get
-            {
-                if (!string.IsNullOrEmpty(Path))
-                {
-                    return Path.Split('/');
-                }
-                return null;
-            }
-        }
     }
 }

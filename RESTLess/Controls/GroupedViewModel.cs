@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Caliburn.Micro;
-
+using Raven.Abstractions.Extensions;
 using Raven.Client;
 
 using RESTLess.Models;
@@ -21,9 +21,9 @@ namespace RESTLess.Controls
 
         private Request selectedItem;
 
-        private BindableCollection<ResultGrouped> groupedRequests;
+        private BindableCollection<RequestGrouped> groupedRequests;
 
-        public BindableCollection<ResultGrouped> GroupedRequests
+        public BindableCollection<RequestGrouped> GroupedRequests
         {
             get { return groupedRequests; }
             set
@@ -49,7 +49,7 @@ namespace RESTLess.Controls
             this.eventAggregator = eventAggregator;
             eventAggregator.Subscribe(this);
             this.documentStore = documentStore;
-            GroupedRequests = new BindableCollection<ResultGrouped>();
+            GroupedRequests = new BindableCollection<RequestGrouped>();
             LoadGrouped();
         }
 
@@ -60,7 +60,31 @@ namespace RESTLess.Controls
                 try
                 {
                     var items = await conn.Query<ResultGrouped>(IndexName).Take(100).ToListAsync();
-                    GroupedRequests.AddRange(items);
+                    foreach(var item in items)
+                    {
+                        RequestGrouped requestgrouped = GroupedRequests.FirstOrDefault(x => x.Part == item.Path);
+                        if (requestgrouped == null)
+                        {
+                            requestgrouped = new RequestGrouped {Id = item.Id, Part = item.Url};
+                            GroupedRequests.Add(requestgrouped);
+                        }
+
+                        if (!string.IsNullOrEmpty(item.Path))
+                        {
+                            var pathparts = new Stack<string>();
+                            foreach (var p in item.Path.Split('/'))
+                            {
+                                pathparts.Push(p);
+                            }
+
+                            if (pathparts.Count > 0)
+                            {
+                                requestgrouped.Children.Add(GetChild(requestgrouped.Id, pathparts));
+                            }
+                        }
+
+                        //GroupedRequests.Add(requestgrouped);
+                    }
                 }
                 catch (Exception)
                 {
@@ -68,6 +92,18 @@ namespace RESTLess.Controls
                     // eventAggregator.PublishOnUIThread(ex); // <- Wrap in a specific exception class
                 }
             }
+        }
+
+        public static RequestGrouped GetChild(string id, Stack<string> parts)
+        {
+            var part = parts.Pop();
+            var item = new RequestGrouped {Id = id, Part = part };
+            if (parts.Count > 0)
+            {
+                item.Children.Add(GetChild(id, parts));
+            }
+
+            return item;
         }
     }
 }
