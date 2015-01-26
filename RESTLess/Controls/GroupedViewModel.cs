@@ -62,7 +62,7 @@ namespace RESTLess.Controls
                     var items = await conn.Query<ResultGrouped>(IndexName).Take(100).ToListAsync();
                     foreach(var item in items)
                     {
-                        RequestGrouped requestgrouped = GroupedRequests.FirstOrDefault(x => x.Part == item.Path);
+                        RequestGrouped requestgrouped = GroupedRequests.FirstOrDefault(x => x.Part == item.Url);
                         if (requestgrouped == null)
                         {
                             requestgrouped = new RequestGrouped {Id = item.Id, Part = item.Url};
@@ -72,14 +72,15 @@ namespace RESTLess.Controls
                         if (!string.IsNullOrEmpty(item.Path))
                         {
                             var pathparts = new Stack<string>();
-                            foreach (var p in item.Path.Split('/'))
+                            foreach (var p in item.Path.Split(new []{ '/' }, StringSplitOptions.RemoveEmptyEntries ))
                             {
                                 pathparts.Push(p);
                             }
 
                             if (pathparts.Count > 0)
                             {
-                                requestgrouped.Children.Add(GetChild(requestgrouped.Id, pathparts));
+                                var child = GetChild(requestgrouped.Id, pathparts);
+                                requestgrouped.Children.Add(child);
                             }
                         }
 
@@ -94,7 +95,7 @@ namespace RESTLess.Controls
             }
         }
 
-        public static RequestGrouped GetChild(string id, Stack<string> parts)
+        private static RequestGrouped GetChild(string id, Stack<string> parts)
         {
             var part = parts.Pop();
             var item = new RequestGrouped {Id = id, Part = part };
