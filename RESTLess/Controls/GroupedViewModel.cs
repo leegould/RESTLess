@@ -59,7 +59,7 @@ namespace RESTLess.Controls
             {
                 try
                 {
-                    var items = await conn.Query<ResultGrouped>(IndexName).Take(100).ToListAsync();
+                    var items = await conn.Query<ResultGrouped>(IndexName).ToListAsync();
                     foreach(var item in items)
                     {
                         RequestGrouped requestgrouped = GroupedRequests.FirstOrDefault(x => x.Part == item.Url);
@@ -71,20 +71,17 @@ namespace RESTLess.Controls
 
                         if (!string.IsNullOrEmpty(item.Path))
                         {
-                            var pathparts = new Stack<string>();
+                            var pathparts = new Queue<string>();
                             foreach (var p in item.Path.Split(new []{ '/' }, StringSplitOptions.RemoveEmptyEntries ))
                             {
-                                pathparts.Push(p);
+                                pathparts.Enqueue(p);
                             }
 
                             if (pathparts.Count > 0)
                             {
-                                var child = GetChild(requestgrouped.Id, pathparts);
-                                requestgrouped.Children.Add(child);
+                                PopulateChildren(requestgrouped, pathparts, item.Id);
                             }
                         }
-
-                        //GroupedRequests.Add(requestgrouped);
                     }
                 }
                 catch (Exception)
@@ -95,16 +92,21 @@ namespace RESTLess.Controls
             }
         }
 
-        private static RequestGrouped GetChild(string id, Stack<string> parts)
+        private static void PopulateChildren(RequestGrouped requestGrouped, Queue<string> parts, string itemid)
         {
-            var part = parts.Pop();
-            var item = new RequestGrouped {Id = id, Part = part };
-            if (parts.Count > 0)
+            var part = parts.Dequeue();
+            var child = requestGrouped.Children.FirstOrDefault(x => x.Part == part);
+
+            if (child == null)
             {
-                item.Children.Add(GetChild(id, parts));
+                child = new RequestGrouped { Id = itemid, Part = part };
+                requestGrouped.Children.Add(child);
             }
 
-            return item;
+            if (parts.Count > 0)
+            {
+                PopulateChildren(child, parts, itemid);
+            }
         }
     }
 }
