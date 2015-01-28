@@ -18,7 +18,7 @@ using RESTLess.Models.Messages;
 namespace RESTLess
 {
     [Export(typeof(AppViewModel))]
-    public class AppViewModel : PropertyChangedBase, IApp, IHandle<HistorySelectedMessage>, IHandle<MethodSelectedMessage>
+    public class AppViewModel : PropertyChangedBase, IApp, IHandle<HistorySelectedMessage>, IHandle<MethodSelectedMessage>, IHandle<GroupedSelectedMessage>
     {
         #region Private members
 
@@ -334,6 +334,11 @@ namespace RESTLess
         {
             selectedMethod = message.Method;
             BodyIsVisible = UseBody(message.Method);
+        }
+
+        public void Handle(GroupedSelectedMessage message)
+        {
+            RawResultsTextBox = message.Request.Id + " " + message.Request.Part;
         }
 
         #endregion

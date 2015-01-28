@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 using Caliburn.Micro;
-using Raven.Abstractions.Extensions;
+
 using Raven.Client;
 
 using RESTLess.Models;
+using RESTLess.Models.Messages;
 
 namespace RESTLess.Controls
 {
@@ -19,7 +19,7 @@ namespace RESTLess.Controls
 
         private readonly IDocumentStore documentStore;
 
-        private Request selectedItem;
+        //private RequestGrouped selectedItem;
 
         private BindableCollection<RequestGrouped> groupedRequests;
 
@@ -33,16 +33,16 @@ namespace RESTLess.Controls
             }
         }
 
-        public Request SelectedItem
-        {
-            get { return selectedItem; }
-            set
-            {
-                selectedItem = value;
-                //eventAggregator.PublishOnUIThread(new HistorySelectedMessage { Request = value });
-                NotifyOfPropertyChange(() => SelectedItem);
-            }
-        }
+        //public RequestGrouped SelectedItem
+        //{
+        //    get { return selectedItem; }
+        //    set
+        //    {
+        //        selectedItem = value;
+        //        eventAggregator.PublishOnUIThread(new GroupedSelectedMessage { Request = value });
+        //        NotifyOfPropertyChange(() => SelectedItem);
+        //    }
+        //}
 
         public GroupedViewModel(IEventAggregator eventAggregator, IDocumentStore documentStore)
         {
@@ -51,6 +51,11 @@ namespace RESTLess.Controls
             this.documentStore = documentStore;
             GroupedRequests = new BindableCollection<RequestGrouped>();
             LoadGrouped();
+        }
+
+        public void SetSelectedItem(RequestGrouped item)
+        {
+            eventAggregator.PublishOnUIThread(new GroupedSelectedMessage { Request = item });
         }
 
         private async void LoadGrouped()

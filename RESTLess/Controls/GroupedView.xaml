@@ -5,9 +5,12 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:models="clr-namespace:RESTLess.Models"
              xmlns:system="clr-namespace:System;assembly=mscorlib"
+             xmlns:cal="http://www.caliburnproject.org"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <TreeView ItemsSource="{Binding GroupedRequests}">
+    <TreeView ItemsSource="{Binding GroupedRequests}"
+              cal:Message.Attach="[Event SelectedItemChanged] = [Action SetSelectedItem($this.SelectedItem)]">
+
         <TreeView.Resources>
             <HierarchicalDataTemplate DataType="{x:Type models:RequestGrouped}" ItemsSource="{Binding Path=Children}">
                 <StackPanel Orientation="Horizontal">

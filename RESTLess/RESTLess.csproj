@@ -104,6 +104,7 @@
     <Compile Include="Indexes\RequestsGroupedAll.cs" />
     <Compile Include="Indexes\Responses_All.cs" />
     <Compile Include="Models\Messages\ChangeMethodMessage.cs" />
+    <Compile Include="Models\Messages\GroupedSelectedMessage.cs" />
     <Compile Include="Models\Messages\HistorySelectedMessage.cs" />
     <Compile Include="Models\Messages\MethodSelectedMessage.cs" />
     <Compile Include="Models\Messages\RequestSavedMessage.cs" />
