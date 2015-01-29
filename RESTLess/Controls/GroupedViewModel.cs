@@ -19,8 +19,6 @@ namespace RESTLess.Controls
 
         private readonly IDocumentStore documentStore;
 
-        //private RequestGrouped selectedItem;
-
         private BindableCollection<RequestGrouped> groupedRequests;
 
         public BindableCollection<RequestGrouped> GroupedRequests
@@ -32,17 +30,6 @@ namespace RESTLess.Controls
                 NotifyOfPropertyChange(() => GroupedRequests);
             }
         }
-
-        //public RequestGrouped SelectedItem
-        //{
-        //    get { return selectedItem; }
-        //    set
-        //    {
-        //        selectedItem = value;
-        //        eventAggregator.PublishOnUIThread(new GroupedSelectedMessage { Request = value });
-        //        NotifyOfPropertyChange(() => SelectedItem);
-        //    }
-        //}
 
         public GroupedViewModel(IEventAggregator eventAggregator, IDocumentStore documentStore)
         {

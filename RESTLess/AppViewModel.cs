@@ -338,7 +338,24 @@ namespace RESTLess
 
         public void Handle(GroupedSelectedMessage message)
         {
-            RawResultsTextBox = message.Request.Id + " " + message.Request.Part;
+            using (var docstore = documentStore.OpenSession())
+            {
+                var item = docstore.Load<Request>(message.Request.Id);
+                Mapper.Map(item, this);
+                var response = docstore.Query<Response>().FirstOrDefault(x => x.RequestId == item.Id);
+                if (response != null)
+                {
+                    DisplayResponse(response);
+                }
+                else
+                {
+                    ResponseElapsedTextBlock = string.Empty;
+                    ResponseStatusTextBlock = string.Empty;
+                    ResponseWhenTextBlock = string.Empty;
+                    RawResultsTextBox = "No Response";
+
+                }
+            }
         }
 
         #endregion
