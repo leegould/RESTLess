@@ -48,7 +48,12 @@
         <GradientStop Offset="0" Color="#229922"/>
         <GradientStop Offset="1" Color="#007700"/>
     </LinearGradientBrush>
-    
+
+    <LinearGradientBrush x:Key="BgLightBlueBrush" StartPoint="0,0" EndPoint="0,1">
+        <GradientStop Offset="0" Color="#ADD8E6"/>
+        <GradientStop Offset="1" Color="#7D98b6"/>
+    </LinearGradientBrush>
+
     <SolidColorBrush x:Key="RedBrush" Color="#ff0000"/>
     <SolidColorBrush x:Key="BlueBrush" Color="#0000ff"/>
     <SolidColorBrush x:Key="GreenBrush" Color="#00ff00"/>
