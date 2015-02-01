@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Diagnostics;
 using System.Linq;
-using System.Net;
+using System.Windows;
 using AutoMapper;
 using Caliburn.Micro;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Raven.Client;
-using Raven.Client.Linq;
 using RestSharp;
 using RESTLess.Controls;
 using RESTLess.Models;
@@ -307,6 +306,19 @@ namespace RESTLess
             BodyTextBox = string.Empty;
             HeadersDataGrid.Clear();
         }
+        
+        #endregion
+
+        #region Menu
+
+        public void Exit()
+        {
+            Application.Current.Shutdown();
+        }
+
+        #endregion
+
+        #region Message Handlers
 
         public void Handle(HistorySelectedMessage historyRequest)
         {

@@ -103,6 +103,8 @@
     <Compile Include="Indexes\Requests_All.cs" />
     <Compile Include="Indexes\RequestsGroupedAll.cs" />
     <Compile Include="Indexes\Responses_All.cs" />
+    <Compile Include="Models\Interface\IMenu.cs" />
+    <Compile Include="Models\Interface\IMenuItem.cs" />
     <Compile Include="Models\Messages\ChangeMethodMessage.cs" />
     <Compile Include="Models\Messages\GroupedSelectedMessage.cs" />
     <Compile Include="Models\Messages\HistorySelectedMessage.cs" />

@@ -15,6 +15,12 @@
             </StatusBarItem>
         </StatusBar>
         
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="File">
+                <MenuItem x:Name="Exit" Header="_Exit"></MenuItem>
+            </MenuItem>
+        </Menu>
+        
     <Grid Background="DarkGray" DockPanel.Dock="Top">
 
         <Grid DockPanel.Dock="Top">
