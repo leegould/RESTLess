@@ -1,0 +1,26 @@
+﻿<Page x:Class="RESTLess.Controls.PreferencesView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      mc:Ignorable="d" 
+      d:DesignHeight="300" d:DesignWidth="300"
+	Title="PreferencesView">
+
+    <Grid Background="Gray">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="2*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+            
+        <Label Grid.Row="0" Grid.Column="0">Timeout</Label>
+        
+        <TextBox Grid.Row="0" Grid.Column="1" x:Name="TimeoutTextBox"></TextBox>
+
+        <Button Grid.Row="1" Grid.Column="1" Name="SaveButton" Margin="2" Content="Save"></Button>
+    </Grid>
+</Page>

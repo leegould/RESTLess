@@ -100,6 +100,10 @@
       <DependentUpon>HistoryView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\HistoryViewModel.cs" />
+    <Compile Include="Controls\PreferencesView.xaml.cs">
+      <DependentUpon>PreferencesView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PreferencesViewModel.cs" />
     <Compile Include="Indexes\Requests_All.cs" />
     <Compile Include="Indexes\RequestsGroupedAll.cs" />
     <Compile Include="Indexes\Responses_All.cs" />
@@ -172,6 +176,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\MethodView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\PreferencesView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
