@@ -13,6 +13,7 @@ using RestSharp;
 using RESTLess.Controls;
 using RESTLess.Models;
 using RESTLess.Models.Messages;
+using System.Text.RegularExpressions;
 
 namespace RESTLess
 {
@@ -380,8 +381,15 @@ namespace RESTLess
             {
                 if (!string.IsNullOrWhiteSpace(response.Content))
                 {
-                    var json = JObject.Parse(response.Content);
-                    RawResultsTextBox = json.ToString(Formatting.Indented);
+                    try
+                    {
+                        var json = JObject.Parse(response.Content);
+                        RawResultsTextBox = json.ToString(Formatting.Indented);
+                    }
+                    catch(JsonReaderException)
+                    {
+                        RawResultsTextBox = response.Content;
+                    }
                 }
                 else
                 {
