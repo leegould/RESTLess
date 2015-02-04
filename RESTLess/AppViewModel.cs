@@ -13,7 +13,6 @@ using RestSharp;
 using RESTLess.Controls;
 using RESTLess.Models;
 using RESTLess.Models.Messages;
-using System.Text.RegularExpressions;
 
 namespace RESTLess
 {
@@ -29,6 +28,7 @@ namespace RESTLess
         private readonly IDocumentStore documentStore;
 
         private string rawResultsTextBox;
+        private string htmlResultsTextBox;
         private string url;
         private string body;
 
@@ -118,6 +118,16 @@ namespace RESTLess
             {
                 rawResultsTextBox = value;
                 NotifyOfPropertyChange(() => RawResultsTextBox);
+            }
+        }
+
+        public string HtmlResultsTextBox
+        {
+            get { return htmlResultsTextBox; }
+            set
+            {
+                htmlResultsTextBox = value;
+                NotifyOfPropertyChange(() => HtmlResultsTextBox);
             }
         }
 
@@ -389,6 +399,7 @@ namespace RESTLess
                     catch(JsonReaderException)
                     {
                         RawResultsTextBox = response.Content;
+                        HtmlResultsTextBox = response.Content;
                     }
                 }
                 else

@@ -188,9 +188,32 @@
                                 <TextBlock Name="ResponseElapsedTextBlock" Background="DarkGray" Margin="5"/>
                             </WrapPanel>
                         </Grid>
-                        <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Column="0" Grid.Row="1" VerticalAlignment="Stretch">
-                            <TextBox IsReadOnly="True" Name="RawResultsTextBox" Background="DarkGray" VerticalAlignment="Stretch"></TextBox>
-                        </ScrollViewer>
+
+                        <TabControl Background="Gray" Grid.Column="0" Grid.Row="1" Padding="0">
+
+                            <TabItem>
+                                <TabItem.Header>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Raw" Foreground="DarkSlateGray" />
+                                    </StackPanel>
+                                </TabItem.Header>
+                                <ScrollViewer VerticalScrollBarVisibility="Auto" VerticalAlignment="Stretch">
+                                    <TextBox IsReadOnly="True" Name="RawResultsTextBox" Background="DarkGray" VerticalAlignment="Stretch"></TextBox>
+                                </ScrollViewer>
+                            </TabItem>
+
+                            <TabItem>
+                                <TabItem.Header>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Html" Foreground="DarkSlateGray" />
+                                    </StackPanel>
+                                </TabItem.Header>
+                                <ScrollViewer VerticalScrollBarVisibility="Auto" VerticalAlignment="Stretch">
+                                    <RichTextBox IsReadOnly="True" Name="HtmlResultsTextBox" Background="DarkGray" VerticalAlignment="Stretch"></RichTextBox>
+                                </ScrollViewer>
+                            </TabItem>
+                            
+                        </TabControl>
                     </Grid>
                 <!--</StackPanel>-->
             </Grid>
