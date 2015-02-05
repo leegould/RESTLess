@@ -6,6 +6,9 @@ using System.Linq;
 using System.Windows;
 using AutoMapper;
 using Caliburn.Micro;
+
+using HTMLConverter;
+
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Raven.Client;
@@ -399,7 +402,7 @@ namespace RESTLess
                     catch(JsonReaderException)
                     {
                         RawResultsTextBox = response.Content;
-                        HtmlResultsTextBox = response.Content;
+                        HtmlResultsTextBox =  HtmlToXamlConverter.ConvertHtmlToXaml(response.Content, true);
                     }
                 }
                 else

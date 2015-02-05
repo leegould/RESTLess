@@ -104,6 +104,13 @@
       <DependentUpon>PreferencesView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\PreferencesViewModel.cs" />
+    <Compile Include="HtmlConverter\HtmlCssParser.cs" />
+    <Compile Include="HtmlConverter\HtmlFromXamlConverter.cs" />
+    <Compile Include="HtmlConverter\HtmlLexicalAnalyzer.cs" />
+    <Compile Include="HtmlConverter\HtmlParser.cs" />
+    <Compile Include="HtmlConverter\HtmlSchema.cs" />
+    <Compile Include="HtmlConverter\HtmlTokenType.cs" />
+    <Compile Include="HtmlConverter\HtmlToXamlConverter.cs" />
     <Compile Include="Indexes\Requests_All.cs" />
     <Compile Include="Indexes\RequestsGroupedAll.cs" />
     <Compile Include="Indexes\Responses_All.cs" />

@@ -209,7 +209,8 @@
                                     </StackPanel>
                                 </TabItem.Header>
                                 <ScrollViewer VerticalScrollBarVisibility="Auto" VerticalAlignment="Stretch">
-                                    <RichTextBox IsReadOnly="True" Name="HtmlResultsTextBox" Background="DarkGray" VerticalAlignment="Stretch"></RichTextBox>
+                                    <!--<RichTextBox IsReadOnly="True" Name="HtmlResultsTextBox" Background="DarkGray" VerticalAlignment="Stretch"></RichTextBox>-->
+                                    <FlowDocumentScrollViewer Name="HtmlResultsTextBox" />
                                 </ScrollViewer>
                             </TabItem>
                             
