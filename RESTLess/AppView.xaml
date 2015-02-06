@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity" 
              xmlns:cal="http://www.caliburnproject.org"
+             xmlns:wpf="clr-namespace:TheArtOfDev.HtmlRenderer.WPF;assembly=HtmlRenderer.WPF"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="800">
 
@@ -209,8 +210,7 @@
                                     </StackPanel>
                                 </TabItem.Header>
                                 <ScrollViewer VerticalScrollBarVisibility="Auto" VerticalAlignment="Stretch">
-                                    <!--<RichTextBox IsReadOnly="True" Name="HtmlResultsTextBox" Background="DarkGray" VerticalAlignment="Stretch"></RichTextBox>-->
-                                    <FlowDocumentScrollViewer Name="HtmlResultsTextBox" />
+                                    <wpf:HtmlPanel x:Name="HtmlResultsBox" Text="&lt;p&gt; &lt;h1&gt; Hello World &lt;/h1&gt; This is html rendered text&lt;/p&gt;" />
                                 </ScrollViewer>
                             </TabItem>
                             

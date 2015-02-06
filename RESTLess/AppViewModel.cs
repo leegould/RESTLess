@@ -4,10 +4,9 @@ using System.ComponentModel.Composition;
 using System.Diagnostics;
 using System.Linq;
 using System.Windows;
+
 using AutoMapper;
 using Caliburn.Micro;
-
-using HTMLConverter;
 
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -31,7 +30,7 @@ namespace RESTLess
         private readonly IDocumentStore documentStore;
 
         private string rawResultsTextBox;
-        private string htmlResultsTextBox;
+        private string htmlResultsBox;
         private string url;
         private string body;
 
@@ -124,13 +123,13 @@ namespace RESTLess
             }
         }
 
-        public string HtmlResultsTextBox
+        public string HtmlResultsBox
         {
-            get { return htmlResultsTextBox; }
+            get { return htmlResultsBox; }
             set
             {
-                htmlResultsTextBox = value;
-                NotifyOfPropertyChange(() => HtmlResultsTextBox);
+                htmlResultsBox = value;
+                NotifyOfPropertyChange(() => HtmlResultsBox);
             }
         }
 
@@ -398,11 +397,13 @@ namespace RESTLess
                     {
                         var json = JObject.Parse(response.Content);
                         RawResultsTextBox = json.ToString(Formatting.Indented);
+                        HtmlResultsBox = "<p>This is a test</p><b>blah</b>";
                     }
                     catch(JsonReaderException)
                     {
                         RawResultsTextBox = response.Content;
-                        HtmlResultsTextBox =  HtmlToXamlConverter.ConvertHtmlToXaml(response.Content, true);
+                        HtmlResultsBox = "<p>This is a test</p><b>blah</b>";
+                        //HtmlResultsBox = response.Content;
                     }
                 }
                 else
