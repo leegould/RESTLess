@@ -396,14 +396,14 @@ namespace RESTLess
                     try
                     {
                         var json = JObject.Parse(response.Content);
-                        RawResultsTextBox = json.ToString(Formatting.Indented);
-                        HtmlResultsBox = "<p>This is a test</p><b>blah</b>";
+                        var formattedjson = json.ToString(Formatting.Indented);
+                        RawResultsTextBox = formattedjson;
+                        HtmlResultsBox = formattedjson;
                     }
                     catch(JsonReaderException)
                     {
                         RawResultsTextBox = response.Content;
-                        HtmlResultsBox = "<p>This is a test</p><b>blah</b>";
-                        //HtmlResultsBox = response.Content;
+                        HtmlResultsBox = response.Content;
                     }
                 }
                 else

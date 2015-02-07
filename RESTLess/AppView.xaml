@@ -210,7 +210,7 @@
                                     </StackPanel>
                                 </TabItem.Header>
                                 <ScrollViewer VerticalScrollBarVisibility="Auto" VerticalAlignment="Stretch">
-                                    <wpf:HtmlPanel x:Name="HtmlResultsBox" Text="&lt;p&gt; &lt;h1&gt; Hello World &lt;/h1&gt; This is html rendered text&lt;/p&gt;" />
+                                    <wpf:HtmlPanel x:Name="HtmlResultsBox" Text="{Binding Path=HtmlResultsBox}" />
                                 </ScrollViewer>
                             </TabItem>
                             
