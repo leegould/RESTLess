@@ -395,10 +395,9 @@ namespace RESTLess
                 {
                     try
                     {
-                        var json = JObject.Parse(response.Content);
-                        var formattedjson = json.ToString(Formatting.Indented);
+                        var formattedjson = JObject.Parse(response.Content).ToString(Formatting.Indented);
                         RawResultsTextBox = formattedjson;
-                        HtmlResultsBox = formattedjson;
+                        HtmlResultsBox = "<pre>" + System.Net.WebUtility.HtmlEncode(formattedjson).Replace("\r\n", "<br/>") + "</pre>";
                     }
                     catch(JsonReaderException)
                     {
