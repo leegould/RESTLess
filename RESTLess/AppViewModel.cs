@@ -340,21 +340,11 @@ namespace RESTLess
             using (var docstore = documentStore.OpenSession())
             {
                 var response = docstore.Query<Response>().FirstOrDefault(x => x.RequestId == historyRequest.Request.Id);
-                if (response != null)
-                {
-                    DisplayResponse(response);
-                }
-                else
-                {
-                    ResponseElapsedTextBlock = string.Empty;
-                    ResponseStatusTextBlock = string.Empty;
-                    ResponseWhenTextBlock = string.Empty;
-                    RawResultsTextBox = "No Response";
-
-                }
+                DisplayOrClear(response);
             }
         }
 
+        
         public void Handle(MethodSelectedMessage message)
         {
             selectedMethod = message.Method;
@@ -368,24 +358,29 @@ namespace RESTLess
                 var item = docstore.Load<Request>(message.Request.Id);
                 Mapper.Map(item, this);
                 var response = docstore.Query<Response>().FirstOrDefault(x => x.RequestId == item.Id);
-                if (response != null)
-                {
-                    DisplayResponse(response);
-                }
-                else
-                {
-                    ResponseElapsedTextBlock = string.Empty;
-                    ResponseStatusTextBlock = string.Empty;
-                    ResponseWhenTextBlock = string.Empty;
-                    RawResultsTextBox = "No Response";
-
-                }
+                DisplayOrClear(response);
             }
         }
 
         #endregion
 
         #region Private Methods
+
+        private void DisplayOrClear(Response response)
+        {
+            if (response != null)
+            {
+                DisplayResponse(response);
+            }
+            else
+            {
+                ResponseElapsedTextBlock = string.Empty;
+                ResponseStatusTextBlock = string.Empty;
+                ResponseWhenTextBlock = string.Empty;
+                RawResultsTextBox = "No Response";
+                HtmlResultsBox = "<p>No Response</p>";
+            }
+        }
 
         private void DisplayResponse(Response response)
         {
@@ -397,7 +392,7 @@ namespace RESTLess
                     {
                         var formattedjson = JObject.Parse(response.Content).ToString(Formatting.Indented);
                         RawResultsTextBox = formattedjson;
-                        HtmlResultsBox = "<pre>" + System.Net.WebUtility.HtmlEncode(formattedjson).Replace("\r\n", "<br/>") + "</pre>";
+                        HtmlResultsBox = "<pre>" + System.Net.WebUtility.HtmlEncode(formattedjson) + "</pre>";
                     }
                     catch(JsonReaderException)
                     {
