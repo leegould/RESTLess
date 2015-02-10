@@ -18,7 +18,7 @@ namespace RESTLess.Controls
     /// <summary>
     /// Interaction logic for PreferencesView.xaml
     /// </summary>
-    public partial class PreferencesView : Page
+    public partial class PreferencesView : UserControl
     {
         public PreferencesView()
         {

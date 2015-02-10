@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Diagnostics;
+using System.Dynamic;
 using System.Linq;
 using System.Windows;
 
@@ -327,6 +328,16 @@ namespace RESTLess
         public void Exit()
         {
             Application.Current.Shutdown();
+        }
+
+        public void Preferences()
+        {
+            dynamic settings = new ExpandoObject();
+            settings.Width = 300;
+            settings.Height = 200;
+            settings.WindowStartupLocation = WindowStartupLocation.Manual;
+
+            windowManager.ShowWindow(new PreferencesViewModel(eventAggregator), null, settings);
         }
 
         #endregion
