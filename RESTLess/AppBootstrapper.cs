@@ -1,12 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using System.Windows;
 using Caliburn.Micro;
 using Raven.Client;
+using Raven.Client.Document;
 using Raven.Client.Embedded;
 using Raven.Client.Indexes;
 using Raven.Database.Server;
+
+using RESTLess.Models;
 
 namespace RESTLess
 {
@@ -57,11 +61,6 @@ namespace RESTLess
         protected override void BuildUp(object instance)
         {
             container.BuildUp(instance);
-        }
-
-        protected override void OnStartup(object sender, StartupEventArgs e)
-        {
-            DisplayRootViewFor<IApp>();
         }
     }
 }

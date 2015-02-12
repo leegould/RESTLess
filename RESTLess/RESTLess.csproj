@@ -113,6 +113,7 @@
     <Compile Include="Indexes\Requests_All.cs" />
     <Compile Include="Indexes\RequestsGroupedAll.cs" />
     <Compile Include="Indexes\Responses_All.cs" />
+    <Compile Include="Models\AppSettings.cs" />
     <Compile Include="Models\Interface\IMenu.cs" />
     <Compile Include="Models\Interface\IMenuItem.cs" />
     <Compile Include="Models\Messages\ChangeMethodMessage.cs" />
@@ -122,6 +123,7 @@
     <Compile Include="Models\Messages\RequestSavedMessage.cs" />
     <Compile Include="Models\Request.cs" />
     <Compile Include="Models\RequestGrouped.cs" />
+    <Compile Include="Models\RequestSettings.cs" />
     <Compile Include="Models\Response.cs" />
   </ItemGroup>
   <ItemGroup>

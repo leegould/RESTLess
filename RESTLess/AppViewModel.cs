@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Dynamic;
 using System.Linq;
 using System.Windows;
+using System.Windows.Forms.VisualStyles;
 
 using AutoMapper;
 using Caliburn.Micro;
@@ -20,7 +21,7 @@ using RESTLess.Models.Messages;
 namespace RESTLess
 {
     [Export(typeof(AppViewModel))]
-    public class AppViewModel : PropertyChangedBase, IApp, IHandle<HistorySelectedMessage>, IHandle<MethodSelectedMessage>, IHandle<GroupedSelectedMessage>
+    public class AppViewModel : Screen, IApp, IHandle<HistorySelectedMessage>, IHandle<MethodSelectedMessage>, IHandle<GroupedSelectedMessage>
     {
         #region Private members
 
@@ -84,6 +85,46 @@ namespace RESTLess
             selectedMethod = Method.GET;
             BodyIsVisible = false;
         }
+
+        ////http://caliburnmicro.codeplex.com/discussions/394099
+        //public override void CanClose(Action<bool> callback)
+        //{
+        //    using (var conn = documentStore.OpenSession())
+        //    {
+        //        var appsettings = conn.Query<AppSettings>().FirstOrDefault() ?? new AppSettings();
+
+        //        appsettings.Left = Application.Current.MainWindow.Left;
+        //        appsettings.Top = Application.Current.MainWindow.Top;
+        //        appsettings.Width = Application.Current.MainWindow.Width;
+        //        appsettings.Height = Application.Current.MainWindow.Height;
+
+        //        conn.SaveChanges();
+        //    }
+
+        //    base.CanClose(callback);
+        //}
+
+        //protected override void OnViewAttached(object view, object context)
+        //{
+        //    base.OnViewAttached(view, context);
+        //    //ShellView shellView = view as ShellView;
+        //    //Get window size from Isolated storage in UserSettings
+
+        //    using (var conn = documentStore.OpenSession())
+        //    {
+        //        var appsettings = conn.Query<AppSettings>().FirstOrDefault();
+
+        //        if (appsettings != null)
+        //        {
+        //            Application.Current.MainWindow.SizeToContent = SizeToContent.Manual;
+
+        //            Application.Current.MainWindow.Left = appsettings.Left;
+        //            Application.Current.MainWindow.Top = appsettings.Top;
+        //            Application.Current.MainWindow.Width = appsettings.Width;
+        //            Application.Current.MainWindow.Height = appsettings.Height;
+        //        }
+        //    }
+        //}
 
         #region Properties
 
