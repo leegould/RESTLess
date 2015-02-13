@@ -5,7 +5,6 @@ using System.Reflection;
 using System.Windows;
 using Caliburn.Micro;
 using Raven.Client;
-using Raven.Client.Document;
 using Raven.Client.Embedded;
 using Raven.Client.Indexes;
 using Raven.Database.Server;
@@ -62,5 +61,27 @@ namespace RESTLess
         {
             container.BuildUp(instance);
         }
+
+        //protected override void OnStartup(object sender, StartupEventArgs e)
+        //{
+        //    base.OnStartup(sender, e);
+
+        //    var docstore = container.GetInstance<IDocumentStore>();
+        //    if (docstore != null)
+        //    {
+        //        using (var conn = docstore.OpenSession())
+        //        {
+        //            var appsettings = conn.Query<AppSettings>().FirstOrDefault();
+
+        //            if (appsettings != null)
+        //            {
+        //                Application.Current.MainWindow.SizeToContent = SizeToContent.Manual;
+
+        //                Application.Current.MainWindow.Width = appsettings.Width;
+        //                Application.Current.MainWindow.Height = appsettings.Height;
+        //            }
+        //        }
+        //    }
+        //}
     }
 }

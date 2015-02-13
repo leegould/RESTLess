@@ -5,7 +5,6 @@ using System.Diagnostics;
 using System.Dynamic;
 using System.Linq;
 using System.Windows;
-using System.Windows.Forms.VisualStyles;
 
 using AutoMapper;
 using Caliburn.Micro;
@@ -93,8 +92,6 @@ namespace RESTLess
         //    {
         //        var appsettings = conn.Query<AppSettings>().FirstOrDefault() ?? new AppSettings();
 
-        //        appsettings.Left = Application.Current.MainWindow.Left;
-        //        appsettings.Top = Application.Current.MainWindow.Top;
         //        appsettings.Width = Application.Current.MainWindow.Width;
         //        appsettings.Height = Application.Current.MainWindow.Height;
 
@@ -103,29 +100,7 @@ namespace RESTLess
 
         //    base.CanClose(callback);
         //}
-
-        //protected override void OnViewAttached(object view, object context)
-        //{
-        //    base.OnViewAttached(view, context);
-        //    //ShellView shellView = view as ShellView;
-        //    //Get window size from Isolated storage in UserSettings
-
-        //    using (var conn = documentStore.OpenSession())
-        //    {
-        //        var appsettings = conn.Query<AppSettings>().FirstOrDefault();
-
-        //        if (appsettings != null)
-        //        {
-        //            Application.Current.MainWindow.SizeToContent = SizeToContent.Manual;
-
-        //            Application.Current.MainWindow.Left = appsettings.Left;
-        //            Application.Current.MainWindow.Top = appsettings.Top;
-        //            Application.Current.MainWindow.Width = appsettings.Width;
-        //            Application.Current.MainWindow.Height = appsettings.Height;
-        //        }
-        //    }
-        //}
-
+        
         #region Properties
 
         public MethodViewModel MethodViewModel { get; set; }
