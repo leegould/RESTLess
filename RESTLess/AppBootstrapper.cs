@@ -8,7 +8,6 @@ using Raven.Client;
 using Raven.Client.Embedded;
 using Raven.Client.Indexes;
 using Raven.Database.Server;
-
 using RESTLess.Models;
 
 namespace RESTLess
@@ -62,26 +61,9 @@ namespace RESTLess
             container.BuildUp(instance);
         }
 
-        //protected override void OnStartup(object sender, StartupEventArgs e)
-        //{
-        //    base.OnStartup(sender, e);
-
-        //    var docstore = container.GetInstance<IDocumentStore>();
-        //    if (docstore != null)
-        //    {
-        //        using (var conn = docstore.OpenSession())
-        //        {
-        //            var appsettings = conn.Query<AppSettings>().FirstOrDefault();
-
-        //            if (appsettings != null)
-        //            {
-        //                Application.Current.MainWindow.SizeToContent = SizeToContent.Manual;
-
-        //                Application.Current.MainWindow.Width = appsettings.Width;
-        //                Application.Current.MainWindow.Height = appsettings.Height;
-        //            }
-        //        }
-        //    }
-        //}
+        protected override void OnStartup(object sender, StartupEventArgs e)
+        {
+            DisplayRootViewFor<IApp>();
+        }
     }
 }

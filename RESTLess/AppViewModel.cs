@@ -20,7 +20,7 @@ using RESTLess.Models.Messages;
 namespace RESTLess
 {
     [Export(typeof(AppViewModel))]
-    public class AppViewModel : Screen, IApp, IHandle<HistorySelectedMessage>, IHandle<MethodSelectedMessage>, IHandle<GroupedSelectedMessage>
+    public class AppViewModel : PropertyChangedBase, IApp, IHandle<HistorySelectedMessage>, IHandle<MethodSelectedMessage>, IHandle<GroupedSelectedMessage>
     {
         #region Private members
 
@@ -28,7 +28,7 @@ namespace RESTLess
 
         private readonly IWindowManager windowManager;
 
-        private readonly IDocumentStore documentStore;
+        public readonly IDocumentStore DocumentStore;
 
         private string rawResultsTextBox;
         private string htmlResultsBox;
@@ -76,7 +76,7 @@ namespace RESTLess
             this.eventAggregator = eventAggregator;
             eventAggregator.Subscribe(this);
             this.windowManager = windowManager;
-            this.documentStore = documentStore;
+            this.DocumentStore = documentStore;
             HeadersDataGrid = new BindableCollection<HttpHeader>();
             MethodViewModel = new MethodViewModel(eventAggregator);
             HistoryViewModel = new HistoryViewModel(eventAggregator, documentStore);
@@ -84,22 +84,6 @@ namespace RESTLess
             selectedMethod = Method.GET;
             BodyIsVisible = false;
         }
-
-        ////http://caliburnmicro.codeplex.com/discussions/394099
-        //public override void CanClose(Action<bool> callback)
-        //{
-        //    using (var conn = documentStore.OpenSession())
-        //    {
-        //        var appsettings = conn.Query<AppSettings>().FirstOrDefault() ?? new AppSettings();
-
-        //        appsettings.Width = Application.Current.MainWindow.Width;
-        //        appsettings.Height = Application.Current.MainWindow.Height;
-
-        //        conn.SaveChanges();
-        //    }
-
-        //    base.CanClose(callback);
-        //}
         
         #region Properties
 
@@ -272,7 +256,7 @@ namespace RESTLess
             NotifyOfPropertyChange(() => CanStopButton);
 
             Request req = null;
-            using (var conn = documentStore.OpenSession())
+            using (var conn = DocumentStore.OpenSession())
             {
                 try
                 {
@@ -303,7 +287,7 @@ namespace RESTLess
 
                         StopSending();
 
-                        using (var conn = documentStore.OpenSession())
+                        using (var conn = DocumentStore.OpenSession())
                         {
                             try
                             {
@@ -364,7 +348,7 @@ namespace RESTLess
         {
             Mapper.Map(historyRequest.Request, this);
 
-            using (var docstore = documentStore.OpenSession())
+            using (var docstore = DocumentStore.OpenSession())
             {
                 var response = docstore.Query<Response>().FirstOrDefault(x => x.RequestId == historyRequest.Request.Id);
                 DisplayOrClear(response);
@@ -380,7 +364,7 @@ namespace RESTLess
 
         public void Handle(GroupedSelectedMessage message)
         {
-            using (var docstore = documentStore.OpenSession())
+            using (var docstore = DocumentStore.OpenSession())
             {
                 var item = docstore.Load<Request>(message.Request.Id);
                 Mapper.Map(item, this);
