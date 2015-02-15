@@ -20,7 +20,7 @@ using RESTLess.Models.Messages;
 namespace RESTLess
 {
     [Export(typeof(AppViewModel))]
-    public class AppViewModel : PropertyChangedBase, IApp, IHandle<HistorySelectedMessage>, IHandle<MethodSelectedMessage>, IHandle<GroupedSelectedMessage>
+    public class AppViewModel : Screen, IApp, IHandle<HistorySelectedMessage>, IHandle<MethodSelectedMessage>, IHandle<GroupedSelectedMessage>
     {
         #region Private members
 
@@ -83,6 +83,26 @@ namespace RESTLess
             GroupedViewModel = new GroupedViewModel(eventAggregator, documentStore);
             selectedMethod = Method.GET;
             BodyIsVisible = false;
+        }
+
+        //http://caliburnmicro.codeplex.com/discussions/394099
+        public override void CanClose(Action<bool> callback)
+        {
+            using (var conn = DocumentStore.OpenSession())
+            {
+                var appsettings = conn.Query<AppSettings>().FirstOrDefault();
+                if (appsettings == null)
+                {
+                    appsettings = new AppSettings();
+                    conn.Store(appsettings);
+                }
+
+                appsettings.Width = Application.Current.MainWindow.Width;
+                appsettings.Height = Application.Current.MainWindow.Height;
+                conn.SaveChanges();
+            }
+
+            base.CanClose(callback);
         }
         
         #region Properties
