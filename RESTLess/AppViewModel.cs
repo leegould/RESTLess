@@ -357,7 +357,7 @@ namespace RESTLess
             settings.Height = 200;
             settings.WindowStartupLocation = WindowStartupLocation.Manual;
 
-            windowManager.ShowWindow(new PreferencesViewModel(eventAggregator), null, settings);
+            windowManager.ShowWindow(new PreferencesViewModel(eventAggregator, DocumentStore), null, settings);
         }
 
         #endregion

@@ -6,41 +6,25 @@
 	  mc:Ignorable="d" 
 	  d:DesignHeight="300" d:DesignWidth="300" Width="300" Height="200">
 
-    <StackPanel >
-        <GroupBox Header="Request" Margin="10">
-            <Grid Margin="10">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="25"></RowDefinition>
-                </Grid.RowDefinitions>
-                <Label Grid.Column="0">Timeout (ms)</Label>
-                <TextBox Grid.Column="1">60000</TextBox>
-            </Grid>
-        </GroupBox>
-        
-            <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Margin="0,20,0,0">
-                <Button Height="25" Width="75" Name="CancelButton" Content="Cancel" Margin="0,0,20,0"></Button>
-                <Button Height="25" Width="75" Name="SaveButton" Content="Save" Margin="0,0,20,0"></Button>
-            </StackPanel>
-    </StackPanel>
-    
-	<!--<Grid Background="Gray">
-		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="*"></ColumnDefinition>
-			<ColumnDefinition Width="2*"></ColumnDefinition>
-		</Grid.ColumnDefinitions>
-		<Grid.RowDefinitions>
-			<RowDefinition Height="*"></RowDefinition>
-			<RowDefinition Height="*"></RowDefinition>
-		</Grid.RowDefinitions>
-			
-		<Label Grid.Row="0" Grid.Column="0" Padding="10">Timeout</Label>
-
-		<TextBox Grid.Row="0" Grid.Column="1" Padding="10" x:Name="TimeoutTextBox"></TextBox>
-
-		<Button Grid.Row="1" Grid.Column="1" Padding="10" Name="SaveButton" Margin="2" Content="Save"></Button>
-	</Grid>-->
+	<StackPanel >
+		<GroupBox Header="Request" Margin="10">
+			<Grid Margin="10">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+					<ColumnDefinition Width="*"/>
+				</Grid.ColumnDefinitions>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="25"></RowDefinition>
+				</Grid.RowDefinitions>
+				<Label Grid.Column="0">Timeout (ms)</Label>
+				<TextBox Grid.Column="1" x:Name="TimeoutTextBox">60000</TextBox>
+			</Grid>
+		</GroupBox>
+		
+			<StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Margin="0,20,0,0">
+				<Button Height="25" Width="75" Name="CancelButton" Content="Cancel" Margin="0,0,20,0"></Button>
+				<Button Height="25" Width="75" Name="SaveButton" Content="Save" Margin="0,0,20,0"></Button>
+			</StackPanel>
+	</StackPanel>
+	
 </UserControl>
