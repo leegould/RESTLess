@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.Composition;
+﻿using System.ComponentModel.Composition;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 using Caliburn.Micro;
 
 using Raven.Client;
-using Raven.Client.Document;
 
 using RESTLess.Models;
 
@@ -41,6 +36,24 @@ namespace RESTLess.Controls
             eventAggregator.Subscribe(this);
         }
 
+        protected override void OnViewAttached(object view, object context)
+        {
+            base.OnViewAttached(view, context);
+
+            using (var conn = documentStore.OpenSession())
+            {
+                var appsettings = conn.Query<AppSettings>().FirstOrDefault();
+                if (appsettings != null && appsettings.RequestSettings != null)
+                {
+                    TimeoutTextBox = appsettings.RequestSettings.Timeout.ToString();
+                }
+                else
+                {
+                    timeoutTextBox = "60000"; // Default
+                }
+            }
+        }
+        
         public void SaveButton()
         {
             using (var conn = documentStore.OpenSession())
