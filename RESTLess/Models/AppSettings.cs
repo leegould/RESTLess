@@ -11,5 +11,7 @@
         public double Height { get; set; }
         
         public RequestSettings RequestSettings { get; set; }
+
+        public bool LoadResponses { get; set; }
     }
 }

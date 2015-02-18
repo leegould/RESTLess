@@ -97,6 +97,8 @@ namespace RESTLess
                     conn.Store(appsettings);
                 }
 
+                appsettings.Top = Application.Current.MainWindow.Top;
+                appsettings.Left = Application.Current.MainWindow.Left;
                 appsettings.Width = Application.Current.MainWindow.Width;
                 appsettings.Height = Application.Current.MainWindow.Height;
                 conn.SaveChanges();
@@ -354,7 +356,7 @@ namespace RESTLess
         {
             dynamic settings = new ExpandoObject();
             settings.Width = 300;
-            settings.Height = 200;
+            settings.Height = 300;
             settings.WindowStartupLocation = WindowStartupLocation.Manual;
 
             windowManager.ShowWindow(new PreferencesViewModel(eventAggregator, DocumentStore), null, settings);

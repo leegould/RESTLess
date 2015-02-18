@@ -14,6 +14,8 @@ namespace RESTLess.Controls
     {
         private string timeoutTextBox;
 
+        private bool loadResponsesChecked;
+
         private readonly IEventAggregator eventAggregator;
 
         private readonly IDocumentStore documentStore;
@@ -25,6 +27,16 @@ namespace RESTLess.Controls
             {
                 timeoutTextBox = value;
                 NotifyOfPropertyChange(() => TimeoutTextBox);
+            }
+        }
+
+        public bool LoadResponsesChecked
+        {
+            get { return loadResponsesChecked; }
+            set
+            {
+                loadResponsesChecked = value;
+                NotifyOfPropertyChange(() => LoadResponsesChecked);
             }
         }
 
@@ -46,10 +58,12 @@ namespace RESTLess.Controls
                 if (appsettings != null && appsettings.RequestSettings != null)
                 {
                     TimeoutTextBox = appsettings.RequestSettings.Timeout.ToString();
+                    LoadResponsesChecked = appsettings.LoadResponses;
                 }
                 else
                 {
-                    timeoutTextBox = "60000"; // Default
+                    TimeoutTextBox = "60000"; // Default
+                    LoadResponsesChecked = true;
                 }
             }
         }
@@ -72,8 +86,10 @@ namespace RESTLess.Controls
                 appsettings.RequestSettings = 
                     new RequestSettings
                     {
-                        Timeout = int.Parse(timeoutTextBox)
+                        Timeout = int.Parse(TimeoutTextBox)
                     };
+
+                appsettings.LoadResponses = LoadResponsesChecked;
 
                 conn.SaveChanges();
             }

@@ -26,6 +26,8 @@ namespace RESTLess
 
                         if (appsettings != null)
                         {
+                            window.Top = appsettings.Top;
+                            window.Left = appsettings.Left;
                             window.Width = appsettings.Width;
                             window.Height = appsettings.Height;
                         }
