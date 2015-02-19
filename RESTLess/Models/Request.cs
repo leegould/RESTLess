@@ -11,7 +11,7 @@ namespace RESTLess.Models
             
         }
 
-        public Request(Uri baseUrl, RestRequest restRequest, string body)
+        public Request(Uri baseUrl, RestRequest restRequest, string body, RequestSettings requestSettings)
         {
             When = DateTime.UtcNow;
             Url = baseUrl;
@@ -26,6 +26,8 @@ namespace RESTLess.Models
                     Headers.Add(param.Name, param.Value.ToString());
                 }
             }
+
+            Timeout = requestSettings.Timeout;
 
             Body = body;
         }
@@ -43,5 +45,7 @@ namespace RESTLess.Models
         public string Method { get; set; }
 
         public string Body { get; set; }
+
+        public int Timeout { get; set; }
     }
 }

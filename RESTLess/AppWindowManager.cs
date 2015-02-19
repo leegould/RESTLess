@@ -20,22 +20,14 @@ namespace RESTLess
                 {
                     using (var conn = docstore.OpenSession())
                     {
-                        var appsettings = conn.Query<AppSettings>().FirstOrDefault();
+                        var appsettings = conn.Query<AppSettings>().FirstOrDefault() ?? AppSettings.CreateDefault();
 
                         window.SizeToContent = SizeToContent.Manual;
-
-                        if (appsettings != null)
-                        {
-                            window.Top = appsettings.Top;
-                            window.Left = appsettings.Left;
-                            window.Width = appsettings.Width;
-                            window.Height = appsettings.Height;
-                        }
-                        else
-                        {
-                            window.Width = 800;
-                            window.Height = 600;
-                        }
+                        
+                        window.Top = appsettings.Top;
+                        window.Left = appsettings.Left;
+                        window.Width = appsettings.Width;
+                        window.Height = appsettings.Height;
                     }
                 }
             }

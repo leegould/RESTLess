@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Diagnostics;
 using System.Dynamic;
+using System.Globalization;
 using System.Linq;
 using System.Windows;
 
@@ -20,16 +21,18 @@ using RESTLess.Models.Messages;
 namespace RESTLess
 {
     [Export(typeof(AppViewModel))]
-    public class AppViewModel : Screen, IApp, IHandle<HistorySelectedMessage>, IHandle<MethodSelectedMessage>, IHandle<GroupedSelectedMessage>
+    public class AppViewModel : Screen, IApp, IHandle<HistorySelectedMessage>, IHandle<MethodSelectedMessage>, IHandle<GroupedSelectedMessage>, IHandle<AppSettingsChangedMessage>
     {
         #region Private members
+
+        private AppSettings appSettings;
 
         private readonly IEventAggregator eventAggregator;
 
         private readonly IWindowManager windowManager;
-
+        
         public readonly IDocumentStore DocumentStore;
-
+        
         private string rawResultsTextBox;
         private string htmlResultsBox;
         private string url;
@@ -60,17 +63,7 @@ namespace RESTLess
                 .ForMember(d => d.UrlTextBox, o => o.MapFrom(s => s.Url + s.Path.Substring(1)))
                 .ForMember(d => d.BodyTextBox, o => o.MapFrom(s => s.Body));
         }
-
-        private static IObservableCollection<HttpHeader> CreateHeadersFromDict(Dictionary<string, string> dictionary)
-        {
-            var items = new BindableCollection<HttpHeader>();
-            foreach (var item in dictionary)
-            {
-                items.Add(new HttpHeader {Name = item.Key, Value = item.Value});
-            }
-            return items;
-        }
-
+        
         public AppViewModel(IEventAggregator eventAggregator, IWindowManager windowManager, IDocumentStore documentStore)
         {
             this.eventAggregator = eventAggregator;
@@ -83,6 +76,17 @@ namespace RESTLess
             GroupedViewModel = new GroupedViewModel(eventAggregator, documentStore);
             selectedMethod = Method.GET;
             BodyIsVisible = false;
+
+            using (var conn = DocumentStore.OpenSession())
+            {
+                appSettings = conn.Query<AppSettings>().FirstOrDefault();
+                if (appSettings == null)
+                {
+                    appSettings = AppSettings.CreateDefault();
+                    conn.Store(appSettings);
+                    conn.SaveChanges();
+                }
+            }
         }
 
         //http://caliburnmicro.codeplex.com/discussions/394099
@@ -93,7 +97,7 @@ namespace RESTLess
                 var appsettings = conn.Query<AppSettings>().FirstOrDefault();
                 if (appsettings == null)
                 {
-                    appsettings = new AppSettings();
+                    appsettings = AppSettings.CreateDefault();
                     conn.Store(appsettings);
                 }
 
@@ -248,7 +252,7 @@ namespace RESTLess
         #endregion
 
 
-        #region Public Methods
+        #region Button Actions
 
         public void SendButton()
         {
@@ -282,7 +286,7 @@ namespace RESTLess
             {
                 try
                 {
-                    req = new Request(client.BaseUrl, request, body);
+                    req = new Request(client.BaseUrl, request, body, appSettings.RequestSettings);
                     conn.Store(req);
                     conn.SaveChanges();
                 }
@@ -355,7 +359,7 @@ namespace RESTLess
         public void Preferences()
         {
             dynamic settings = new ExpandoObject();
-            settings.Width = 300;
+            settings.Width = 400;
             settings.Height = 300;
             settings.WindowStartupLocation = WindowStartupLocation.Manual;
 
@@ -370,10 +374,14 @@ namespace RESTLess
         {
             Mapper.Map(historyRequest.Request, this);
 
-            using (var docstore = DocumentStore.OpenSession())
+            if (appSettings.LoadResponses)
             {
-                var response = docstore.Query<Response>().FirstOrDefault(x => x.RequestId == historyRequest.Request.Id);
-                DisplayOrClear(response);
+                using (var docstore = DocumentStore.OpenSession())
+                {
+                    var response =
+                        docstore.Query<Response>().FirstOrDefault(x => x.RequestId == historyRequest.Request.Id);
+                    DisplayOrClear(response);
+                }
             }
         }
 
@@ -390,8 +398,21 @@ namespace RESTLess
             {
                 var item = docstore.Load<Request>(message.Request.Id);
                 Mapper.Map(item, this);
-                var response = docstore.Query<Response>().FirstOrDefault(x => x.RequestId == item.Id);
-                DisplayOrClear(response);
+
+                if (appSettings.LoadResponses)
+                {
+                    var response = docstore.Query<Response>().FirstOrDefault(x => x.RequestId == item.Id);
+                    DisplayOrClear(response);
+                }
+            }
+        }
+
+        public void Handle(AppSettingsChangedMessage message)
+        {
+            appSettings = message.AppSettings;
+            if (!appSettings.LoadResponses)
+            {
+                DisplayOrClear(null); // Clear
             }
         }
 
@@ -441,7 +462,7 @@ namespace RESTLess
                 ResponseElapsedTextBlock =  response.Elapsed + " ms.";
                 ResponseStatusTextBlock = response.StatusCode + " " + response.StatusCodeDescription;
 
-                var whentext = response.When.ToString();
+                var whentext = response.When.ToString(CultureInfo.InvariantCulture);
                 var ago = DateTime.UtcNow.Subtract(response.When);
                 if (ago.TotalMinutes > 1)
                 {
@@ -467,6 +488,16 @@ namespace RESTLess
             isWaiting = false;
             NotifyOfPropertyChange(() => CanStopButton);
             NotifyOfPropertyChange(() => CanSendButton);
+        }
+
+        private static IObservableCollection<HttpHeader> CreateHeadersFromDict(Dictionary<string, string> dictionary)
+        {
+            var items = new BindableCollection<HttpHeader>();
+            foreach (var item in dictionary)
+            {
+                items.Add(new HttpHeader { Name = item.Key, Value = item.Value });
+            }
+            return items;
         }
 
         #endregion

@@ -6,6 +6,7 @@ using Caliburn.Micro;
 using Raven.Client;
 
 using RESTLess.Models;
+using RESTLess.Models.Messages;
 
 namespace RESTLess.Controls
 {
@@ -19,6 +20,8 @@ namespace RESTLess.Controls
         private readonly IEventAggregator eventAggregator;
 
         private readonly IDocumentStore documentStore;
+
+        #region Properties
 
         public string TimeoutTextBox
         {
@@ -40,6 +43,7 @@ namespace RESTLess.Controls
             }
         }
 
+        #endregion
 
         public PreferencesViewModel(IEventAggregator eventAggregator, IDocumentStore documentStore)
         {
@@ -48,26 +52,8 @@ namespace RESTLess.Controls
             eventAggregator.Subscribe(this);
         }
 
-        protected override void OnViewAttached(object view, object context)
-        {
-            base.OnViewAttached(view, context);
+        #region Button Actions
 
-            using (var conn = documentStore.OpenSession())
-            {
-                var appsettings = conn.Query<AppSettings>().FirstOrDefault();
-                if (appsettings != null && appsettings.RequestSettings != null)
-                {
-                    TimeoutTextBox = appsettings.RequestSettings.Timeout.ToString();
-                    LoadResponsesChecked = appsettings.LoadResponses;
-                }
-                else
-                {
-                    TimeoutTextBox = "60000"; // Default
-                    LoadResponsesChecked = true;
-                }
-            }
-        }
-        
         public void SaveButton()
         {
             using (var conn = documentStore.OpenSession())
@@ -75,29 +61,48 @@ namespace RESTLess.Controls
                 var appsettings = conn.Query<AppSettings>().FirstOrDefault();
                 if (appsettings == null)
                 {
-                    appsettings = new AppSettings
-                                  {
-                                      Height = 600,
-                                      Width = 800
-                                  };
+                    appsettings = AppSettings.CreateDefault();
                     conn.Store(appsettings);
                 }
 
-                appsettings.RequestSettings = 
-                    new RequestSettings
-                    {
-                        Timeout = int.Parse(TimeoutTextBox)
-                    };
+                appsettings.RequestSettings.Timeout = int.Parse(TimeoutTextBox);
 
                 appsettings.LoadResponses = LoadResponsesChecked;
-
+                
                 conn.SaveChanges();
+
+                eventAggregator.PublishOnUIThread(new AppSettingsChangedMessage { AppSettings = appsettings });
+
+                TryClose();
             }
         }
 
         public void CancelButton()
         {
             TryClose();
+        }
+
+        #endregion
+
+        protected override void OnViewAttached(object view, object context)
+        {
+            base.OnViewAttached(view, context);
+
+            using (var conn = documentStore.OpenSession())
+            {
+                var appsettings = conn.Query<AppSettings>().FirstOrDefault() ?? AppSettings.CreateDefault();
+                LoadValues(appsettings);
+            }
+        }
+
+        private void LoadValues(AppSettings appsettings)
+        {
+            LoadResponsesChecked = appsettings.LoadResponses;
+
+            if (appsettings.RequestSettings != null)
+            {
+                TimeoutTextBox = appsettings.RequestSettings.Timeout.ToString();
+            }
         }
     }
 }
