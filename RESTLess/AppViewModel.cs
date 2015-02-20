@@ -257,7 +257,10 @@ namespace RESTLess
         public void SendButton()
         {
             var uri = new Uri(UrlTextBox);
-            RestClient client = new RestClient(uri.GetLeftPart(UriPartial.Authority));
+            RestClient client = new RestClient(uri.GetLeftPart(UriPartial.Authority))
+                                {
+                                    Timeout = appSettings.RequestSettings.Timeout
+                                };
             var method = selectedMethod;
 
             var request = new RestRequest(uri, method);
@@ -362,6 +365,8 @@ namespace RESTLess
             settings.Width = 400;
             settings.Height = 300;
             settings.WindowStartupLocation = WindowStartupLocation.Manual;
+            settings.Title = "Preferences";
+            //settings.SizeToContent = "WidthAndHeight";
 
             windowManager.ShowWindow(new PreferencesViewModel(eventAggregator, DocumentStore), null, settings);
         }
