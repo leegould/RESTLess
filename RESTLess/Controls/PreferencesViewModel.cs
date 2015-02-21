@@ -60,6 +60,7 @@ namespace RESTLess.Controls
             using (var conn = documentStore.OpenSession())
             {
                 var appsettings = conn.Query<AppSettings>().FirstOrDefault();
+
                 if (appsettings == null)
                 {
                     appsettings = AppSettings.CreateDefault();
@@ -67,7 +68,6 @@ namespace RESTLess.Controls
                 }
 
                 appsettings.RequestSettings.Timeout = int.Parse(TimeoutTextBox);
-
                 appsettings.LoadResponses = LoadResponsesChecked;
                 
                 conn.SaveChanges();
