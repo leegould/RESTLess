@@ -98,6 +98,10 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Controls\FavouritesViewModel.cs" />
+    <Compile Include="Controls\FavouritesView.xaml.cs">
+      <DependentUpon>FavouritesView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\GroupedView.xaml.cs">
       <DependentUpon>GroupedView.xaml</DependentUpon>
     </Compile>
@@ -173,6 +177,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Assets\CommonResources.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\FavouritesView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

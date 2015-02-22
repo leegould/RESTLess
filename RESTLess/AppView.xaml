@@ -55,8 +55,17 @@
                     </TabItem.Header>
                     <ContentControl x:Name="GroupedViewModel"></ContentControl>
                 </TabItem>
-                
-            </TabControl>
+
+                <TabItem>
+                    <TabItem.Header>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Favourites" Foreground="DarkSlateGray"/>
+                        </StackPanel>
+                    </TabItem.Header>
+                    <ContentControl x:Name="FavouritesViewModel"></ContentControl>
+                </TabItem>
+
+                </TabControl>
 
             <GridSplitter Grid.Column="0" Width="2" HorizontalAlignment="Right" VerticalAlignment="Stretch" ResizeBehavior="CurrentAndNext"/>
 

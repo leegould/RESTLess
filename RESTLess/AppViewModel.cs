@@ -74,6 +74,7 @@ namespace RESTLess
             MethodViewModel = new MethodViewModel(eventAggregator);
             HistoryViewModel = new HistoryViewModel(eventAggregator, documentStore);
             GroupedViewModel = new GroupedViewModel(eventAggregator, documentStore);
+            FavouritesViewModel = new FavouritesViewModel(eventAggregator, documentStore);
             selectedMethod = Method.GET;
             BodyIsVisible = false;
 
@@ -118,6 +119,8 @@ namespace RESTLess
         public HistoryViewModel HistoryViewModel { get; set; }
 
         public GroupedViewModel GroupedViewModel { get; set; }
+
+        public FavouritesViewModel FavouritesViewModel { get; set; }
 
         public string UrlTextBox
         {
