@@ -47,5 +47,7 @@ namespace RESTLess.Models
         public string Body { get; set; }
 
         public int Timeout { get; set; }
+
+        public bool Favourite { get; set; }
     }
 }
