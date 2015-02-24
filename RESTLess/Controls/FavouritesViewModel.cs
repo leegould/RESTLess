@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 using Caliburn.Micro;
+
 using Raven.Client;
+
 using RESTLess.Models;
 using RESTLess.Models.Messages;
 

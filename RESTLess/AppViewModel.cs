@@ -13,6 +13,7 @@ using Caliburn.Micro;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Raven.Client;
+using Raven.Client.Linq;
 using RestSharp;
 using RESTLess.Controls;
 using RESTLess.Models;
@@ -21,7 +22,7 @@ using RESTLess.Models.Messages;
 namespace RESTLess
 {
     [Export(typeof(AppViewModel))]
-    public class AppViewModel : Screen, IApp, IHandle<HistorySelectedMessage>, IHandle<MethodSelectedMessage>, IHandle<GroupedSelectedMessage>, IHandle<AppSettingsChangedMessage>
+    public class AppViewModel : Screen, IApp, IHandle<HistorySelectedMessage>, IHandle<MethodSelectedMessage>, IHandle<GroupedSelectedMessage>, IHandle<AppSettingsChangedMessage>, IHandle<FavouriteSelectedMessage>
     {
         #region Private members
 
@@ -380,17 +381,7 @@ namespace RESTLess
 
         public void Handle(HistorySelectedMessage historyRequest)
         {
-            Mapper.Map(historyRequest.Request, this);
-
-            if (appSettings.LoadResponses)
-            {
-                using (var docstore = DocumentStore.OpenSession())
-                {
-                    var response =
-                        docstore.Query<Response>().FirstOrDefault(x => x.RequestId == historyRequest.Request.Id);
-                    DisplayOrClear(response);
-                }
-            }
+            LoadSelected(historyRequest.Request);
         }
 
         
@@ -400,27 +391,35 @@ namespace RESTLess
             BodyIsVisible = UseBody(message.Method);
         }
 
-        public void Handle(GroupedSelectedMessage message)
-        {
-            using (var docstore = DocumentStore.OpenSession())
-            {
-                var item = docstore.Load<Request>(message.Request.Id);
-                Mapper.Map(item, this);
-
-                if (appSettings.LoadResponses)
-                {
-                    var response = docstore.Query<Response>().FirstOrDefault(x => x.RequestId == item.Id);
-                    DisplayOrClear(response);
-                }
-            }
-        }
-
         public void Handle(AppSettingsChangedMessage message)
         {
             appSettings = message.AppSettings;
             if (!appSettings.LoadResponses)
             {
                 DisplayOrClear(null); // Clear
+            }
+        }
+
+        public void Handle(FavouriteSelectedMessage message)
+        {
+            LoadSelected(message.Request);
+        }
+
+        public void Handle(GroupedSelectedMessage message)
+        {
+            using (var docstore = DocumentStore.OpenSession())
+            {
+                var item = docstore.Load<Request>(message.Request.Id);
+                if (item != null)
+                {
+                    Mapper.Map(item, this);
+
+                    if (appSettings.LoadResponses)
+                    {
+                        var response = docstore.Query<Response>().FirstOrDefault(x => x.RequestId == item.Id);
+                        DisplayOrClear(response);
+                    }
+                }
             }
         }
 
@@ -482,6 +481,20 @@ namespace RESTLess
             catch (Exception ex)
             {
                 RawResultsTextBox = ex.ToString();
+            }
+        }
+
+        private void LoadSelected(Request request)
+        {
+            Mapper.Map(request, this);
+
+            if (appSettings.LoadResponses)
+            {
+                using (var docstore = DocumentStore.OpenSession())
+                {
+                    var response = docstore.Query<Response>().FirstOrDefault(x => x.RequestId == request.Id);
+                    DisplayOrClear(response);
+                }
             }
         }
 
