@@ -492,7 +492,11 @@ namespace RESTLess
             {
                 using (var docstore = DocumentStore.OpenSession())
                 {
-                    var response = docstore.Query<Response>().FirstOrDefault(x => x.RequestId == request.Id);
+                    Response response = null;
+                    if (request != null)
+                    {
+                        response = docstore.Query<Response>().FirstOrDefault(x => x.RequestId == request.Id);
+                    }
                     DisplayOrClear(response);
                 }
             }

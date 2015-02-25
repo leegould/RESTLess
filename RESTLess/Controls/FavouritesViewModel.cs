@@ -1,5 +1,5 @@
 ﻿using System;
-
+using System.Windows.Controls;
 using Caliburn.Micro;
 
 using Raven.Client;
@@ -37,8 +37,11 @@ namespace RESTLess.Controls
             set
             {
                 selectedItem = value;
-                eventAggregator.PublishOnUIThread(new FavouriteSelectedMessage { Request = value });
-                NotifyOfPropertyChange(() => SelectedItem);
+                if (value != null)
+                {
+                    eventAggregator.PublishOnUIThread(new FavouriteSelectedMessage {Request = value});
+                    NotifyOfPropertyChange(() => SelectedItem);
+                }
             }
         }
 
