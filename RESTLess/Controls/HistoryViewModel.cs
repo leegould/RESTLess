@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Linq;
+using System.Windows;
+
 using Caliburn.Micro;
 using Raven.Client;
 using Raven.Client.Linq;
@@ -49,6 +51,11 @@ namespace RESTLess.Controls
             this.documentStore = documentStore;
             HistoryRequests = new BindableCollection<Request>();
             LoadHistory();
+        }
+
+        public void Favourite(object source)
+        {
+            MessageBox.Show((string) source);
         }
 
         public void Handle(RequestSavedMessage message)

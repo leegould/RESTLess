@@ -13,7 +13,6 @@ using Caliburn.Micro;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Raven.Client;
-using Raven.Client.Linq;
 using RestSharp;
 using RESTLess.Controls;
 using RESTLess.Models;
@@ -373,6 +372,11 @@ namespace RESTLess
             //settings.SizeToContent = "WidthAndHeight";
 
             windowManager.ShowWindow(new PreferencesViewModel(eventAggregator, DocumentStore), null, settings);
+        }
+
+        public void Favourite()
+        {
+            
         }
 
         #endregion
