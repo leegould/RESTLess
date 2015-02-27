@@ -9,7 +9,7 @@ using RESTLess.Models.Messages;
 
 namespace RESTLess.Controls
 {
-    public class FavouritesViewModel : PropertyChangedBase
+    public class FavouritesViewModel : PropertyChangedBase, IHandle<FavouriteAddedMessage>
     {
         private const string IndexName = "Requests/Favourite/All";
 
@@ -69,6 +69,11 @@ namespace RESTLess.Controls
                     // eventAggregator.PublishOnUIThread(ex); // <- Wrap in a specific exception class
                 }
             }
+        }
+
+        public void Handle(FavouriteAddedMessage message)
+        {
+            FavouriteRequests.Add(message.Request);
         }
     }
 }
