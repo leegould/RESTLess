@@ -54,6 +54,34 @@ namespace RESTLess.Controls
             Load();
         }
 
+        public async void RemoveFavourite(object source)
+        {
+            var request = source as Request;
+            if (request != null)
+            {
+                using (var conn = documentStore.OpenAsyncSession())
+                {
+                    try
+                    {
+                        var requestid = request.Id;
+                        var dbRequest = await conn.LoadAsync<Request>(requestid);
+
+                        if (dbRequest != null)
+                        {
+                            dbRequest.Favourite = false;
+                            await conn.SaveChangesAsync();
+                            eventAggregator.PublishOnUIThread(new FavouriteRemovedMessage() { Request = dbRequest });
+                        }
+                    }
+                    catch (Exception)
+                    {
+                        // TODO : pass exception messages to main window - add to event aggregator
+                        // eventAggregator.PublishOnUIThread(ex); // <- Wrap in a specific exception class
+                    }
+                }
+            }
+        }
+
         private async void Load()
         {
             using (var conn = documentStore.OpenAsyncSession())

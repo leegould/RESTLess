@@ -124,6 +124,7 @@
     <Compile Include="Models\Messages\AppSettingsChangedMessage.cs" />
     <Compile Include="Models\Messages\ChangeMethodMessage.cs" />
     <Compile Include="Models\Messages\FavouriteAddedMessage.cs" />
+    <Compile Include="Models\Messages\FavouriteRemovedMessage.cs" />
     <Compile Include="Models\Messages\FavouriteSelectedMessage.cs" />
     <Compile Include="Models\Messages\GroupedSelectedMessage.cs" />
     <Compile Include="Models\Messages\HistorySelectedMessage.cs" />
