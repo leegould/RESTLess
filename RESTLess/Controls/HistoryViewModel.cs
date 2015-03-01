@@ -1,17 +1,14 @@
 ﻿using System;
 using System.Linq;
-using System.Windows;
-
 using Caliburn.Micro;
 using Raven.Client;
-using Raven.Client.Linq;
-
 using RESTLess.Models;
+using RESTLess.Models.Interface;
 using RESTLess.Models.Messages;
 
 namespace RESTLess.Controls
 {
-    public class HistoryViewModel : PropertyChangedBase, IHandle<RequestSavedMessage>
+    public sealed class HistoryViewModel : Screen, ITabItem, IHandle<RequestSavedMessage>
     {
         private const string RequestsIndexName = "Requests/All";
 
@@ -46,6 +43,7 @@ namespace RESTLess.Controls
 
         public HistoryViewModel(IEventAggregator eventAggregator, IDocumentStore documentStore)
         {
+            DisplayName = "History";
             this.eventAggregator = eventAggregator;
             eventAggregator.Subscribe(this);
             this.documentStore = documentStore;

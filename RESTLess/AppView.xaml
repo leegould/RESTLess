@@ -36,9 +36,9 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <TabControl Background="Gray" Grid.Column="0" Grid.Row="0" Padding="0">
-
-                <TabItem>
+            <TabControl Background="Gray" Grid.Column="0" Grid.Row="0" Padding="0" x:Name="Items">
+                
+                <!--<TabItem>
                     <TabItem.Header>
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="History" Foreground="DarkSlateGray" />
@@ -63,7 +63,7 @@
                         </StackPanel>
                     </TabItem.Header>
                     <ContentControl x:Name="FavouritesViewModel"></ContentControl>
-                </TabItem>
+                </TabItem>-->
 
                 </TabControl>
 

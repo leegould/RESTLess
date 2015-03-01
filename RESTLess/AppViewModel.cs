@@ -16,12 +16,13 @@ using Raven.Client;
 using RestSharp;
 using RESTLess.Controls;
 using RESTLess.Models;
+using RESTLess.Models.Interface;
 using RESTLess.Models.Messages;
 
 namespace RESTLess
 {
     [Export(typeof(AppViewModel))]
-    public class AppViewModel : Screen, IApp, IHandle<HistorySelectedMessage>, IHandle<MethodSelectedMessage>, IHandle<GroupedSelectedMessage>, IHandle<AppSettingsChangedMessage>, IHandle<FavouriteSelectedMessage>
+    public class AppViewModel : Conductor<ITabItem>.Collection.OneActive, IApp, IHandle<HistorySelectedMessage>, IHandle<MethodSelectedMessage>, IHandle<GroupedSelectedMessage>, IHandle<AppSettingsChangedMessage>, IHandle<FavouriteSelectedMessage>
     {
         #region Private members
 
@@ -64,7 +65,7 @@ namespace RESTLess
                 .ForMember(d => d.BodyTextBox, o => o.MapFrom(s => s.Body));
         }
         
-        public AppViewModel(IEventAggregator eventAggregator, IWindowManager windowManager, IDocumentStore documentStore)
+        public AppViewModel(IEnumerable<ITabItem> tabs, IEventAggregator eventAggregator, IWindowManager windowManager, IDocumentStore documentStore)
         {
             this.eventAggregator = eventAggregator;
             eventAggregator.Subscribe(this);
@@ -72,9 +73,13 @@ namespace RESTLess
             this.DocumentStore = documentStore;
             HeadersDataGrid = new BindableCollection<HttpHeader>();
             MethodViewModel = new MethodViewModel(eventAggregator);
-            HistoryViewModel = new HistoryViewModel(eventAggregator, documentStore);
-            GroupedViewModel = new GroupedViewModel(eventAggregator, documentStore);
-            FavouritesViewModel = new FavouritesViewModel(eventAggregator, documentStore);
+            Items.AddRange(tabs);
+            Items.Add(new HistoryViewModel(eventAggregator, documentStore));
+            Items.Add(new GroupedViewModel(eventAggregator, documentStore));
+            Items.Add(new FavouritesViewModel(eventAggregator, documentStore));
+            //HistoryViewModel = new HistoryViewModel(eventAggregator, documentStore);
+            //GroupedViewModel = new GroupedViewModel(eventAggregator, documentStore);
+            //FavouritesViewModel = new FavouritesViewModel(eventAggregator, documentStore);
             selectedMethod = Method.GET;
             BodyIsVisible = false;
 

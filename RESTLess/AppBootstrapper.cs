@@ -9,6 +9,7 @@ using Raven.Client.Embedded;
 using Raven.Client.Indexes;
 using Raven.Database.Server;
 using RESTLess.Models;
+using RESTLess.Models.Interface;
 
 namespace RESTLess
 {

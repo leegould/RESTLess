@@ -7,11 +7,12 @@ using Caliburn.Micro;
 using Raven.Client;
 
 using RESTLess.Models;
+using RESTLess.Models.Interface;
 using RESTLess.Models.Messages;
 
 namespace RESTLess.Controls
 {
-    public class GroupedViewModel : PropertyChangedBase
+    public sealed class GroupedViewModel : Screen, ITabItem
     {
         private const string IndexName = "Requests/Grouped/All";
 
@@ -33,6 +34,7 @@ namespace RESTLess.Controls
 
         public GroupedViewModel(IEventAggregator eventAggregator, IDocumentStore documentStore)
         {
+            DisplayName = "Grouped";
             this.eventAggregator = eventAggregator;
             eventAggregator.Subscribe(this);
             this.documentStore = documentStore;

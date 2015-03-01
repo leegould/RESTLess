@@ -1,15 +1,16 @@
 ﻿using System;
-using System.Windows.Controls;
+using System.Linq;
 using Caliburn.Micro;
 
 using Raven.Client;
 
 using RESTLess.Models;
+using RESTLess.Models.Interface;
 using RESTLess.Models.Messages;
 
 namespace RESTLess.Controls
 {
-    public class FavouritesViewModel : PropertyChangedBase, IHandle<FavouriteAddedMessage>
+    public sealed class FavouritesViewModel : Screen, ITabItem, IHandle<FavouriteAddedMessage>
     {
         private const string IndexName = "Requests/Favourite/All";
 
@@ -47,6 +48,7 @@ namespace RESTLess.Controls
 
         public FavouritesViewModel(IEventAggregator eventAggregator, IDocumentStore documentStore)
         {
+            DisplayName = "Favourites";
             this.eventAggregator = eventAggregator;
             eventAggregator.Subscribe(this);
             this.documentStore = documentStore;
@@ -71,6 +73,7 @@ namespace RESTLess.Controls
                             dbRequest.Favourite = false;
                             await conn.SaveChangesAsync();
                             eventAggregator.PublishOnUIThread(new FavouriteRemovedMessage() { Request = dbRequest });
+                            FavouriteRequests.Remove(FavouriteRequests.FirstOrDefault(x => x.Id == dbRequest.Id));
                         }
                     }
                     catch (Exception)
@@ -101,7 +104,8 @@ namespace RESTLess.Controls
 
         public void Handle(FavouriteAddedMessage message)
         {
-            FavouriteRequests.Add(message.Request);
+            FavouriteRequests.Insert(0, message.Request);
+            //Load();
         }
     }
 }
