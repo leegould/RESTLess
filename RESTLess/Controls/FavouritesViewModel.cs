@@ -10,7 +10,7 @@ using RESTLess.Models.Messages;
 
 namespace RESTLess.Controls
 {
-    public sealed class FavouritesViewModel : Screen, ITabItem, IHandle<FavouriteAddedMessage>
+    public sealed class FavouritesViewModel : Screen, ITabItem
     {
         private const string IndexName = "Requests/Favourite/All";
 
@@ -52,8 +52,13 @@ namespace RESTLess.Controls
             this.eventAggregator = eventAggregator;
             eventAggregator.Subscribe(this);
             this.documentStore = documentStore;
+        }
+
+        protected override void OnActivate()
+        {
+            base.OnActivate();
             FavouriteRequests = new BindableCollection<Request>();
-            Load();
+            Load(); // Load or Reload collection.
         }
 
         public async void RemoveFavourite(object source)
@@ -100,12 +105,6 @@ namespace RESTLess.Controls
                     // eventAggregator.PublishOnUIThread(ex); // <- Wrap in a specific exception class
                 }
             }
-        }
-
-        public void Handle(FavouriteAddedMessage message)
-        {
-            FavouriteRequests.Insert(0, message.Request);
-            //Load();
         }
     }
 }

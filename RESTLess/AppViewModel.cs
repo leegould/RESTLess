@@ -65,7 +65,7 @@ namespace RESTLess
                 .ForMember(d => d.BodyTextBox, o => o.MapFrom(s => s.Body));
         }
         
-        public AppViewModel(IEnumerable<ITabItem> tabs, IEventAggregator eventAggregator, IWindowManager windowManager, IDocumentStore documentStore)
+        public AppViewModel(IEventAggregator eventAggregator, IWindowManager windowManager, IDocumentStore documentStore)
         {
             this.eventAggregator = eventAggregator;
             eventAggregator.Subscribe(this);
@@ -73,13 +73,12 @@ namespace RESTLess
             this.DocumentStore = documentStore;
             HeadersDataGrid = new BindableCollection<HttpHeader>();
             MethodViewModel = new MethodViewModel(eventAggregator);
-            Items.AddRange(tabs);
+
+            // Add tabs. TODO : can add these via bootstrapper;
             Items.Add(new HistoryViewModel(eventAggregator, documentStore));
             Items.Add(new GroupedViewModel(eventAggregator, documentStore));
             Items.Add(new FavouritesViewModel(eventAggregator, documentStore));
-            //HistoryViewModel = new HistoryViewModel(eventAggregator, documentStore);
-            //GroupedViewModel = new GroupedViewModel(eventAggregator, documentStore);
-            //FavouritesViewModel = new FavouritesViewModel(eventAggregator, documentStore);
+
             selectedMethod = Method.GET;
             BodyIsVisible = false;
 
