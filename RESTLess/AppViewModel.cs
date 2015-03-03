@@ -390,6 +390,7 @@ namespace RESTLess
         public void Handle(HistorySelectedMessage historyRequest)
         {
             LoadSelected(historyRequest.Request);
+            StatusBarTextBlock = "Loaded History Item.";
         }
 
         
@@ -411,6 +412,7 @@ namespace RESTLess
         public void Handle(FavouriteSelectedMessage message)
         {
             LoadSelected(message.Request);
+            StatusBarTextBlock = "Loaded Favourite Item.";
         }
 
         public void Handle(GroupedSelectedMessage message)
