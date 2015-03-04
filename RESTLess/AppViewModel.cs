@@ -378,9 +378,15 @@ namespace RESTLess
             windowManager.ShowWindow(new PreferencesViewModel(eventAggregator, DocumentStore), null, settings);
         }
 
-        public void Favourite()
+        public void About()
         {
-            
+            dynamic settings = new ExpandoObject();
+            settings.Width = 300;
+            settings.Height = 180;
+            settings.WindowStartupLocation = WindowStartupLocation.Manual;
+            settings.Title = "About";
+
+            windowManager.ShowWindow(new AboutViewModel(), null, settings);
         }
 
         #endregion
