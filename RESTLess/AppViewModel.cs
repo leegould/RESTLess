@@ -232,6 +232,14 @@ namespace RESTLess
             }
         }
 
+        public bool CanFavouriteButton
+        {
+            get 
+            { 
+                return false; // TODO
+            }
+        }
+
         public string StatusBarTextBlock
         {
             get { return statusBarTextBlock; }
@@ -264,24 +272,8 @@ namespace RESTLess
         public void SendButton()
         {
             var uri = new Uri(UrlTextBox);
-            RestClient client = new RestClient(uri.GetLeftPart(UriPartial.Authority))
-                                {
-                                    Timeout = appSettings.RequestSettings.Timeout
-                                };
-            var method = selectedMethod;
-
-            var request = new RestRequest(uri, method);
-            
-            //request.AddHeader("nocache", DateTime.UtcNow.ToString(CultureInfo.InvariantCulture));
-            foreach (var header in HeadersDataGrid)
-            {
-                request.AddHeader(header.Name, header.Value);
-            }
-
-            if (UseBody(method) && !string.IsNullOrWhiteSpace(BodyTextBox))
-            {
-                request.AddJsonBody(BodyTextBox);
-            }
+            var client = GetRestClient(uri);
+            var request = GetRestRequest(uri);
 
             stopWatch = new Stopwatch();
             stopWatch.Start();
@@ -340,6 +332,8 @@ namespace RESTLess
                 });
         }
 
+        
+
         public void StopButton()
         {
             StopSending();
@@ -355,6 +349,33 @@ namespace RESTLess
             UrlTextBox = string.Empty;
             BodyTextBox = string.Empty;
             HeadersDataGrid.Clear();
+        }
+
+        public async void FavouriteButton()
+        {
+            //if (request != null)
+            //{
+            //    using (var conn = DocumentStore.OpenAsyncSession())
+            //    {
+            //        try
+            //        {
+            //            var requestid = request.Id;
+            //            var dbRequest = await conn.LoadAsync<Request>(requestid);
+
+            //            if (dbRequest != null)
+            //            {
+            //                dbRequest.Favourite = true;
+            //                await conn.SaveChangesAsync();
+            //                eventAggregator.PublishOnUIThread(new FavouriteSelectedMessage() { Request = dbRequest });
+            //            }
+            //        }
+            //        catch (Exception)
+            //        {
+            //            // TODO : pass exception messages to main window - add to event aggregator
+            //            // eventAggregator.PublishOnUIThread(ex); // <- Wrap in a specific exception class
+            //        }
+            //    }
+            //}
         }
         
         #endregion
@@ -442,6 +463,34 @@ namespace RESTLess
         #endregion
 
         #region Private Methods
+
+        private RestRequest GetRestRequest(Uri uri)
+        {
+            var method = selectedMethod;
+
+            var request = new RestRequest(uri, method);
+
+            //request.AddHeader("nocache", DateTime.UtcNow.ToString(CultureInfo.InvariantCulture));
+            foreach (var header in HeadersDataGrid)
+            {
+                request.AddHeader(header.Name, header.Value);
+            }
+
+            if (UseBody(method) && !string.IsNullOrWhiteSpace(BodyTextBox))
+            {
+                request.AddJsonBody(BodyTextBox);
+            }
+            return request;
+        }
+
+        private RestClient GetRestClient(Uri uri)
+        {
+            RestClient client = new RestClient(uri.GetLeftPart(UriPartial.Authority))
+            {
+                Timeout = appSettings.RequestSettings.Timeout
+            };
+            return client;
+        }
 
         private void DisplayOrClear(Response response)
         {
