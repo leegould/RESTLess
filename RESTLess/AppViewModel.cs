@@ -351,8 +351,8 @@ namespace RESTLess
             HeadersDataGrid.Clear();
         }
 
-        public async void FavouriteButton()
-        {
+        //public async void FavouriteButton()
+        //{
             //if (request != null)
             //{
             //    using (var conn = DocumentStore.OpenAsyncSession())
@@ -376,7 +376,7 @@ namespace RESTLess
             //        }
             //    }
             //}
-        }
+        //}
         
         #endregion
 
