@@ -118,6 +118,10 @@
       <DependentUpon>PreferencesView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\PreferencesViewModel.cs" />
+    <Compile Include="Controls\SearchView.xaml.cs">
+      <DependentUpon>SearchView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\SearchViewModel.cs" />
     <Compile Include="Indexes\RequestsFavouriteAll.cs" />
     <Compile Include="Indexes\Requests_All.cs" />
     <Compile Include="Indexes\RequestsGroupedAll.cs" />
@@ -210,6 +214,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\PreferencesView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\SearchView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

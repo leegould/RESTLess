@@ -78,6 +78,7 @@ namespace RESTLess
             Items.Add(new HistoryViewModel(eventAggregator, documentStore));
             Items.Add(new GroupedViewModel(eventAggregator, documentStore));
             Items.Add(new FavouritesViewModel(eventAggregator, documentStore));
+            Items.Add(new SearchViewModel(eventAggregator, documentStore));
 
             selectedMethod = Method.GET;
             BodyIsVisible = false;
@@ -125,6 +126,8 @@ namespace RESTLess
         public GroupedViewModel GroupedViewModel { get; set; }
 
         public FavouritesViewModel FavouritesViewModel { get; set; }
+
+        public SearchViewModel SearchViewModel { get; set; }
 
         public string UrlTextBox
         {
