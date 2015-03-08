@@ -2,15 +2,130 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:cal="http://www.caliburnproject.org"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <StackPanel>
         <TextBox x:Name="SearchTextBox"></TextBox>
+        <Button x:Name="SearchButton" Content="Search"></Button>
         <ListBox x:Name="SearchRequests" ItemsSource="{Binding SearchRequests}" 
              SelectedItem="{Binding SelectedItem, Mode=TwoWay}" HorizontalContentAlignment="Stretch">
 
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Border BorderThickness="5 0 0 0">
+                        <Border.Style>
+                            <Style TargetType="Border">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Path=Method}" Value="GET">
+                                        <Setter Property="BorderBrush" Value="{StaticResource BlueBrush}"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Path=Method}" Value="POST">
+                                        <Setter Property="BorderBrush" Value="{StaticResource GreenBrush}"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Path=Method}" Value="PUT">
+                                        <Setter Property="BorderBrush" Value="{StaticResource YellowBrush}"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Path=Method}" Value="DELETE">
+                                        <Setter Property="BorderBrush" Value="{StaticResource RedBrush}"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Path=Method}" Value="PATCH">
+                                        <Setter Property="BorderBrush" Value="{StaticResource PurpleBrush}"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Path=Method}" Value="HEAD">
+                                        <Setter Property="BorderBrush" Value="{StaticResource GreyBrush}"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Path=Method}" Value="OPTIONS">
+                                        <Setter Property="BorderBrush" Value="{StaticResource LBlueBrush}"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Path=Method}" Value="MERGE">
+                                        <Setter Property="BorderBrush" Value="{StaticResource BrownBrush}"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Border.Style>
+                        <Border BorderThickness="0 0 1 0.5" BorderBrush="DarkGray" Padding="1" HorizontalAlignment="Stretch">
 
-         </ListBox>
+                            <WrapPanel MinHeight="20">
+                                <!--<TextBlock Text='{Binding Path=Id}'/>-->
+
+                                <TextBlock Text=" "/>
+                                <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
+                                    <StackPanel.ContextMenu>
+                                        <ContextMenu Name="cm" cal:Action.TargetWithoutContext="{Binding Source={x:Reference HistoryRequests}, Path=DataContext}">
+                                            <MenuItem Header="Favourite" cal:Message.Attach="[Event Click] = [Action Favourite($datacontext)]">
+                                            </MenuItem>
+                                        </ContextMenu>
+                                    </StackPanel.ContextMenu>
+
+
+                                    <Image Width="11" Height="15" Margin="0,0,3,0">
+                                        <Image.Style>
+                                            <Style TargetType="{x:Type Image}">
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding Path=Url.Scheme}" Value="http">
+                                                        <Setter Property="Image.Source" Value="../Assets/Images/http.png"/>
+                                                        <Setter Property="ToolTip" Value="HTTP"></Setter>
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding Path=Url.Scheme}" Value="https">
+                                                        <Setter Property="Image.Source" Value="../Assets/Images/https.png"/>
+                                                        <Setter Property="ToolTip" Value="HTTPS"></Setter>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Image.Style>
+                                    </Image>
+                                    <TextBlock TextWrapping="Wrap" Text='{Binding Path=Url.Host}' />
+                                    <TextBlock>
+                                        <TextBlock.Style>
+                                            <Style TargetType="{x:Type TextBlock}">
+                                                <Style.Setters>
+                                                    <Setter Property="Text" Value=":"></Setter>
+                                                </Style.Setters>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding Path=Url.Port}" Value="80">
+                                                        <Setter Property="Text" Value=""/>
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding Path=Url.Port}" Value="443">
+                                                        <Setter Property="Text" Value=""/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                    <TextBlock>
+                                        <TextBlock.Style>
+                                            <Style TargetType="{x:Type TextBlock}">
+                                                <Style.Setters>
+                                                    <Setter Property="Text" Value="{Binding Path=Url.Port}"></Setter>
+                                                </Style.Setters>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding Path=Url.Port}" Value="80">
+                                                        <Setter Property="Text" Value=""/>
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding Path=Url.Port}" Value="443">
+                                                        <Setter Property="Text" Value=""/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+
+                                    <TextBlock Text='{Binding Path=Path}' />
+                                </StackPanel>
+                            </WrapPanel>
+
+                        </Border>
+                    </Border>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+
+            <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel />
+                </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
+        </ListBox>
     </StackPanel>
 </UserControl>
