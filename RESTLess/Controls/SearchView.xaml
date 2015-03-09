@@ -6,11 +6,11 @@
              xmlns:cal="http://www.caliburnproject.org"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <StackPanel>
+    <StackPanel Orientation="Vertical">
         <TextBox x:Name="SearchTextBox"></TextBox>
         <Button x:Name="SearchButton" Content="Search"></Button>
         <ListBox x:Name="SearchRequests" ItemsSource="{Binding SearchRequests}" 
-             SelectedItem="{Binding SelectedItem, Mode=TwoWay}" HorizontalContentAlignment="Stretch">
+             SelectedItem="{Binding SelectedItem, Mode=TwoWay}" HorizontalContentAlignment="Stretch" VerticalAlignment="Stretch">
 
             <ListBox.ItemTemplate>
                 <DataTemplate>
@@ -53,7 +53,7 @@
                                 <TextBlock Text=" "/>
                                 <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
                                     <StackPanel.ContextMenu>
-                                        <ContextMenu Name="cm" cal:Action.TargetWithoutContext="{Binding Source={x:Reference HistoryRequests}, Path=DataContext}">
+                                        <ContextMenu Name="cm" cal:Action.TargetWithoutContext="{Binding Source={x:Reference SearchRequests}, Path=DataContext}">
                                             <MenuItem Header="Favourite" cal:Message.Attach="[Event Click] = [Action Favourite($datacontext)]">
                                             </MenuItem>
                                         </ContextMenu>

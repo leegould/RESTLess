@@ -1,8 +1,8 @@
-﻿using System.Linq;
-using Caliburn.Micro;
+﻿using Caliburn.Micro;
+
 using Raven.Client;
-using Raven.Client.Document;
 using Raven.Client.Linq;
+
 using RESTLess.Models;
 using RESTLess.Models.Interface;
 
@@ -68,9 +68,8 @@ namespace RESTLess.Controls
 
             using (var conn = documentStore.OpenSession())
             {
-                var results = conn.Query<Request>(RequestsIndexName)
-                    
-                    .Where(x => x.Path.Contains(SearchTextBox));
+                var results = conn.Query<Request>(RequestsIndexName).Search(x => x.Path, SearchTextBox);
+
                 SearchRequests.AddRange(results);
             }
         }
