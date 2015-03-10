@@ -7,8 +7,8 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <StackPanel Orientation="Vertical">
-        <TextBox x:Name="SearchTextBox"></TextBox>
-        <Button x:Name="SearchButton" Content="Search"></Button>
+        <TextBox x:Name="SearchTextBox" Text="{Binding SearchTextBox, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+        <Button x:Name="SearchButton" Content="Search" IsDefault="True"></Button>
         <ListBox x:Name="SearchRequests" ItemsSource="{Binding SearchRequests}" 
              SelectedItem="{Binding SelectedItem, Mode=TwoWay}" HorizontalContentAlignment="Stretch" VerticalAlignment="Stretch">
 
