@@ -139,6 +139,7 @@
     <Compile Include="Models\Messages\HistorySelectedMessage.cs" />
     <Compile Include="Models\Messages\MethodSelectedMessage.cs" />
     <Compile Include="Models\Messages\RequestSavedMessage.cs" />
+    <Compile Include="Models\Messages\SearchSelectedMessage.cs" />
     <Compile Include="Models\Request.cs" />
     <Compile Include="Models\RequestGrouped.cs" />
     <Compile Include="Models\RequestSettings.cs" />

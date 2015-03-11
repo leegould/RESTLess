@@ -1,10 +1,10 @@
 ﻿using Caliburn.Micro;
 
 using Raven.Client;
-using Raven.Client.Linq;
 
 using RESTLess.Models;
 using RESTLess.Models.Interface;
+using RESTLess.Models.Messages;
 
 namespace RESTLess.Controls
 {
@@ -48,7 +48,7 @@ namespace RESTLess.Controls
             set
             {
                 selectedItem = value;
-                //eventAggregator.PublishOnUIThread(new SearchSelectedMessage { Request = value });
+                eventAggregator.PublishOnUIThread(new SearchSelectedMessage { Request = value });
                 NotifyOfPropertyChange(() => SelectedItem);
             }
         }

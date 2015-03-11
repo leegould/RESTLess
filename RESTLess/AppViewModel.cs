@@ -22,7 +22,7 @@ using RESTLess.Models.Messages;
 namespace RESTLess
 {
     [Export(typeof(AppViewModel))]
-    public class AppViewModel : Conductor<ITabItem>.Collection.OneActive, IApp, IHandle<HistorySelectedMessage>, IHandle<MethodSelectedMessage>, IHandle<GroupedSelectedMessage>, IHandle<AppSettingsChangedMessage>, IHandle<FavouriteSelectedMessage>
+    public class AppViewModel : Conductor<ITabItem>.Collection.OneActive, IApp, IHandle<HistorySelectedMessage>, IHandle<MethodSelectedMessage>, IHandle<GroupedSelectedMessage>, IHandle<AppSettingsChangedMessage>, IHandle<FavouriteSelectedMessage>, IHandle<SearchSelectedMessage>
     {
         #region Private members
 
@@ -461,6 +461,12 @@ namespace RESTLess
                     }
                 }
             }
+        }
+
+        public void Handle(SearchSelectedMessage message)
+        {
+            LoadSelected(message.Request);
+            StatusBarTextBlock = "Loaded Search Result.";
         }
 
         #endregion
