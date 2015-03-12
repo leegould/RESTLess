@@ -66,11 +66,13 @@ namespace RESTLess.Controls
         {
             SearchRequests.Clear();
 
-            using (var conn = documentStore.OpenSession())
+            if (!string.IsNullOrEmpty(SearchTextBox))
             {
-                var results = conn.Query<Request>(RequestsIndexName).Search(x => x.Path, SearchTextBox);
-
-                SearchRequests.AddRange(results);
+                using (var conn = documentStore.OpenSession())
+                {
+                    var results = conn.Query<Request>(RequestsIndexName).Search(x => x.Path, SearchTextBox);
+                    SearchRequests.AddRange(results);
+                }
             }
         }
     }

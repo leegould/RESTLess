@@ -41,35 +41,7 @@
             </Grid.RowDefinitions>
 
             <TabControl Background="Gray" Grid.Column="0" Grid.Row="0" Padding="0" x:Name="Items">
-                
-                <!--<TabItem>
-                    <TabItem.Header>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="History" Foreground="DarkSlateGray" />
-                        </StackPanel>
-                    </TabItem.Header>
-                    <ContentControl x:Name="HistoryViewModel"> </ContentControl>
-                </TabItem>
-                    
-                <TabItem>
-                    <TabItem.Header>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="Grouped" Foreground="DarkSlateGray"/>
-                        </StackPanel>
-                    </TabItem.Header>
-                    <ContentControl x:Name="GroupedViewModel"></ContentControl>
-                </TabItem>
-
-                <TabItem>
-                    <TabItem.Header>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="Favourites" Foreground="DarkSlateGray"/>
-                        </StackPanel>
-                    </TabItem.Header>
-                    <ContentControl x:Name="FavouritesViewModel"></ContentControl>
-                </TabItem>-->
-
-                </TabControl>
+            </TabControl>
 
             <GridSplitter Grid.Column="0" Width="2" HorizontalAlignment="Right" VerticalAlignment="Stretch" ResizeBehavior="CurrentAndNext"/>
 
