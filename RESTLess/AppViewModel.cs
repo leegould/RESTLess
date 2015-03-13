@@ -22,7 +22,7 @@ using RESTLess.Models.Messages;
 namespace RESTLess
 {
     [Export(typeof(AppViewModel))]
-    public class AppViewModel : Conductor<ITabItem>.Collection.OneActive, IApp, IHandle<HistorySelectedMessage>, IHandle<MethodSelectedMessage>, IHandle<GroupedSelectedMessage>, IHandle<AppSettingsChangedMessage>, IHandle<FavouriteSelectedMessage>, IHandle<SearchSelectedMessage>
+    public class AppViewModel : Conductor<ITabItem>.Collection.OneActive, IApp, IHandle<HistorySelectedMessage>, IHandle<GroupedSelectedMessage>, IHandle<AppSettingsChangedMessage>, IHandle<FavouriteSelectedMessage>, IHandle<SearchSelectedMessage>
     {
         #region Private members
 
@@ -33,17 +33,17 @@ namespace RESTLess
         private readonly IWindowManager windowManager;
         
         public readonly IDocumentStore DocumentStore;
-        
+
         private string rawResultsTextBox;
         private string htmlResultsBox;
-        private string url;
-        private string body;
+        //private string url;
+        //private string body;
 
         private string responseStatusTextBlock;
         private string responseWhenTextBlock;
         private string responseElapsedTextBlock;
 
-        private IObservableCollection<HttpHeader> headers;
+        //private IObservableCollection<HttpHeader> headers;
 
         private string statusBarTextBlock;
 
@@ -51,19 +51,19 @@ namespace RESTLess
         
         private Stopwatch stopWatch;
 
-        private Method selectedMethod;
+        //private Method selectedMethod;
 
-        private bool bodyIsVisible;
+        //private bool bodyIsVisible;
 
         #endregion
 
-        static AppViewModel()
-        {
-            Mapper.CreateMap<Request, AppViewModel>()
-                .ForMember(d => d.HeadersDataGrid, o => o.MapFrom(s => CreateHeadersFromDict(s.Headers)))
-                .ForMember(d => d.UrlTextBox, o => o.MapFrom(s => s.Url + s.Path.Substring(1)))
-                .ForMember(d => d.BodyTextBox, o => o.MapFrom(s => s.Body));
-        }
+        //static AppViewModel()
+        //{
+        //    Mapper.CreateMap<Request, AppViewModel>()
+        //        .ForMember(d => d.HeadersDataGrid, o => o.MapFrom(s => CreateHeadersFromDict(s.Headers)))
+        //        .ForMember(d => d.UrlTextBox, o => o.MapFrom(s => s.Url + s.Path.Substring(1)))
+        //        .ForMember(d => d.BodyTextBox, o => o.MapFrom(s => s.Body));
+        //}
         
         public AppViewModel(IEventAggregator eventAggregator, IWindowManager windowManager, IDocumentStore documentStore)
         {
@@ -71,8 +71,9 @@ namespace RESTLess
             eventAggregator.Subscribe(this);
             this.windowManager = windowManager;
             this.DocumentStore = documentStore;
-            HeadersDataGrid = new BindableCollection<HttpHeader>();
-            MethodViewModel = new MethodViewModel(eventAggregator);
+            //HeadersDataGrid = new BindableCollection<HttpHeader>();
+            //MethodViewModel = new MethodViewModel(eventAggregator);
+            RequestBuilderViewModel = new RequestBuilderViewModel(eventAggregator, documentStore);
 
             // Add tabs. TODO : can add these via bootstrapper;
             Items.Add(new HistoryViewModel(eventAggregator, documentStore));
@@ -80,8 +81,8 @@ namespace RESTLess
             Items.Add(new FavouritesViewModel(eventAggregator, documentStore));
             Items.Add(new SearchViewModel(eventAggregator, documentStore));
 
-            selectedMethod = Method.GET;
-            BodyIsVisible = false;
+            //selectedMethod = Method.GET;
+            //BodyIsVisible = false;
 
             using (var conn = DocumentStore.OpenSession())
             {
@@ -119,7 +120,9 @@ namespace RESTLess
         
         #region Properties
 
-        public MethodViewModel MethodViewModel { get; set; }
+        //public MethodViewModel MethodViewModel { get; set; }
+
+        public RequestBuilderViewModel RequestBuilderViewModel { get; set; }
 
         public HistoryViewModel HistoryViewModel { get; set; }
 
@@ -129,26 +132,26 @@ namespace RESTLess
 
         public SearchViewModel SearchViewModel { get; set; }
 
-        public string UrlTextBox
-        {
-            get { return url; }
-            set
-            {
-                url = value;
-                NotifyOfPropertyChange(() => UrlTextBox);
-                NotifyOfPropertyChange(() => CanSendButton);
-            }
-        }
+        //public string UrlTextBox
+        //{
+        //    get { return url; }
+        //    set
+        //    {
+        //        url = value;
+        //        NotifyOfPropertyChange(() => UrlTextBox);
+        //        NotifyOfPropertyChange(() => CanSendButton);
+        //    }
+        //}
 
-        public string BodyTextBox
-        {
-            get { return body; }
-            set
-            {
-                body = value;
-                NotifyOfPropertyChange(BodyTextBox);
-            }
-        }
+        //public string BodyTextBox
+        //{
+        //    get { return body; }
+        //    set
+        //    {
+        //        body = value;
+        //        NotifyOfPropertyChange(BodyTextBox);
+        //    }
+        //}
 
         public string RawResultsTextBox
         {
@@ -209,21 +212,22 @@ namespace RESTLess
             }
         }
 
-        public IObservableCollection<HttpHeader> HeadersDataGrid
-        {
-            get { return headers; }
-            set
-            {
-                headers = value;
-                NotifyOfPropertyChange(() => HeadersDataGrid);
-            }
-        } 
+        //public IObservableCollection<HttpHeader> HeadersDataGrid
+        //{
+        //    get { return headers; }
+        //    set
+        //    {
+        //        headers = value;
+        //        NotifyOfPropertyChange(() => HeadersDataGrid);
+        //    }
+        //} 
 
         public bool CanSendButton
         {
             get
             {
-                return !string.IsNullOrWhiteSpace(UrlTextBox) && !isWaiting;
+                //return !string.IsNullOrWhiteSpace(UrlTextBox) && !isWaiting;
+                return true;
             }
         }
 
@@ -253,19 +257,19 @@ namespace RESTLess
             }
         }
 
-        public bool BodyIsVisible
-        {
-            get { return bodyIsVisible; }
-            set
-            {
-                bodyIsVisible = value;
-                if (!bodyIsVisible)
-                {
-                    BodyTextBox = string.Empty;
-                }
-                NotifyOfPropertyChange(() => BodyIsVisible);
-            }
-        }
+        //public bool BodyIsVisible
+        //{
+        //    get { return bodyIsVisible; }
+        //    set
+        //    {
+        //        bodyIsVisible = value;
+        //        if (!bodyIsVisible)
+        //        {
+        //            BodyTextBox = string.Empty;
+        //        }
+        //        NotifyOfPropertyChange(() => BodyIsVisible);
+        //    }
+        //}
 
         #endregion
 
@@ -274,65 +278,65 @@ namespace RESTLess
 
         public void SendButton()
         {
-            var uri = new Uri(UrlTextBox);
-            var client = GetRestClient(uri);
-            var request = GetRestRequest(uri);
+            //var uri = new Uri(UrlTextBox);
+            //var client = GetRestClient(uri);
+            //var request = GetRestRequest(uri);
 
-            stopWatch = new Stopwatch();
-            stopWatch.Start();
+            //stopWatch = new Stopwatch();
+            //stopWatch.Start();
 
-            StatusBarTextBlock = "Sending " + request.Method + " " + client.BaseUrl.ToString().Substring(0, client.BaseUrl.ToString().Length - 1) + request.Resource;
+            //StatusBarTextBlock = "Sending " + request.Method + " " + client.BaseUrl.ToString().Substring(0, client.BaseUrl.ToString().Length - 1) + request.Resource;
 
-            isWaiting = true;
-            NotifyOfPropertyChange(() => CanStopButton);
+            //isWaiting = true;
+            //NotifyOfPropertyChange(() => CanStopButton);
 
-            Request req = null;
-            using (var conn = DocumentStore.OpenSession())
-            {
-                try
-                {
-                    req = new Request(client.BaseUrl, request, body, appSettings.RequestSettings);
-                    conn.Store(req);
-                    conn.SaveChanges();
-                }
-                catch (Exception ex)
-                {
-                    StatusBarTextBlock = "Cancelled request";
-                    RawResultsTextBox = ex.ToString();
-                    StopSending();
-                }
-            }
-            eventAggregator.PublishOnUIThread(new RequestSavedMessage { Request = req });
+            //Request req = null;
+            //using (var conn = DocumentStore.OpenSession())
+            //{
+            //    try
+            //    {
+            //        req = new Request(client.BaseUrl, request, body, appSettings.RequestSettings);
+            //        conn.Store(req);
+            //        conn.SaveChanges();
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        StatusBarTextBlock = "Cancelled request";
+            //        RawResultsTextBox = ex.ToString();
+            //        StopSending();
+            //    }
+            //}
+            //eventAggregator.PublishOnUIThread(new RequestSavedMessage { Request = req });
 
-            client.ExecuteAsync(request,
-                r =>
-                {
-                    if (isWaiting)
-                    {
-                        stopWatch.Stop();
-                        StatusBarTextBlock = "Status: " + r.ResponseStatus + ". Code:" + r.StatusCode + ". Elapsed: " + stopWatch.ElapsedMilliseconds.ToString() + " ms.";
+            //client.ExecuteAsync(request,
+            //    r =>
+            //    {
+            //        if (isWaiting)
+            //        {
+            //            stopWatch.Stop();
+            //            StatusBarTextBlock = "Status: " + r.ResponseStatus + ". Code:" + r.StatusCode + ". Elapsed: " + stopWatch.ElapsedMilliseconds.ToString() + " ms.";
 
-                        Response response = new Response(req != null ? req.Id : 0, r, stopWatch.ElapsedMilliseconds);
+            //            Response response = new Response(req != null ? req.Id : 0, r, stopWatch.ElapsedMilliseconds);
 
-                        DisplayResponse(response);
+            //            DisplayResponse(response);
 
-                        StopSending();
+            //            StopSending();
 
-                        using (var conn = DocumentStore.OpenSession())
-                        {
-                            try
-                            {
-                                conn.Store(response);
-                                conn.SaveChanges();
-                            }
-                            catch (Exception ex)
-                            {
-                                StatusBarTextBlock = "Response Error";
-                                RawResultsTextBox = ex.ToString();
-                            }
-                        }
-                    }
-                });
+            //            using (var conn = DocumentStore.OpenSession())
+            //            {
+            //                try
+            //                {
+            //                    conn.Store(response);
+            //                    conn.SaveChanges();
+            //                }
+            //                catch (Exception ex)
+            //                {
+            //                    StatusBarTextBlock = "Response Error";
+            //                    RawResultsTextBox = ex.ToString();
+            //                }
+            //            }
+            //        }
+            //    });
         }
 
         
@@ -347,12 +351,12 @@ namespace RESTLess
             ResponseWhenTextBlock = string.Empty;
         }
 
-        public void ClearButton()
-        {
-            UrlTextBox = string.Empty;
-            BodyTextBox = string.Empty;
-            HeadersDataGrid.Clear();
-        }
+        //public void ClearButton()
+        //{
+        //    UrlTextBox = string.Empty;
+        //    BodyTextBox = string.Empty;
+        //    HeadersDataGrid.Clear();
+        //}
 
         //public async void FavouriteButton()
         //{
@@ -424,11 +428,11 @@ namespace RESTLess
         }
 
         
-        public void Handle(MethodSelectedMessage message)
-        {
-            selectedMethod = message.Method;
-            BodyIsVisible = UseBody(message.Method);
-        }
+        //public void Handle(MethodSelectedMessage message)
+        //{
+        //    selectedMethod = message.Method;
+        //    BodyIsVisible = UseBody(message.Method);
+        //}
 
         public void Handle(AppSettingsChangedMessage message)
         {
@@ -473,24 +477,24 @@ namespace RESTLess
 
         #region Private Methods
 
-        private RestRequest GetRestRequest(Uri uri)
-        {
-            var method = selectedMethod;
+        //private RestRequest GetRestRequest(Uri uri)
+        //{
+        //    var method = selectedMethod;
 
-            var request = new RestRequest(uri, method);
+        //    var request = new RestRequest(uri, method);
 
-            //request.AddHeader("nocache", DateTime.UtcNow.ToString(CultureInfo.InvariantCulture));
-            foreach (var header in HeadersDataGrid)
-            {
-                request.AddHeader(header.Name, header.Value);
-            }
+        //    //request.AddHeader("nocache", DateTime.UtcNow.ToString(CultureInfo.InvariantCulture));
+        //    foreach (var header in HeadersDataGrid)
+        //    {
+        //        request.AddHeader(header.Name, header.Value);
+        //    }
 
-            if (UseBody(method) && !string.IsNullOrWhiteSpace(BodyTextBox))
-            {
-                request.AddJsonBody(BodyTextBox);
-            }
-            return request;
-        }
+        //    if (UseBody(method) && !string.IsNullOrWhiteSpace(BodyTextBox))
+        //    {
+        //        request.AddJsonBody(BodyTextBox);
+        //    }
+        //    return request;
+        //}
 
         private RestClient GetRestClient(Uri uri)
         {
