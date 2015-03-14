@@ -47,9 +47,9 @@ namespace RESTLess
 
         private string statusBarTextBlock;
 
-        private bool isWaiting;
+        //private bool isWaiting;
         
-        private Stopwatch stopWatch;
+        //private Stopwatch stopWatch;
 
         //private Method selectedMethod;
 
@@ -124,13 +124,13 @@ namespace RESTLess
 
         public RequestBuilderViewModel RequestBuilderViewModel { get; set; }
 
-        public HistoryViewModel HistoryViewModel { get; set; }
+        //public HistoryViewModel HistoryViewModel { get; set; }
 
-        public GroupedViewModel GroupedViewModel { get; set; }
+        //public GroupedViewModel GroupedViewModel { get; set; }
 
-        public FavouritesViewModel FavouritesViewModel { get; set; }
+        //public FavouritesViewModel FavouritesViewModel { get; set; }
 
-        public SearchViewModel SearchViewModel { get; set; }
+        //public SearchViewModel SearchViewModel { get; set; }
 
         //public string UrlTextBox
         //{
@@ -222,22 +222,22 @@ namespace RESTLess
         //    }
         //} 
 
-        public bool CanSendButton
-        {
-            get
-            {
-                //return !string.IsNullOrWhiteSpace(UrlTextBox) && !isWaiting;
-                return true;
-            }
-        }
+        //public bool CanSendButton
+        //{
+        //    get
+        //    {
+        //        //return !string.IsNullOrWhiteSpace(UrlTextBox) && !isWaiting;
+        //        return true;
+        //    }
+        //}
 
-        public bool CanStopButton
-        {
-            get
-            {
-                return isWaiting;
-            }
-        }
+        //public bool CanStopButton
+        //{
+        //    get
+        //    {
+        //        return isWaiting;
+        //    }
+        //}
 
         public bool CanFavouriteButton
         {
@@ -343,7 +343,7 @@ namespace RESTLess
 
         public void StopButton()
         {
-            StopSending();
+            //StopSending();
             StatusBarTextBlock = "Cancelled request";
             RawResultsTextBox = string.Empty;
             ResponseElapsedTextBlock = string.Empty;
@@ -423,7 +423,7 @@ namespace RESTLess
 
         public void Handle(HistorySelectedMessage historyRequest)
         {
-            LoadSelected(historyRequest.Request);
+            //LoadSelected(historyRequest.Request);
             StatusBarTextBlock = "Loaded History Item.";
         }
 
@@ -445,7 +445,7 @@ namespace RESTLess
 
         public void Handle(FavouriteSelectedMessage message)
         {
-            LoadSelected(message.Request);
+            //LoadSelected(message.Request);
             StatusBarTextBlock = "Loaded Favourite Item.";
         }
 
@@ -469,7 +469,7 @@ namespace RESTLess
 
         public void Handle(SearchSelectedMessage message)
         {
-            LoadSelected(message.Request);
+            //LoadSelected(message.Request);
             StatusBarTextBlock = "Loaded Search Result.";
         }
 
@@ -496,14 +496,14 @@ namespace RESTLess
         //    return request;
         //}
 
-        private RestClient GetRestClient(Uri uri)
-        {
-            RestClient client = new RestClient(uri.GetLeftPart(UriPartial.Authority))
-            {
-                Timeout = appSettings.RequestSettings.Timeout
-            };
-            return client;
-        }
+        //private RestClient GetRestClient(Uri uri)
+        //{
+        //    RestClient client = new RestClient(uri.GetLeftPart(UriPartial.Authority))
+        //    {
+        //        Timeout = appSettings.RequestSettings.Timeout
+        //    };
+        //    return client;
+        //}
 
         private void DisplayOrClear(Response response)
         {
@@ -562,56 +562,56 @@ namespace RESTLess
             }
         }
 
-        private void LoadSelected(Request request)
-        {
-            Mapper.Map(request, this);
+        //private void LoadSelected(Request request)
+        //{
+        //    Mapper.Map(request, this);
 
-            if (appSettings.LoadResponses)
-            {
-                using (var docstore = DocumentStore.OpenSession())
-                {
-                    Response response = null;
-                    if (request != null)
-                    {
-                        response = docstore.Query<Response>().FirstOrDefault(x => x.RequestId == request.Id);
-                    }
-                    DisplayOrClear(response);
-                }
-            }
-        }
+        //    if (appSettings.LoadResponses)
+        //    {
+        //        using (var docstore = DocumentStore.OpenSession())
+        //        {
+        //            Response response = null;
+        //            if (request != null)
+        //            {
+        //                response = docstore.Query<Response>().FirstOrDefault(x => x.RequestId == request.Id);
+        //            }
+        //            DisplayOrClear(response);
+        //        }
+        //    }
+        //}
 
-        private void StopSending()
-        {
-            if (stopWatch.IsRunning)
-            {
-                stopWatch.Stop();
-                stopWatch.Reset();
-            }
+        //private void StopSending()
+        //{
+        //    if (stopWatch.IsRunning)
+        //    {
+        //        stopWatch.Stop();
+        //        stopWatch.Reset();
+        //    }
 
-            isWaiting = false;
-            NotifyOfPropertyChange(() => CanStopButton);
-            NotifyOfPropertyChange(() => CanSendButton);
-        }
+        //    isWaiting = false;
+        //    NotifyOfPropertyChange(() => CanStopButton);
+        //    NotifyOfPropertyChange(() => CanSendButton);
+        //}
 
-        private static IObservableCollection<HttpHeader> CreateHeadersFromDict(Dictionary<string, string> dictionary)
-        {
-            var items = new BindableCollection<HttpHeader>();
-            foreach (var item in dictionary)
-            {
-                items.Add(new HttpHeader { Name = item.Key, Value = item.Value });
-            }
-            return items;
-        }
-
-        #endregion
-
-        #region Static Methods
-
-        private static bool UseBody(Method method)
-        {
-            return method != Method.GET && method != Method.HEAD && method != Method.OPTIONS;
-        }
+        //private static IObservableCollection<HttpHeader> CreateHeadersFromDict(Dictionary<string, string> dictionary)
+        //{
+        //    var items = new BindableCollection<HttpHeader>();
+        //    foreach (var item in dictionary)
+        //    {
+        //        items.Add(new HttpHeader { Name = item.Key, Value = item.Value });
+        //    }
+        //    return items;
+        //}
 
         #endregion
+
+        //#region Static Methods
+
+        //private static bool UseBody(Method method)
+        //{
+        //    return method != Method.GET && method != Method.HEAD && method != Method.OPTIONS;
+        //}
+
+        //#endregion
     }
 }
