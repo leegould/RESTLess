@@ -13,7 +13,7 @@ using RESTLess.Models.Messages;
 
 namespace RESTLess.Controls
 {
-    public class RequestBuilderViewModel : PropertyChangedBase, IHandle<MethodSelectedMessage>
+    public class RequestBuilderViewModel : PropertyChangedBase, IHandle<MethodSelectedMessage>, IHandle<HistorySelectedMessage>
     {
         #region Private members
 
@@ -142,7 +142,13 @@ namespace RESTLess.Controls
         public void Handle(MethodSelectedMessage message)
         {
             selectedMethod = message.Method;
-            //BodyIsVisible = UseBody(message.Method);
+            BodyIsVisible = UseBody(message.Method);
+        }
+
+        public void Handle(HistorySelectedMessage historyRequest)
+        {
+            LoadSelected(historyRequest.Request);
+            //StatusBarTextBlock = "Loaded History Item.";
         }
 
         #endregion

@@ -276,8 +276,8 @@ namespace RESTLess
 
         #region Button Actions
 
-        public void SendButton()
-        {
+        //public void SendButton()
+        //{
             //var uri = new Uri(UrlTextBox);
             //var client = GetRestClient(uri);
             //var request = GetRestRequest(uri);
@@ -337,19 +337,19 @@ namespace RESTLess
             //            }
             //        }
             //    });
-        }
+        //}
 
         
 
-        public void StopButton()
-        {
-            //StopSending();
-            StatusBarTextBlock = "Cancelled request";
-            RawResultsTextBox = string.Empty;
-            ResponseElapsedTextBlock = string.Empty;
-            ResponseStatusTextBlock = string.Empty;
-            ResponseWhenTextBlock = string.Empty;
-        }
+        //public void StopButton()
+        //{
+        //    //StopSending();
+        //    StatusBarTextBlock = "Cancelled request";
+        //    RawResultsTextBox = string.Empty;
+        //    ResponseElapsedTextBlock = string.Empty;
+        //    ResponseStatusTextBlock = string.Empty;
+        //    ResponseWhenTextBlock = string.Empty;
+        //}
 
         //public void ClearButton()
         //{
