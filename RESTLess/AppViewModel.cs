@@ -1,19 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.Composition;
-using System.Diagnostics;
 using System.Dynamic;
 using System.Globalization;
 using System.Linq;
+using System.Net;
 using System.Windows;
 
 using AutoMapper;
+
 using Caliburn.Micro;
 
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+
 using Raven.Client;
-using RestSharp;
+
 using RESTLess.Controls;
 using RESTLess.Models;
 using RESTLess.Models.Interface;
@@ -36,43 +37,21 @@ namespace RESTLess
 
         private string rawResultsTextBox;
         private string htmlResultsBox;
-        //private string url;
-        //private string body;
 
         private string responseStatusTextBlock;
         private string responseWhenTextBlock;
         private string responseElapsedTextBlock;
 
-        //private IObservableCollection<HttpHeader> headers;
-
         private string statusBarTextBlock;
 
-        //private bool isWaiting;
-        
-        //private Stopwatch stopWatch;
-
-        //private Method selectedMethod;
-
-        //private bool bodyIsVisible;
-
         #endregion
-
-        //static AppViewModel()
-        //{
-        //    Mapper.CreateMap<Request, AppViewModel>()
-        //        .ForMember(d => d.HeadersDataGrid, o => o.MapFrom(s => CreateHeadersFromDict(s.Headers)))
-        //        .ForMember(d => d.UrlTextBox, o => o.MapFrom(s => s.Url + s.Path.Substring(1)))
-        //        .ForMember(d => d.BodyTextBox, o => o.MapFrom(s => s.Body));
-        //}
         
         public AppViewModel(IEventAggregator eventAggregator, IWindowManager windowManager, IDocumentStore documentStore)
         {
             this.eventAggregator = eventAggregator;
             eventAggregator.Subscribe(this);
             this.windowManager = windowManager;
-            this.DocumentStore = documentStore;
-            //HeadersDataGrid = new BindableCollection<HttpHeader>();
-            //MethodViewModel = new MethodViewModel(eventAggregator);
+            DocumentStore = documentStore;
             RequestBuilderViewModel = new RequestBuilderViewModel(eventAggregator, documentStore);
 
             // Add tabs. TODO : can add these via bootstrapper;
@@ -80,9 +59,6 @@ namespace RESTLess
             Items.Add(new GroupedViewModel(eventAggregator, documentStore));
             Items.Add(new FavouritesViewModel(eventAggregator, documentStore));
             Items.Add(new SearchViewModel(eventAggregator, documentStore));
-
-            //selectedMethod = Method.GET;
-            //BodyIsVisible = false;
 
             using (var conn = DocumentStore.OpenSession())
             {
@@ -120,38 +96,7 @@ namespace RESTLess
         
         #region Properties
 
-        //public MethodViewModel MethodViewModel { get; set; }
-
         public RequestBuilderViewModel RequestBuilderViewModel { get; set; }
-
-        //public HistoryViewModel HistoryViewModel { get; set; }
-
-        //public GroupedViewModel GroupedViewModel { get; set; }
-
-        //public FavouritesViewModel FavouritesViewModel { get; set; }
-
-        //public SearchViewModel SearchViewModel { get; set; }
-
-        //public string UrlTextBox
-        //{
-        //    get { return url; }
-        //    set
-        //    {
-        //        url = value;
-        //        NotifyOfPropertyChange(() => UrlTextBox);
-        //        NotifyOfPropertyChange(() => CanSendButton);
-        //    }
-        //}
-
-        //public string BodyTextBox
-        //{
-        //    get { return body; }
-        //    set
-        //    {
-        //        body = value;
-        //        NotifyOfPropertyChange(BodyTextBox);
-        //    }
-        //}
 
         public string RawResultsTextBox
         {
@@ -212,40 +157,13 @@ namespace RESTLess
             }
         }
 
-        //public IObservableCollection<HttpHeader> HeadersDataGrid
+        //public bool CanFavouriteButton
         //{
-        //    get { return headers; }
-        //    set
-        //    {
-        //        headers = value;
-        //        NotifyOfPropertyChange(() => HeadersDataGrid);
-        //    }
-        //} 
-
-        //public bool CanSendButton
-        //{
-        //    get
-        //    {
-        //        //return !string.IsNullOrWhiteSpace(UrlTextBox) && !isWaiting;
-        //        return true;
+        //    get 
+        //    { 
+        //        return false; // TODO
         //    }
         //}
-
-        //public bool CanStopButton
-        //{
-        //    get
-        //    {
-        //        return isWaiting;
-        //    }
-        //}
-
-        public bool CanFavouriteButton
-        {
-            get 
-            { 
-                return false; // TODO
-            }
-        }
 
         public string StatusBarTextBlock
         {
@@ -256,20 +174,6 @@ namespace RESTLess
                 NotifyOfPropertyChange(() => StatusBarTextBlock);
             }
         }
-
-        //public bool BodyIsVisible
-        //{
-        //    get { return bodyIsVisible; }
-        //    set
-        //    {
-        //        bodyIsVisible = value;
-        //        if (!bodyIsVisible)
-        //        {
-        //            BodyTextBox = string.Empty;
-        //        }
-        //        NotifyOfPropertyChange(() => BodyIsVisible);
-        //    }
-        //}
 
         #endregion
 
@@ -423,16 +327,8 @@ namespace RESTLess
 
         public void Handle(HistorySelectedMessage historyRequest)
         {
-            //LoadSelected(historyRequest.Request);
             StatusBarTextBlock = "Loaded History Item.";
         }
-
-        
-        //public void Handle(MethodSelectedMessage message)
-        //{
-        //    selectedMethod = message.Method;
-        //    BodyIsVisible = UseBody(message.Method);
-        //}
 
         public void Handle(AppSettingsChangedMessage message)
         {
@@ -445,7 +341,6 @@ namespace RESTLess
 
         public void Handle(FavouriteSelectedMessage message)
         {
-            //LoadSelected(message.Request);
             StatusBarTextBlock = "Loaded Favourite Item.";
         }
 
@@ -456,8 +351,6 @@ namespace RESTLess
                 var item = docstore.Load<Request>(message.Request.Id);
                 if (item != null)
                 {
-                    Mapper.Map(item, this);
-
                     if (appSettings.LoadResponses)
                     {
                         var response = docstore.Query<Response>().FirstOrDefault(x => x.RequestId == item.Id);
@@ -469,41 +362,12 @@ namespace RESTLess
 
         public void Handle(SearchSelectedMessage message)
         {
-            //LoadSelected(message.Request);
             StatusBarTextBlock = "Loaded Search Result.";
         }
 
         #endregion
 
         #region Private Methods
-
-        //private RestRequest GetRestRequest(Uri uri)
-        //{
-        //    var method = selectedMethod;
-
-        //    var request = new RestRequest(uri, method);
-
-        //    //request.AddHeader("nocache", DateTime.UtcNow.ToString(CultureInfo.InvariantCulture));
-        //    foreach (var header in HeadersDataGrid)
-        //    {
-        //        request.AddHeader(header.Name, header.Value);
-        //    }
-
-        //    if (UseBody(method) && !string.IsNullOrWhiteSpace(BodyTextBox))
-        //    {
-        //        request.AddJsonBody(BodyTextBox);
-        //    }
-        //    return request;
-        //}
-
-        //private RestClient GetRestClient(Uri uri)
-        //{
-        //    RestClient client = new RestClient(uri.GetLeftPart(UriPartial.Authority))
-        //    {
-        //        Timeout = appSettings.RequestSettings.Timeout
-        //    };
-        //    return client;
-        //}
 
         private void DisplayOrClear(Response response)
         {
@@ -531,7 +395,7 @@ namespace RESTLess
                     {
                         var formattedjson = JObject.Parse(response.Content).ToString(Formatting.Indented);
                         RawResultsTextBox = formattedjson;
-                        HtmlResultsBox = "<pre>" + System.Net.WebUtility.HtmlEncode(formattedjson) + "</pre>";
+                        HtmlResultsBox = "<pre>" + WebUtility.HtmlEncode(formattedjson) + "</pre>";
                     }
                     catch(JsonReaderException)
                     {

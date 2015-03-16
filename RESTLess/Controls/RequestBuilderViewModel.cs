@@ -6,18 +6,17 @@ using AutoMapper;
 using Caliburn.Micro;
 
 using Raven.Client;
-using Raven.Client.Document;
 using RestSharp;
 using RESTLess.Models;
 using RESTLess.Models.Messages;
 
 namespace RESTLess.Controls
 {
-    public class RequestBuilderViewModel : PropertyChangedBase, IHandle<MethodSelectedMessage>, IHandle<HistorySelectedMessage>
+    public class RequestBuilderViewModel : PropertyChangedBase, IHandle<MethodSelectedMessage>, IHandle<HistorySelectedMessage>, IHandle<AppSettingsChangedMessage>, IHandle<FavouriteSelectedMessage>, IHandle<GroupedSelectedMessage>, IHandle<SearchSelectedMessage>
     {
         #region Private members
 
-        private readonly AppSettings appSettings;
+        private AppSettings appSettings;
 
         private readonly IEventAggregator eventAggregator;
 
@@ -80,7 +79,7 @@ namespace RESTLess.Controls
             {
                 url = value;
                 NotifyOfPropertyChange(() => UrlTextBox);
-                //NotifyOfPropertyChange(() => CanSendButton);
+                NotifyOfPropertyChange(() => CanSendButton);
             }
         }
 
@@ -122,8 +121,7 @@ namespace RESTLess.Controls
         {
             get
             {
-                //return !string.IsNullOrWhiteSpace(UrlTextBox) && !isWaiting;
-                return true;
+                return !string.IsNullOrWhiteSpace(UrlTextBox) && !isWaiting;
             }
         }
 
@@ -148,7 +146,33 @@ namespace RESTLess.Controls
         public void Handle(HistorySelectedMessage historyRequest)
         {
             LoadSelected(historyRequest.Request);
-            //StatusBarTextBlock = "Loaded History Item.";
+        }
+
+        public void Handle(AppSettingsChangedMessage message)
+        {
+            appSettings = message.AppSettings;
+        }
+
+        public void Handle(FavouriteSelectedMessage message)
+        {
+            LoadSelected(message.Request);
+        }
+
+        public void Handle(GroupedSelectedMessage message)
+        {
+            using (var docstore = documentStore.OpenSession())
+            {
+                var item = docstore.Load<Request>(message.Request.Id);
+                if (item != null)
+                {
+                    Mapper.Map(item, this);
+                }
+            }
+        }
+
+        public void Handle(SearchSelectedMessage message)
+        {
+            LoadSelected(message.Request);
         }
 
         #endregion
@@ -252,8 +276,6 @@ namespace RESTLess.Controls
             NotifyOfPropertyChange(() => CanStopButton);
             NotifyOfPropertyChange(() => CanSendButton);
         }
-
-
 
         private RestRequest GetRestRequest(Uri uri)
         {
