@@ -218,9 +218,12 @@ namespace RESTLess.Controls
 
                         Response response = new Response(req != null ? req.Id : 0, r, stopWatch.ElapsedMilliseconds);
 
+                        StopSending();
+
                         //DisplayResponse(response);
 
-                        StopSending();
+                        eventAggregator.PublishOnUIThread(new ResponseReceivedMessage { Response = response });
+
 
                         using (var conn = documentStore.OpenSession())
                         {

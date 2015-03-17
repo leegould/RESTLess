@@ -6,8 +6,6 @@ using System.Linq;
 using System.Net;
 using System.Windows;
 
-using AutoMapper;
-
 using Caliburn.Micro;
 
 using Newtonsoft.Json;
@@ -23,7 +21,7 @@ using RESTLess.Models.Messages;
 namespace RESTLess
 {
     [Export(typeof(AppViewModel))]
-    public class AppViewModel : Conductor<ITabItem>.Collection.OneActive, IApp, IHandle<HistorySelectedMessage>, IHandle<GroupedSelectedMessage>, IHandle<AppSettingsChangedMessage>, IHandle<FavouriteSelectedMessage>, IHandle<SearchSelectedMessage>
+    public class AppViewModel : Conductor<ITabItem>.Collection.OneActive, IApp, IHandle<HistorySelectedMessage>, IHandle<GroupedSelectedMessage>, IHandle<AppSettingsChangedMessage>, IHandle<FavouriteSelectedMessage>, IHandle<SearchSelectedMessage>, IHandle<ResponseReceivedMessage>
     {
         #region Private members
 
@@ -327,6 +325,8 @@ namespace RESTLess
 
         public void Handle(HistorySelectedMessage historyRequest)
         {
+            var response = LoadResponseFromRequest(historyRequest.Request);
+            DisplayOrClear(response);
             StatusBarTextBlock = "Loaded History Item.";
         }
 
@@ -365,9 +365,29 @@ namespace RESTLess
             StatusBarTextBlock = "Loaded Search Result.";
         }
 
+        public void Handle(ResponseReceivedMessage message)
+        {
+            DisplayOrClear(message.Response);
+        }
+
         #endregion
 
         #region Private Methods
+
+        private Response LoadResponseFromRequest(Request request)
+        {
+            if (appSettings.LoadResponses)
+            {
+                using (var docstore = DocumentStore.OpenSession())
+                {
+                    if (request != null)
+                    {
+                        return docstore.Query<Response>().FirstOrDefault(x => x.RequestId == request.Id);
+                    }
+                }
+            }
+            return null;
+        }
 
         private void DisplayOrClear(Response response)
         {
@@ -477,5 +497,6 @@ namespace RESTLess
         //}
 
         //#endregion
+
     }
 }
