@@ -10,7 +10,7 @@ namespace RESTLess.Models
         {
         }
 
-        public Response(int requestId, IRestResponse restResponse, long elapsed)
+        public Response(string requestId, IRestResponse restResponse, long elapsed)
         {
             When = DateTime.UtcNow;
             Elapsed = elapsed;
@@ -36,13 +36,13 @@ namespace RESTLess.Models
             ResponseUri = restResponse.ResponseUri;
         }
 
-        public int Id { get; set; }
+        public string Id { get; set; }
 
         public DateTime When { get; set; }
 
         public long Elapsed { get; set; }
 
-        public int RequestId { get; set; }
+        public string RequestId { get; set; }
 
         public Dictionary<string, string> Headers { get; set; }
 

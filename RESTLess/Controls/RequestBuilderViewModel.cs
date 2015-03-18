@@ -216,7 +216,7 @@ namespace RESTLess.Controls
                         stopWatch.Stop();
                         //StatusBarTextBlock = "Status: " + r.ResponseStatus + ". Code:" + r.StatusCode + ". Elapsed: " + stopWatch.ElapsedMilliseconds.ToString() + " ms.";
 
-                        Response response = new Response(req != null ? req.Id : 0, r, stopWatch.ElapsedMilliseconds);
+                        Response response = new Response(req != null ? req.Id : "0", r, stopWatch.ElapsedMilliseconds);
 
                         StopSending();
 
@@ -248,23 +248,18 @@ namespace RESTLess.Controls
             StopSending();
         }
 
+        public void ClearButton()
+        {
+            UrlTextBox = string.Empty;
+            BodyTextBox = string.Empty;
+            HeadersDataGrid.Clear();
+        }
+
         #endregion
 
         private void LoadSelected(Request request)
         {
             Mapper.Map(request, this);
-
-            //if (appSettings.LoadResponses)
-            //{
-            //    using (var docstore = documentStore.OpenSession())
-            //    {
-            //        Response response = null;
-            //        if (request != null)
-            //        {
-            //            response = docstore.Query<Response>().FirstOrDefault(x => x.RequestId == request.Id);
-            //        }
-            //    }
-            //}
         }
 
         private void StopSending()
@@ -292,10 +287,11 @@ namespace RESTLess.Controls
                 request.AddHeader(header.Name, header.Value);
             }
 
-            //if (UseBody(method) && !string.IsNullOrWhiteSpace(BodyTextBox))
-            //{
-            //    request.AddJsonBody(BodyTextBox);
-            //}
+            if (UseBody(method) && !string.IsNullOrWhiteSpace(BodyTextBox))
+            {
+                request.AddJsonBody(BodyTextBox);
+            }
+
             return request;
         }
 

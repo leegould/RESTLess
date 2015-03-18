@@ -253,13 +253,6 @@ namespace RESTLess
         //    ResponseWhenTextBlock = string.Empty;
         //}
 
-        //public void ClearButton()
-        //{
-        //    UrlTextBox = string.Empty;
-        //    BodyTextBox = string.Empty;
-        //    HeadersDataGrid.Clear();
-        //}
-
         //public async void FavouriteButton()
         //{
             //if (request != null)
@@ -325,7 +318,7 @@ namespace RESTLess
 
         public void Handle(HistorySelectedMessage historyRequest)
         {
-            var response = LoadResponseFromRequest(historyRequest.Request);
+            var response = LoadResponseFromRequest(historyRequest.Request.Id);
             DisplayOrClear(response);
             StatusBarTextBlock = "Loaded History Item.";
         }
@@ -341,27 +334,21 @@ namespace RESTLess
 
         public void Handle(FavouriteSelectedMessage message)
         {
+            var response = LoadResponseFromRequest(message.Request.Id);
+            DisplayOrClear(response);
             StatusBarTextBlock = "Loaded Favourite Item.";
         }
 
         public void Handle(GroupedSelectedMessage message)
         {
-            using (var docstore = DocumentStore.OpenSession())
-            {
-                var item = docstore.Load<Request>(message.Request.Id);
-                if (item != null)
-                {
-                    if (appSettings.LoadResponses)
-                    {
-                        var response = docstore.Query<Response>().FirstOrDefault(x => x.RequestId == item.Id);
-                        DisplayOrClear(response);
-                    }
-                }
-            }
+            var response = LoadResponseFromRequest(message.Request.Id);
+
         }
 
         public void Handle(SearchSelectedMessage message)
         {
+            var response = LoadResponseFromRequest(message.Request.Id);
+            DisplayOrClear(response);
             StatusBarTextBlock = "Loaded Search Result.";
         }
 
@@ -374,16 +361,13 @@ namespace RESTLess
 
         #region Private Methods
 
-        private Response LoadResponseFromRequest(Request request)
+        private Response LoadResponseFromRequest(string requestid)
         {
-            if (appSettings.LoadResponses)
+            if (appSettings.LoadResponses && !string.IsNullOrEmpty(requestid))
             {
                 using (var docstore = DocumentStore.OpenSession())
                 {
-                    if (request != null)
-                    {
-                        return docstore.Query<Response>().FirstOrDefault(x => x.RequestId == request.Id);
-                    }
+                    return docstore.Query<Response>().FirstOrDefault(x => x.RequestId == requestid);
                 }
             }
             return null;
@@ -445,24 +429,6 @@ namespace RESTLess
                 RawResultsTextBox = ex.ToString();
             }
         }
-
-        //private void LoadSelected(Request request)
-        //{
-        //    Mapper.Map(request, this);
-
-        //    if (appSettings.LoadResponses)
-        //    {
-        //        using (var docstore = DocumentStore.OpenSession())
-        //        {
-        //            Response response = null;
-        //            if (request != null)
-        //            {
-        //                response = docstore.Query<Response>().FirstOrDefault(x => x.RequestId == request.Id);
-        //            }
-        //            DisplayOrClear(response);
-        //        }
-        //    }
-        //}
 
         //private void StopSending()
         //{

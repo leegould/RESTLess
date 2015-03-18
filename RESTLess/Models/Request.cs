@@ -32,7 +32,7 @@ namespace RESTLess.Models
             Body = body;
         }
 
-        public int Id { get; set; }
+        public string Id { get; set; }
 
         public DateTime When { get; set; }
 
