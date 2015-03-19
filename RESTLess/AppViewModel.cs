@@ -21,7 +21,7 @@ using RESTLess.Models.Messages;
 namespace RESTLess
 {
     [Export(typeof(AppViewModel))]
-    public class AppViewModel : Conductor<ITabItem>.Collection.OneActive, IApp, IHandle<HistorySelectedMessage>, IHandle<GroupedSelectedMessage>, IHandle<AppSettingsChangedMessage>, IHandle<FavouriteSelectedMessage>, IHandle<SearchSelectedMessage>, IHandle<ResponseReceivedMessage>
+    public class AppViewModel : Conductor<ITabItem>.Collection.OneActive, IApp, IHandle<HistorySelectedMessage>, IHandle<GroupedSelectedMessage>, IHandle<FavouriteSelectedMessage>, IHandle<SearchSelectedMessage>, IHandle<ResponseReceivedMessage>
     {
         #region Private members
 
@@ -33,12 +33,12 @@ namespace RESTLess
         
         public readonly IDocumentStore DocumentStore;
 
-        private string rawResultsTextBox;
-        private string htmlResultsBox;
+        //private string rawResultsTextBox;
+        //private string htmlResultsBox;
 
-        private string responseStatusTextBlock;
-        private string responseWhenTextBlock;
-        private string responseElapsedTextBlock;
+        //private string responseStatusTextBlock;
+        //private string responseWhenTextBlock;
+        //private string responseElapsedTextBlock;
 
         private string statusBarTextBlock;
 
@@ -51,6 +51,7 @@ namespace RESTLess
             this.windowManager = windowManager;
             DocumentStore = documentStore;
             RequestBuilderViewModel = new RequestBuilderViewModel(eventAggregator, documentStore);
+            ResponseViewModel = new ResponseViewModel(eventAggregator, documentStore);
 
             // Add tabs. TODO : can add these via bootstrapper;
             Items.Add(new HistoryViewModel(eventAggregator, documentStore));
@@ -96,64 +97,66 @@ namespace RESTLess
 
         public RequestBuilderViewModel RequestBuilderViewModel { get; set; }
 
-        public string RawResultsTextBox
-        {
-            get { return rawResultsTextBox; }
-            set
-            {
-                rawResultsTextBox = value;
-                NotifyOfPropertyChange(() => RawResultsTextBox);
-            }
-        }
+        public ResponseViewModel ResponseViewModel { get; set; }
 
-        public string HtmlResultsBox
-        {
-            get { return htmlResultsBox; }
-            set
-            {
-                htmlResultsBox = value;
-                NotifyOfPropertyChange(() => HtmlResultsBox);
-            }
-        }
+        //public string RawResultsTextBox
+        //{
+        //    get { return rawResultsTextBox; }
+        //    set
+        //    {
+        //        rawResultsTextBox = value;
+        //        NotifyOfPropertyChange(() => RawResultsTextBox);
+        //    }
+        //}
 
-        public string ResponseStatusTextBlock
-        {
-            get
-            {
-                return responseStatusTextBlock;
-            }
-            set
-            {
-                responseStatusTextBlock = value;
-                NotifyOfPropertyChange(() => ResponseStatusTextBlock);
-            }
-        }
+        //public string HtmlResultsBox
+        //{
+        //    get { return htmlResultsBox; }
+        //    set
+        //    {
+        //        htmlResultsBox = value;
+        //        NotifyOfPropertyChange(() => HtmlResultsBox);
+        //    }
+        //}
 
-        public string ResponseWhenTextBlock
-        {
-            get
-            {
-                return responseWhenTextBlock;
-            }
-            set
-            {
-                responseWhenTextBlock = value;
-                NotifyOfPropertyChange(() => ResponseWhenTextBlock);
-            }
-        }
+        //public string ResponseStatusTextBlock
+        //{
+        //    get
+        //    {
+        //        return responseStatusTextBlock;
+        //    }
+        //    set
+        //    {
+        //        responseStatusTextBlock = value;
+        //        NotifyOfPropertyChange(() => ResponseStatusTextBlock);
+        //    }
+        //}
 
-        public string ResponseElapsedTextBlock
-        {
-            get
-            {
-                return responseElapsedTextBlock;
-            }
-            set
-            {
-                responseElapsedTextBlock = value;
-                NotifyOfPropertyChange(() => ResponseElapsedTextBlock);
-            }
-        }
+        //public string ResponseWhenTextBlock
+        //{
+        //    get
+        //    {
+        //        return responseWhenTextBlock;
+        //    }
+        //    set
+        //    {
+        //        responseWhenTextBlock = value;
+        //        NotifyOfPropertyChange(() => ResponseWhenTextBlock);
+        //    }
+        //}
+
+        //public string ResponseElapsedTextBlock
+        //{
+        //    get
+        //    {
+        //        return responseElapsedTextBlock;
+        //    }
+        //    set
+        //    {
+        //        responseElapsedTextBlock = value;
+        //        NotifyOfPropertyChange(() => ResponseElapsedTextBlock);
+        //    }
+        //}
 
         //public bool CanFavouriteButton
         //{
@@ -318,117 +321,101 @@ namespace RESTLess
 
         public void Handle(HistorySelectedMessage historyRequest)
         {
-            var response = LoadResponseFromRequest(historyRequest.Request.Id);
-            DisplayOrClear(response);
             StatusBarTextBlock = "Loaded History Item.";
-        }
-
-        public void Handle(AppSettingsChangedMessage message)
-        {
-            appSettings = message.AppSettings;
-            if (!appSettings.LoadResponses)
-            {
-                DisplayOrClear(null); // Clear
-            }
         }
 
         public void Handle(FavouriteSelectedMessage message)
         {
-            var response = LoadResponseFromRequest(message.Request.Id);
-            DisplayOrClear(response);
             StatusBarTextBlock = "Loaded Favourite Item.";
         }
 
         public void Handle(GroupedSelectedMessage message)
         {
-            var response = LoadResponseFromRequest(message.Request.Id);
-
+            StatusBarTextBlock = "Loaded Grouped Item.";
         }
 
         public void Handle(SearchSelectedMessage message)
         {
-            var response = LoadResponseFromRequest(message.Request.Id);
-            DisplayOrClear(response);
             StatusBarTextBlock = "Loaded Search Result.";
         }
 
         public void Handle(ResponseReceivedMessage message)
         {
-            DisplayOrClear(message.Response);
+            StatusBarTextBlock = "Loaded Response.";
         }
 
         #endregion
 
         #region Private Methods
 
-        private Response LoadResponseFromRequest(string requestid)
-        {
-            if (appSettings.LoadResponses && !string.IsNullOrEmpty(requestid))
-            {
-                using (var docstore = DocumentStore.OpenSession())
-                {
-                    return docstore.Query<Response>().FirstOrDefault(x => x.RequestId == requestid);
-                }
-            }
-            return null;
-        }
+        //private Response LoadResponseFromRequest(string requestid)
+        //{
+        //    if (appSettings.LoadResponses && !string.IsNullOrEmpty(requestid))
+        //    {
+        //        using (var docstore = DocumentStore.OpenSession())
+        //        {
+        //            return docstore.Query<Response>().FirstOrDefault(x => x.RequestId == requestid);
+        //        }
+        //    }
+        //    return null;
+        //}
 
-        private void DisplayOrClear(Response response)
-        {
-            if (response != null)
-            {
-                DisplayResponse(response);
-            }
-            else
-            {
-                ResponseElapsedTextBlock = string.Empty;
-                ResponseStatusTextBlock = string.Empty;
-                ResponseWhenTextBlock = string.Empty;
-                RawResultsTextBox = "No Response";
-                HtmlResultsBox = "<p>No Response</p>";
-            }
-        }
+        //private void DisplayOrClear(Response response)
+        //{
+        //    if (response != null)
+        //    {
+        //        DisplayResponse(response);
+        //    }
+        //    else
+        //    {
+        //        ResponseElapsedTextBlock = string.Empty;
+        //        ResponseStatusTextBlock = string.Empty;
+        //        ResponseWhenTextBlock = string.Empty;
+        //        RawResultsTextBox = "No Response";
+        //        HtmlResultsBox = "<p>No Response</p>";
+        //    }
+        //}
 
-        private void DisplayResponse(Response response)
-        {
-            try 
-            {
-                if (!string.IsNullOrWhiteSpace(response.Content))
-                {
-                    try
-                    {
-                        var formattedjson = JObject.Parse(response.Content).ToString(Formatting.Indented);
-                        RawResultsTextBox = formattedjson;
-                        HtmlResultsBox = "<pre>" + WebUtility.HtmlEncode(formattedjson) + "</pre>";
-                    }
-                    catch(JsonReaderException)
-                    {
-                        RawResultsTextBox = response.Content;
-                        HtmlResultsBox = response.Content;
-                    }
-                }
-                else
-                {
-                    RawResultsTextBox = string.Empty;
-                }
+        //private void DisplayResponse(Response response)
+        //{
+        //    try 
+        //    {
+        //        if (!string.IsNullOrWhiteSpace(response.Content))
+        //        {
+        //            try
+        //            {
+        //                var formattedjson = JObject.Parse(response.Content).ToString(Formatting.Indented);
+        //                RawResultsTextBox = formattedjson;
+        //                HtmlResultsBox = "<pre>" + WebUtility.HtmlEncode(formattedjson) + "</pre>";
+        //            }
+        //            catch(JsonReaderException)
+        //            {
+        //                RawResultsTextBox = response.Content;
+        //                HtmlResultsBox = response.Content;
+        //            }
+        //        }
+        //        else
+        //        {
+        //            RawResultsTextBox = string.Empty;
+        //        }
 
-                ResponseElapsedTextBlock =  response.Elapsed + " ms.";
-                ResponseStatusTextBlock = response.StatusCode + " " + response.StatusCodeDescription;
+        //        ResponseElapsedTextBlock =  response.Elapsed + " ms.";
+        //        ResponseStatusTextBlock = response.StatusCode + " " + response.StatusCodeDescription;
 
-                var whentext = response.When.ToString(CultureInfo.InvariantCulture);
-                var ago = DateTime.UtcNow.Subtract(response.When);
-                if (ago.TotalMinutes > 1)
-                {
-                    whentext += " (-" + ago.ToString(@"d\.h\:mm\:ss") + ")";
-                }
+        //        var whentext = response.When.ToString(CultureInfo.InvariantCulture);
+        //        var ago = DateTime.UtcNow.Subtract(response.When);
+        //        if (ago.TotalMinutes > 1)
+        //        {
+        //            whentext += " (-" + ago.ToString(@"d\.h\:mm\:ss") + ")";
+        //        }
 
-                ResponseWhenTextBlock = whentext;
-            }
-            catch (Exception ex)
-            {
-                RawResultsTextBox = ex.ToString();
-            }
-        }
+        //        ResponseWhenTextBlock = whentext;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        RawResultsTextBox = ex.ToString();
+        //    }
+        //}
 
         //private void StopSending()
         //{

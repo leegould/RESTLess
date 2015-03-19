@@ -59,8 +59,11 @@
                 
                 <GridSplitter Grid.Column="0" Grid.Row="1" Width="Auto" Height="2" HorizontalAlignment="Stretch" VerticalAlignment="Center" ResizeBehavior="PreviousAndNext"/>
 
-                <!--<StackPanel Grid.Column="0" Grid.Row="2" Height="Auto" HorizontalAlignment="Stretch">-->
-                    <Grid MinHeight="200" Grid.Column="0" Grid.Row="2">
+                <ContentControl Grid.Column="0" Grid.Row="2" x:Name="ResponseViewModel"></ContentControl>
+
+
+                    <!--<StackPanel Grid.Column="0" Grid.Row="2" Height="Auto" HorizontalAlignment="Stretch">-->
+                    <!--<Grid MinHeight="200" Grid.Column="0" Grid.Row="2">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
@@ -115,7 +118,7 @@
                             </TabItem>
                             
                         </TabControl>
-                    </Grid>
+                    </Grid>-->
                 <!--</StackPanel>-->
             </Grid>
 
