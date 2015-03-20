@@ -18,7 +18,7 @@ namespace RESTLess.Controls
     /// <summary>
     /// Interaction logic for ResponseView.xaml
     /// </summary>
-    public partial class ResponseView : Page
+    public partial class ResponseView : UserControl
     {
         public ResponseView()
         {

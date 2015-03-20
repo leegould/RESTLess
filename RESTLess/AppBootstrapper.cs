@@ -1,15 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
 using System.Windows;
+
 using Caliburn.Micro;
+
 using Raven.Client;
 using Raven.Client.Embedded;
 using Raven.Client.Indexes;
 using Raven.Database.Server;
-using RESTLess.Models;
-using RESTLess.Models.Interface;
 
 namespace RESTLess
 {
