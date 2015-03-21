@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using AutoMapper;
 using Caliburn.Micro;
-
 using Raven.Client;
 using RestSharp;
 using RESTLess.Models;
@@ -45,27 +43,17 @@ namespace RESTLess.Controls
                 .ForMember(d => d.BodyTextBox, o => o.MapFrom(s => s.Body));
         }
 
-        public RequestBuilderViewModel(IEventAggregator eventAggregator, IDocumentStore documentStore)
+        public RequestBuilderViewModel(IEventAggregator eventAggregator, IDocumentStore documentStore, AppSettings appsettings)
         {
             this.eventAggregator = eventAggregator;
             eventAggregator.Subscribe(this);
             this.documentStore = documentStore;
+            appSettings = appsettings;
             MethodViewModel = new MethodViewModel(eventAggregator);
             HeadersDataGrid = new BindableCollection<HttpHeader>();
 
             selectedMethod = Method.GET;
             BodyIsVisible = false;
-
-            using (var conn = documentStore.OpenSession())
-            {
-                appSettings = conn.Query<AppSettings>().FirstOrDefault();
-                if (appSettings == null)
-                {
-                    appSettings = AppSettings.CreateDefault();
-                    conn.Store(appSettings);
-                    conn.SaveChanges();
-                }
-            }
         }
 
         #region Properties

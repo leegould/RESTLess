@@ -36,18 +36,11 @@ namespace RESTLess
             eventAggregator.Subscribe(this);
             this.windowManager = windowManager;
             DocumentStore = documentStore;
-            RequestBuilderViewModel = new RequestBuilderViewModel(eventAggregator, documentStore);
-            ResponseViewModel = new ResponseViewModel(eventAggregator, documentStore);
 
-            // Add tabs. TODO : can add these via bootstrapper;
-            Items.Add(new HistoryViewModel(eventAggregator, documentStore));
-            Items.Add(new GroupedViewModel(eventAggregator, documentStore));
-            Items.Add(new FavouritesViewModel(eventAggregator, documentStore));
-            Items.Add(new SearchViewModel(eventAggregator, documentStore));
-
+            AppSettings appSettings;
             using (var conn = DocumentStore.OpenSession())
             {
-                var appSettings = conn.Query<AppSettings>().FirstOrDefault();
+                appSettings = conn.Query<AppSettings>().FirstOrDefault();
                 if (appSettings == null)
                 {
                     appSettings = AppSettings.CreateDefault();
@@ -55,6 +48,15 @@ namespace RESTLess
                     conn.SaveChanges();
                 }
             }
+
+            RequestBuilderViewModel = new RequestBuilderViewModel(eventAggregator, documentStore, appSettings);
+            ResponseViewModel = new ResponseViewModel(eventAggregator, documentStore, appSettings);
+
+            // Add tabs. TODO : can add these via bootstrapper;
+            Items.Add(new HistoryViewModel(eventAggregator, documentStore));
+            Items.Add(new GroupedViewModel(eventAggregator, documentStore));
+            Items.Add(new FavouritesViewModel(eventAggregator, documentStore));
+            Items.Add(new SearchViewModel(eventAggregator, documentStore));
         }
 
         //http://caliburnmicro.codeplex.com/discussions/394099

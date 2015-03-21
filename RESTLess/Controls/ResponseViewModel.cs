@@ -26,22 +26,12 @@ namespace RESTLess.Controls
         private string responseWhenTextBlock;
         private string responseElapsedTextBlock;
 
-        public ResponseViewModel(IEventAggregator eventAggregator, IDocumentStore documentStore)
+        public ResponseViewModel(IEventAggregator eventAggregator, IDocumentStore documentStore, AppSettings appsettings)
         {
             this.eventAggregator = eventAggregator;
             eventAggregator.Subscribe(this);
             DocumentStore = documentStore;
-
-            using (var conn = documentStore.OpenSession())
-            {
-                appSettings = conn.Query<AppSettings>().FirstOrDefault();
-                if (appSettings == null)
-                {
-                    appSettings = AppSettings.CreateDefault();
-                    conn.Store(appSettings);
-                    conn.SaveChanges();
-                }
-            }
+            appSettings = appsettings;
         }
 
         #region Properties
