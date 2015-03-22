@@ -13,6 +13,7 @@
                 <ColumnDefinition Width="*"></ColumnDefinition>
                 <ColumnDefinition Width="*"></ColumnDefinition>
                 <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"></RowDefinition>
@@ -20,7 +21,6 @@
                 <RowDefinition Height="*"></RowDefinition>
                 <RowDefinition Height="*"></RowDefinition>
                 <RowDefinition Height="*"></RowDefinition>
-                <RowDefinition Height="28"></RowDefinition>
             </Grid.RowDefinitions>
 
             <ContentControl Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="0" x:Name="MethodViewModel"></ContentControl>
@@ -87,11 +87,12 @@
                 </TextBox>
             </StackPanel>
 
-            <Button Name="ClearButton" Margin="2" Content="Clear" Grid.Column="0" Grid.Row="4" Background="{StaticResource BgLightBlueBrush}"></Button>
-            <!--<Button Name="FavouriteButton" Margin="2" Content="Favourite" Grid.Column="4" Grid.Row="0" Background="{StaticResource BgYellowBrush}"></Button>-->
-            <Button Name="StopButton" Margin="2" Content="Stop" Grid.Column="2" Grid.Row="4" Background="{StaticResource BgRedBrush}"></Button>
-            <Button Name="SendButton" Margin="2" Content="Send" Grid.Column="3" Grid.Row="4" Background="{StaticResource BgDarkGreenBrush}"></Button>
-
+            <StackPanel Grid.Row="0" Grid.Column="5" Grid.RowSpan="5" Margin="0, 5, 0, 0">
+                <Button Name="ClearButton" Margin="5" Content="Clear" Background="{StaticResource BgLightBlueBrush}"></Button>
+                <Button Name="StopButton" Margin="5" Content="Stop" Background="{StaticResource BgRedBrush}"></Button>
+                <Button Name="SendButton" Margin="5" Content="Send" Background="{StaticResource BgDarkGreenBrush}"></Button>
+                <!--<Button Name="FavouriteButton" Margin="2" Content="Favourite" Grid.Column="4" Grid.Row="0" Background="{StaticResource BgYellowBrush}"></Button>-->
+            </StackPanel>
         </Grid>
     </StackPanel>
     
