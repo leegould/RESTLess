@@ -14,6 +14,7 @@
                 <ColumnDefinition Width="*"></ColumnDefinition>
                 <ColumnDefinition Width="*"></ColumnDefinition>
                 <ColumnDefinition Width="*"></ColumnDefinition>
+                <!--<ColumnDefinition Width="*"></ColumnDefinition>-->
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"></RowDefinition>
@@ -87,7 +88,11 @@
                 </TextBox>
             </StackPanel>
 
-            <StackPanel Grid.Row="0" Grid.Column="5" Grid.RowSpan="5" Margin="0, 5, 0, 0">
+            <GridSplitter Grid.Column="3" Grid.Row="0" Grid.RowSpan="4" Width="2" HorizontalAlignment="Right" VerticalAlignment="Stretch" ResizeBehavior="CurrentAndNext"/>
+
+            <!--<GridSplitter Grid.Column="5" ResizeDirection="Columns"></GridSplitter>-->
+            
+            <StackPanel Grid.Row="0" Grid.Column="4" Grid.RowSpan="5" Margin="0, 5, 0, 0" MinWidth="50">
                 <Button Name="ClearButton" Margin="5" Content="Clear" Background="{StaticResource BgLightBlueBrush}"></Button>
                 <Button Name="StopButton" Margin="5" Content="Stop" Background="{StaticResource BgRedBrush}"></Button>
                 <Button Name="SendButton" Margin="5" Content="Send" Background="{StaticResource BgDarkGreenBrush}"></Button>
