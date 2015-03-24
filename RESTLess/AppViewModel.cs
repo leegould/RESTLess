@@ -49,7 +49,7 @@ namespace RESTLess
                 }
             }
 
-            RequestBuilderViewModel = new RequestBuilderViewModel(eventAggregator, documentStore, appSettings);
+            RequestBuilderViewModel = new RequestBuilderViewModel(eventAggregator, documentStore, windowManager, appSettings);
             ResponseViewModel = new ResponseViewModel(eventAggregator, documentStore, appSettings);
 
             // Add tabs. TODO : can add these via bootstrapper;

@@ -1,9 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Dynamic;
+using System.Windows;
+
 using AutoMapper;
 using Caliburn.Micro;
 using Raven.Client;
+using Raven.Client.Document;
+
 using RestSharp;
 using RESTLess.Models;
 using RESTLess.Models.Messages;
@@ -19,6 +24,8 @@ namespace RESTLess.Controls
         private readonly IEventAggregator eventAggregator;
 
         private readonly IDocumentStore documentStore;
+
+        private readonly IWindowManager windowManager;
 
         private IObservableCollection<HttpHeader> headers;
 
@@ -43,11 +50,12 @@ namespace RESTLess.Controls
                 .ForMember(d => d.BodyTextBox, o => o.MapFrom(s => s.Body));
         }
 
-        public RequestBuilderViewModel(IEventAggregator eventAggregator, IDocumentStore documentStore, AppSettings appsettings)
+        public RequestBuilderViewModel(IEventAggregator eventAggregator, IDocumentStore documentStore, IWindowManager windowManager, AppSettings appsettings)
         {
             this.eventAggregator = eventAggregator;
             eventAggregator.Subscribe(this);
             this.documentStore = documentStore;
+            this.windowManager = windowManager;
             appSettings = appsettings;
             MethodViewModel = new MethodViewModel(eventAggregator);
             HeadersDataGrid = new BindableCollection<HttpHeader>();
@@ -241,6 +249,18 @@ namespace RESTLess.Controls
             UrlTextBox = string.Empty;
             BodyTextBox = string.Empty;
             HeadersDataGrid.Clear();
+        }
+
+        public void AddAuth()
+        {
+            dynamic settings = new ExpandoObject();
+            settings.Width = 400;
+            settings.Height = 300;
+            settings.WindowStartupLocation = WindowStartupLocation.Manual;
+            settings.Title = "Add Authentication";
+            //settings.SizeToContent = "WidthAndHeight";
+
+            windowManager.ShowWindow(new AuthenticationViewModel(eventAggregator, documentStore), null, settings);
         }
 
         #endregion
