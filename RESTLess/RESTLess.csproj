@@ -143,6 +143,7 @@
     <Compile Include="Models\Interface\IMenuItem.cs" />
     <Compile Include="Models\Interface\ITabItem.cs" />
     <Compile Include="Models\Messages\AppSettingsChangedMessage.cs" />
+    <Compile Include="Models\Messages\AuthenticationHeaderMessage.cs" />
     <Compile Include="Models\Messages\ChangeMethodMessage.cs" />
     <Compile Include="Models\Messages\FavouriteAddedMessage.cs" />
     <Compile Include="Models\Messages\FavouriteRemovedMessage.cs" />

@@ -1,8 +1,12 @@
-﻿using System.ComponentModel.Composition;
+﻿using System;
+using System.ComponentModel.Composition;
+using System.Text;
 
 using Caliburn.Micro;
 
 using Raven.Client;
+
+using RESTLess.Models.Messages;
 
 namespace RESTLess.Controls
 {
@@ -37,6 +41,26 @@ namespace RESTLess.Controls
                 passwordTextBox = value;
                 NotifyOfPropertyChange(() => PasswordTextBox);
             }
+        }
+
+        #endregion
+
+        #region Button Actions
+
+        public void SaveButton()
+        {
+            if (!string.IsNullOrEmpty(UsernameTextBox) && !string.IsNullOrEmpty(PasswordTextBox))
+            {
+                var basicvalue = "Basic " + Convert.ToBase64String(Encoding.Unicode.GetBytes(UsernameTextBox + ":" + PasswordTextBox));
+                eventAggregator.PublishOnUIThread(new AddHeaderMessage { Header = "Authorization", Value = basicvalue });
+            }
+
+            TryClose();
+        }
+
+        public void CancelButton()
+        {
+            TryClose();
         }
 
         #endregion
