@@ -13,6 +13,10 @@ namespace RESTLess.Controls
     [Export(typeof(AuthenticationViewModel))]
     class AuthenticationViewModel : Screen
     {
+        private BindableCollection<string> typesComboBox;
+
+        private string selectedType;
+
         private string usernameTextBox;
 
         private string passwordTextBox;
@@ -22,6 +26,29 @@ namespace RESTLess.Controls
         private readonly IDocumentStore documentStore;
 
         #region Properties
+
+        public BindableCollection<string> TypesComboBox
+        {
+            get { return typesComboBox; }
+            set
+            {
+                typesComboBox = value;
+                NotifyOfPropertyChange(() => TypesComboBox);
+            }
+        }
+
+        public string SelectedType
+        {
+            get { return selectedType; }
+            set
+            {
+                if (selectedType != value)
+                {
+                    selectedType = value;
+                    NotifyOfPropertyChange(() => SelectedType);
+                }  
+            }
+        }
 
         public string UsernameTextBox
         {
@@ -45,14 +72,34 @@ namespace RESTLess.Controls
 
         #endregion
 
+        public AuthenticationViewModel(IEventAggregator eventAggregator, IDocumentStore documentStore)
+        {
+            this.documentStore = documentStore;
+            this.eventAggregator = eventAggregator;
+            eventAggregator.Subscribe(this);
+            TypesComboBox = new BindableCollection<string>
+            {
+                "Basic"
+            };
+        }
+
         #region Button Actions
 
         public void SaveButton()
         {
-            if (!string.IsNullOrEmpty(UsernameTextBox) && !string.IsNullOrEmpty(PasswordTextBox))
+            if (!string.IsNullOrEmpty(SelectedType) && SelectedType == "Basic")
             {
-                var basicvalue = "Basic " + Convert.ToBase64String(Encoding.Unicode.GetBytes(UsernameTextBox + ":" + PasswordTextBox));
-                eventAggregator.PublishOnUIThread(new AddHeaderMessage { Header = "Authorization", Value = basicvalue });
+                if (!string.IsNullOrEmpty(UsernameTextBox) && !string.IsNullOrEmpty(PasswordTextBox))
+                {
+                    var basicvalue = "Basic " +
+                                     Convert.ToBase64String(
+                                         Encoding.Unicode.GetBytes(UsernameTextBox + ":" + PasswordTextBox));
+                    eventAggregator.PublishOnUIThread(new AddHeaderMessage
+                    {
+                        Header = "Authorization",
+                        Value = basicvalue
+                    });
+                }
             }
 
             TryClose();
@@ -64,17 +111,5 @@ namespace RESTLess.Controls
         }
 
         #endregion
-
-        public AuthenticationViewModel(IEventAggregator eventAggregator, IDocumentStore documentStore)
-        {
-            this.documentStore = documentStore;
-            this.eventAggregator = eventAggregator;
-            eventAggregator.Subscribe(this);
-        }
-
-        #region Button Actions
-
-        #endregion
-
     }
 }

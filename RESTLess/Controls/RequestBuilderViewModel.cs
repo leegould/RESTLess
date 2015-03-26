@@ -260,8 +260,8 @@ namespace RESTLess.Controls
         public void AddAuth()
         {
             dynamic settings = new ExpandoObject();
-            settings.Width = 400;
-            settings.Height = 300;
+            settings.Width = 300;
+            settings.Height = 200;
             settings.WindowStartupLocation = WindowStartupLocation.Manual;
             settings.Title = "Add Authentication";
             //settings.SizeToContent = "WidthAndHeight";

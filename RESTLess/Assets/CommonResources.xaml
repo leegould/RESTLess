@@ -68,4 +68,8 @@
         <GradientStop Offset="1" Color="#999999"/>
     </LinearGradientBrush>
 
+    <Style x:Key="ComboStyle" TargetType="{x:Type ComboBox}">
+        <Setter Property="SelectedIndex" Value="0"/>
+    </Style>
+
 </ResourceDictionary>
