@@ -81,6 +81,8 @@ namespace RESTLess.Controls
             {
                 "Basic"
             };
+
+            SelectedType = TypesComboBox[0];
         }
 
         #region Button Actions
