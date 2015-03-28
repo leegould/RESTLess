@@ -6,8 +6,19 @@
 	  xmlns:wpf="clr-namespace:TheArtOfDev.HtmlRenderer.WPF;assembly=HtmlRenderer.WPF"
 	  mc:Ignorable="d" 
 	  d:DesignHeight="300" d:DesignWidth="300">
-
+    
 	<Grid MinHeight="200">
+        <!--<Grid.Resources>
+            <Color x:Key="ResultColour" A="255" R="255" G="255" B="255"></Color>
+            <Style x:Key="ResultStyle" TargetType="TextBlock">
+                <Setter Property="Background">
+                    <Setter.Value>
+                            <SolidColorBrush Color="{DynamicResource ResultColour}"></SolidColorBrush>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </Grid.Resources>-->
+        
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="*"></ColumnDefinition>
 		</Grid.ColumnDefinitions>
@@ -26,8 +37,10 @@
 				<RowDefinition Height="*"></RowDefinition>
 			</Grid.RowDefinitions>
 
+            
+            
 			<WrapPanel Grid.Column="0" Grid.Row="0" Background="DarkGray" Margin="1,0,1,1">
-				<TextBlock Name="ResponseStatusTextBlock" Background="DarkGray" Margin="5" />
+                <TextBlock Name="ResponseStatusTextBlock" Background="{Binding ResultColor}" Margin="5" />
 			</WrapPanel>
 			<WrapPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="2" Background="DarkGray" Margin="1,0,1,1">
 				<TextBlock Name="ResponseWhenTextBlock" Background="DarkGray" Margin="5"/>

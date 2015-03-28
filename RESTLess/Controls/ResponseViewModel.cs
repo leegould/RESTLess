@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Net;
+using System.Windows.Controls;
+using System.Windows.Media;
 using Caliburn.Micro;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -13,6 +16,12 @@ namespace RESTLess.Controls
 {
     public class ResponseViewModel: PropertyChangedBase, IHandle<HistorySelectedMessage>, IHandle<GroupedSelectedMessage>, IHandle<AppSettingsChangedMessage>, IHandle<FavouriteSelectedMessage>, IHandle<SearchSelectedMessage>, IHandle<ResponseReceivedMessage>
     {
+        private readonly Dictionary<int, Color> resultColors = new Dictionary<int, Color>
+        {
+            { 200, Color.FromArgb(255, 0, 255, 0) },
+            { 500, Color.FromArgb(255, 255, 0, 0) }
+        }; 
+
         private AppSettings appSettings;
 
         private readonly IEventAggregator eventAggregator;
@@ -21,6 +30,7 @@ namespace RESTLess.Controls
 
         private string rawResultsTextBox;
         private string htmlResultsBox;
+        private Brush resultColor;
 
         private string responseStatusTextBlock;
         private string responseWhenTextBlock;
@@ -35,6 +45,20 @@ namespace RESTLess.Controls
         }
 
         #region Properties
+
+        public Brush ResultColor
+        {
+            get
+            {
+                return resultColor;
+            }
+
+            set
+            {
+                resultColor = value;
+                NotifyOfPropertyChange(() => ResultColor);
+            }
+        }
 
         public string RawResultsTextBox
         {
@@ -194,6 +218,7 @@ namespace RESTLess.Controls
 
                 ResponseElapsedTextBlock = response.Elapsed + " ms.";
                 ResponseStatusTextBlock = response.StatusCode + " " + response.StatusCodeDescription;
+                ResultColor = new SolidColorBrush(resultColors[response.StatusCode]);
 
                 var whentext = response.When.ToString(CultureInfo.InvariantCulture);
                 var ago = DateTime.UtcNow.Subtract(response.When);
