@@ -19,6 +19,8 @@ namespace RESTLess.Controls
         private readonly Dictionary<int, Color> resultColors = new Dictionary<int, Color>
         {
             { 200, Color.FromArgb(255, 0, 255, 0) },
+            { 401, Color.FromArgb(255, 255, 255, 0) },
+            { 404, Color.FromArgb(255, 255, 0, 0) },
             { 500, Color.FromArgb(255, 255, 0, 0) }
         }; 
 
