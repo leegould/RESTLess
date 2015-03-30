@@ -16,6 +16,10 @@ namespace RESTLess.Controls
 {
     public class ResponseViewModel: PropertyChangedBase, IHandle<HistorySelectedMessage>, IHandle<GroupedSelectedMessage>, IHandle<AppSettingsChangedMessage>, IHandle<FavouriteSelectedMessage>, IHandle<SearchSelectedMessage>, IHandle<ResponseReceivedMessage>
     {
+        private readonly Color defaultColor = Color.FromArgb(180, 255, 200, 0);
+
+        private readonly Color defaultEndColor = Color.FromArgb(100, 150, 100, 0);
+
         private readonly Dictionary<int, Color> resultColors = new Dictionary<int, Color>
         {
             { 200, Color.FromArgb(255, 0, 255, 0) },
@@ -220,7 +224,15 @@ namespace RESTLess.Controls
 
                 ResponseElapsedTextBlock = response.Elapsed + " ms.";
                 ResponseStatusTextBlock = response.StatusCode + " " + response.StatusCodeDescription;
-                ResultColor = new SolidColorBrush(resultColors[response.StatusCode]);
+
+                if (resultColors.ContainsKey(response.StatusCode))
+                {
+                    ResultColor = new RadialGradientBrush(resultColors[response.StatusCode], CreateEndColor(resultColors[response.StatusCode]) );
+                }
+                else
+                {
+                    ResultColor = new RadialGradientBrush(defaultColor, defaultEndColor);
+                }
 
                 var whentext = response.When.ToString(CultureInfo.InvariantCulture);
                 var ago = DateTime.UtcNow.Subtract(response.When);
@@ -237,6 +249,17 @@ namespace RESTLess.Controls
             }
         }
 
+        private Color CreateEndColor(Color color)
+        {
+            var newColor = color;
+            newColor.A = newColor.A > 50 ? (Byte)(newColor.A - 50) : (Byte)0;
+            newColor.R = newColor.R > 50 ? (Byte)(newColor.R - 50) : (Byte)0;
+            newColor.G = newColor.G > 50 ? (Byte)(newColor.G - 50) : (Byte)0;
+            newColor.B = newColor.B > 50 ? (Byte)(newColor.B - 50) : (Byte)0;
+            return newColor;
+        }
+
         #endregion
     }
 }
+
