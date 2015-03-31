@@ -14,7 +14,6 @@
                 <ColumnDefinition Width="*"></ColumnDefinition>
                 <ColumnDefinition Width="*"></ColumnDefinition>
                 <ColumnDefinition Width="*"></ColumnDefinition>
-                <!--<ColumnDefinition Width="*"></ColumnDefinition>-->
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="30"></RowDefinition>
@@ -90,15 +89,13 @@
 
             <GridSplitter Grid.Column="3" Grid.Row="0" Grid.RowSpan="4" Width="2" HorizontalAlignment="Right" VerticalAlignment="Stretch" ResizeBehavior="CurrentAndNext"/>
 
-            <!--<GridSplitter Grid.Column="5" ResizeDirection="Columns"></GridSplitter>-->
-            
             <StackPanel Grid.Row="0" Grid.Column="4" Grid.RowSpan="5" Margin="0" MinWidth="50" Background="Gray">
+
+                <Button Name="AddAuth" Margin="5" Content="Auth" Background="{StaticResource BgGreyBrush}"></Button>
+
                 <Button Name="ClearButton" Margin="5,10,5,5" Content="Clear" Background="{StaticResource BgLightBlueBrush}"></Button>
                 <Button Name="StopButton" Margin="5" Content="Stop" Background="{StaticResource BgRedBrush}"></Button>
                 <Button Name="SendButton" Margin="5" Content="Send" Background="{StaticResource BgDarkGreenBrush}"></Button>
-                <!--<Button Name="FavouriteButton" Margin="2" Content="Favourite" Grid.Column="4" Grid.Row="0" Background="{StaticResource BgYellowBrush}"></Button>-->
-                
-                <Button Name="AddAuth" Margin="5" Content="Auth" Background="{StaticResource BgGreyBrush}"></Button>
             </StackPanel>
         </Grid>
     </StackPanel>

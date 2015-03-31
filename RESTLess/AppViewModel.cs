@@ -109,8 +109,8 @@ namespace RESTLess
         public void Preferences()
         {
             dynamic settings = new ExpandoObject();
-            settings.Width = 400;
-            settings.Height = 300;
+            settings.Width = 300;
+            settings.Height = 250;
             settings.WindowStartupLocation = WindowStartupLocation.Manual;
             settings.Title = "Preferences";
             //settings.SizeToContent = "WidthAndHeight";
