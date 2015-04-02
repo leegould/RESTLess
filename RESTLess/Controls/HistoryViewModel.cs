@@ -79,6 +79,30 @@ namespace RESTLess.Controls
             }
         }
 
+        public async void DeleteFromHistory(object source)
+        {
+            var request = source as Request;
+            if (request != null)
+            {
+                using (var conn = documentStore.OpenAsyncSession())
+                {
+                    try
+                    {
+                        var requestid = request.Id;
+                        HistoryRequests.Remove(HistoryRequests.FirstOrDefault(x => x.Id == requestid));
+                        conn.Delete(requestid);
+                        await conn.SaveChangesAsync();
+                        eventAggregator.PublishOnUIThread(new HistoryDeletedMessage() {RequestId = requestid});
+                    }
+                    catch (Exception)
+                    {
+                        // TODO : pass exception messages to main window - add to event aggregator
+                        // eventAggregator.PublishOnUIThread(ex); // <- Wrap in a specific exception class
+                    }
+                }
+            }
+        }
+
         public void Handle(RequestSavedMessage message)
         {
             HistoryRequests.Insert(0, message.Request);

@@ -53,6 +53,8 @@
                                     <ContextMenu Name="cm" cal:Action.TargetWithoutContext="{Binding Source={x:Reference HistoryRequests}, Path=DataContext}">
                                         <MenuItem Header="Favourite" cal:Message.Attach="[Event Click] = [Action Favourite($datacontext)]">
                                         </MenuItem>
+                                        <MenuItem Header="Delete" cal:Message.Attach="[Event Click] = [Action DeleteFromHistory($datacontext)]">
+                                        </MenuItem>
                                     </ContextMenu>
                                 </StackPanel.ContextMenu>
 

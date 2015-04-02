@@ -149,6 +149,7 @@
     <Compile Include="Models\Messages\FavouriteRemovedMessage.cs" />
     <Compile Include="Models\Messages\FavouriteSelectedMessage.cs" />
     <Compile Include="Models\Messages\GroupedSelectedMessage.cs" />
+    <Compile Include="Models\Messages\HistoryDeletedMessage.cs" />
     <Compile Include="Models\Messages\HistorySelectedMessage.cs" />
     <Compile Include="Models\Messages\MethodSelectedMessage.cs" />
     <Compile Include="Models\Messages\RequestSavedMessage.cs" />
