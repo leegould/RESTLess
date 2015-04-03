@@ -9,6 +9,7 @@ using Caliburn.Micro;
 using Raven.Client;
 
 using RESTLess.Controls;
+using RESTLess.Extensions;
 using RESTLess.Models;
 using RESTLess.Models.Interface;
 using RESTLess.Models.Messages;
@@ -127,6 +128,28 @@ namespace RESTLess
             settings.Title = "About";
 
             windowManager.ShowWindow(new AboutViewModel(), null, settings);
+        }
+
+        public async void DeleteAll()
+        {
+            // TODO : show confirm message? then ConfirmDeleteAllHistory..
+        }
+
+        public async void ConfirmDeleteAllHistory()
+        {
+            using (var conn = DocumentStore.OpenAsyncSession())
+            {
+                try
+                {
+                    conn.ClearDocumentsAsync<Request>();
+                    conn.ClearDocumentsAsync<Response>();
+                }
+                catch (Exception)
+                {
+                    // TODO : pass exception messages to main window - add to event aggregator
+                    // eventAggregator.PublishOnUIThread(ex); // <- Wrap in a specific exception class
+                }
+            }
         }
 
         #endregion

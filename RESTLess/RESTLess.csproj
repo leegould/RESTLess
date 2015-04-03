@@ -134,6 +134,7 @@
       <DependentUpon>SearchView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\SearchViewModel.cs" />
+    <Compile Include="Extensions\IDocumentSessionExtensions.cs" />
     <Compile Include="Indexes\RequestsFavouriteAll.cs" />
     <Compile Include="Indexes\Requests_All.cs" />
     <Compile Include="Indexes\RequestsGroupedAll.cs" />

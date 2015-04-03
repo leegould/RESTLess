@@ -58,7 +58,6 @@
                                     </ContextMenu>
                                 </StackPanel.ContextMenu>
 
-
                                 <Image Width="11" Height="15" Margin="0,0,3,0">
                                     <Image.Style>
                                         <Style TargetType="{x:Type Image}">

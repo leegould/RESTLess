@@ -20,6 +20,10 @@
                 <MenuItem x:Name="Exit" Header="_Exit"></MenuItem>
             </MenuItem>
             
+            <MenuItem Header="History">
+                <MenuItem x:Name="DeleteAll" Header="_Delete All"></MenuItem>
+            </MenuItem>
+            
             <MenuItem Header="Help">
                 <MenuItem x:Name="About" Header="_About"></MenuItem>
             </MenuItem>

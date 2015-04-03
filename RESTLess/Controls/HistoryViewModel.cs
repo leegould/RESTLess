@@ -2,6 +2,7 @@
 using System.Linq;
 using Caliburn.Micro;
 using Raven.Client;
+using RESTLess.Extensions;
 using RESTLess.Models;
 using RESTLess.Models.Interface;
 using RESTLess.Models.Messages;
@@ -91,8 +92,10 @@ namespace RESTLess.Controls
                         var requestid = request.Id;
                         HistoryRequests.Remove(HistoryRequests.FirstOrDefault(x => x.Id == requestid));
                         conn.Delete(requestid);
+                        var response = conn.Query<Response>().FirstOrDefault(x => x.RequestId == requestid);
+                        conn.Delete(response);
                         await conn.SaveChangesAsync();
-                        eventAggregator.PublishOnUIThread(new HistoryDeletedMessage() {RequestId = requestid});
+                        eventAggregator.PublishOnUIThread(new HistoryDeletedMessage {RequestId = requestid});
                     }
                     catch (Exception)
                     {
@@ -102,7 +105,7 @@ namespace RESTLess.Controls
                 }
             }
         }
-
+        
         public void Handle(RequestSavedMessage message)
         {
             HistoryRequests.Insert(0, message.Request);
