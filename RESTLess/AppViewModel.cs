@@ -133,6 +133,15 @@ namespace RESTLess
         public async void DeleteAll()
         {
             // TODO : show confirm message? then ConfirmDeleteAllHistory..
+
+            dynamic settings = new ExpandoObject();
+            settings.Width = 300;
+            settings.Height = 150;
+            settings.WindowStartupLocation = WindowStartupLocation.Manual;
+            settings.Title = "Confirm";
+
+            var result = windowManager.ShowDialog(new ConfirmView(), null, settings);
+
         }
 
         public async void ConfirmDeleteAllHistory()

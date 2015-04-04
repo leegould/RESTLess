@@ -106,6 +106,10 @@
       <DependentUpon>AuthenticationView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\AuthenticationViewModel.cs" />
+    <Compile Include="Controls\ConfirmView.xaml.cs">
+      <DependentUpon>ConfirmView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ConfirmViewModel.cs" />
     <Compile Include="Controls\FavouritesViewModel.cs" />
     <Compile Include="Controls\FavouritesView.xaml.cs">
       <DependentUpon>FavouritesView.xaml</DependentUpon>
@@ -215,6 +219,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\AuthenticationView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\ConfirmView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
