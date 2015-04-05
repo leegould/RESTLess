@@ -130,7 +130,7 @@ namespace RESTLess
             windowManager.ShowWindow(new AboutViewModel(), null, settings);
         }
 
-        public async void DeleteAll()
+        public async void DeleteAllConfirm()
         {
             // TODO : show confirm message? then ConfirmDeleteAllHistory..
 
@@ -140,11 +140,15 @@ namespace RESTLess
             settings.WindowStartupLocation = WindowStartupLocation.Manual;
             settings.Title = "Confirm";
 
-            var result = windowManager.ShowDialog(new ConfirmView(), null, settings);
+            var result = windowManager.ShowDialog(new ConfirmViewModel(), null, settings);
 
+            if (result)
+            {
+                DeleteAllHistory();
+            }
         }
 
-        public async void ConfirmDeleteAllHistory()
+        private async void DeleteAllHistory()
         {
             using (var conn = DocumentStore.OpenAsyncSession())
             {

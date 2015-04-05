@@ -21,7 +21,7 @@
             </MenuItem>
             
             <MenuItem Header="History">
-                <MenuItem x:Name="DeleteAll" Header="_Delete All"></MenuItem>
+                <MenuItem x:Name="DeleteAllConfirm" Header="_Delete All"></MenuItem>
             </MenuItem>
             
             <MenuItem Header="Help">
