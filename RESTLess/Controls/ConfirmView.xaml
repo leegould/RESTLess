@@ -4,9 +4,9 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             d:DesignHeight="150" d:DesignWidth="300">
+             d:DesignHeight="150" d:DesignWidth="300" MinWidth="300" MinHeight="150">
     <StackPanel >
-        <GroupBox Header="Request" Margin="10" Height="Auto" Width="Auto">
+        <GroupBox Header="History" Margin="10" Height="Auto" Width="Auto">
             <Grid Margin="10">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>

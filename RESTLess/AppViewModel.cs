@@ -2,10 +2,11 @@
 using System.ComponentModel.Composition;
 using System.Dynamic;
 using System.Linq;
+using System.Net.Configuration;
 using System.Windows;
 
 using Caliburn.Micro;
-
+using Newtonsoft.Json.Serialization;
 using Raven.Client;
 
 using RESTLess.Controls;
@@ -139,6 +140,8 @@ namespace RESTLess
             settings.Height = 150;
             settings.WindowStartupLocation = WindowStartupLocation.Manual;
             settings.Title = "Confirm";
+            //settings.WindowStyle = WindowStyle.None;
+            //settings.AllowsTransparency = true;
 
             var result = windowManager.ShowDialog(new ConfirmViewModel(), null, settings);
 
@@ -150,12 +153,13 @@ namespace RESTLess
 
         private async void DeleteAllHistory()
         {
-            using (var conn = DocumentStore.OpenAsyncSession())
+            using (var conn = DocumentStore.OpenSession())
             {
                 try
                 {
-                    conn.ClearDocumentsAsync<Request>();
-                    conn.ClearDocumentsAsync<Response>();
+                    conn.ClearDocuments<Request>();
+                    conn.ClearDocuments<Response>();
+                    eventAggregator.PublishOnUIThread(new DeleteAllHistoryMessage());
                 }
                 catch (Exception)
                 {

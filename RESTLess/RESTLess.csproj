@@ -150,6 +150,7 @@
     <Compile Include="Models\Messages\AppSettingsChangedMessage.cs" />
     <Compile Include="Models\Messages\AuthenticationHeaderMessage.cs" />
     <Compile Include="Models\Messages\ChangeMethodMessage.cs" />
+    <Compile Include="Models\Messages\DeleteAllHistoryMessage.cs" />
     <Compile Include="Models\Messages\FavouriteAddedMessage.cs" />
     <Compile Include="Models\Messages\FavouriteRemovedMessage.cs" />
     <Compile Include="Models\Messages\FavouriteSelectedMessage.cs" />
