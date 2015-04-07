@@ -138,7 +138,7 @@
       <DependentUpon>SearchView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\SearchViewModel.cs" />
-    <Compile Include="Extensions\IDocumentSessionExtensions.cs" />
+    <Compile Include="Extensions\DocumentSessionExtensions.cs" />
     <Compile Include="Indexes\RequestsFavouriteAll.cs" />
     <Compile Include="Indexes\Requests_All.cs" />
     <Compile Include="Indexes\RequestsGroupedAll.cs" />
@@ -150,6 +150,7 @@
     <Compile Include="Models\Messages\AppSettingsChangedMessage.cs" />
     <Compile Include="Models\Messages\AuthenticationHeaderMessage.cs" />
     <Compile Include="Models\Messages\ChangeMethodMessage.cs" />
+    <Compile Include="Models\Messages\DeleteAllFavouritesMessage.cs" />
     <Compile Include="Models\Messages\DeleteAllHistoryMessage.cs" />
     <Compile Include="Models\Messages\FavouriteAddedMessage.cs" />
     <Compile Include="Models\Messages\FavouriteRemovedMessage.cs" />

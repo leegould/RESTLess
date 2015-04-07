@@ -2,11 +2,10 @@
 using System.ComponentModel.Composition;
 using System.Dynamic;
 using System.Linq;
-using System.Net.Configuration;
 using System.Windows;
 
 using Caliburn.Micro;
-using Newtonsoft.Json.Serialization;
+
 using Raven.Client;
 
 using RESTLess.Controls;
@@ -131,15 +130,13 @@ namespace RESTLess
             windowManager.ShowWindow(new AboutViewModel(), null, settings);
         }
 
-        public async void DeleteAllConfirm()
+        public void DeleteAllConfirm()
         {
-            // TODO : show confirm message? then ConfirmDeleteAllHistory..
-
             dynamic settings = new ExpandoObject();
             settings.Width = 300;
             settings.Height = 150;
             settings.WindowStartupLocation = WindowStartupLocation.Manual;
-            settings.Title = "Confirm";
+            settings.Title = "Confirm - Delete All";
             //settings.WindowStyle = WindowStyle.None;
             //settings.AllowsTransparency = true;
 
@@ -151,7 +148,23 @@ namespace RESTLess
             }
         }
 
-        private async void DeleteAllHistory()
+        public void DeleteAllFavouritesConfirm()
+        {
+            dynamic settings = new ExpandoObject();
+            settings.Width = 300;
+            settings.Height = 150;
+            settings.WindowStartupLocation = WindowStartupLocation.Manual;
+            settings.Title = "Confirm - Delete Favourites";
+
+            var result = windowManager.ShowDialog(new ConfirmViewModel(), null, settings);
+
+            if (result)
+            {
+                DeleteAllFavourites();
+            }
+        }
+
+        private void DeleteAllHistory()
         {
             using (var conn = DocumentStore.OpenSession())
             {
@@ -160,6 +173,23 @@ namespace RESTLess
                     conn.ClearDocuments<Request>();
                     conn.ClearDocuments<Response>();
                     eventAggregator.PublishOnUIThread(new DeleteAllHistoryMessage());
+                }
+                catch (Exception)
+                {
+                    // TODO : pass exception messages to main window - add to event aggregator
+                    // eventAggregator.PublishOnUIThread(ex); // <- Wrap in a specific exception class
+                }
+            }
+        }
+
+        private void DeleteAllFavourites()
+        {
+            using (var conn = DocumentStore.OpenSession())
+            {
+                try
+                {
+                    conn.ClearWhere(x => x.Favourite);
+                    eventAggregator.PublishOnUIThread(new DeleteAllFavouritesMessage());
                 }
                 catch (Exception)
                 {

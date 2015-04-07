@@ -10,7 +10,7 @@ using RESTLess.Models.Messages;
 
 namespace RESTLess.Controls
 {
-    public sealed class FavouritesViewModel : Screen, ITabItem, IHandle<DeleteAllHistoryMessage>
+    public sealed class FavouritesViewModel : Screen, ITabItem, IHandle<DeleteAllHistoryMessage>, IHandle<DeleteAllFavouritesMessage>
     {
         private const string IndexName = "Requests/Favourite/All";
 
@@ -110,6 +110,11 @@ namespace RESTLess.Controls
         public void Handle(DeleteAllHistoryMessage message)
         {
             FavouriteRequests = new BindableCollection<Request>();
+        }
+
+        public void Handle(DeleteAllFavouritesMessage message)
+        {
+            FavouriteRequests.Clear();
         }
     }
 }

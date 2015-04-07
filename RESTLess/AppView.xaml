@@ -22,6 +22,8 @@
             
             <MenuItem Header="History">
                 <MenuItem x:Name="DeleteAllConfirm" Header="_Delete All"></MenuItem>
+                <Separator></Separator>
+                <MenuItem x:Name="DeleteAllFavouritesConfirm" Header="Delete All _Favourites"></MenuItem>
             </MenuItem>
             
             <MenuItem Header="Help">
