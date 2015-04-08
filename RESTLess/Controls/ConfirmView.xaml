@@ -6,7 +6,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="150" d:DesignWidth="300" MinWidth="300" MinHeight="150">
     <StackPanel >
-        <GroupBox Header="History" Margin="10" Height="Auto" Width="Auto">
+        <GroupBox Header="Confirm" Margin="10" Height="Auto" Width="Auto">
             <Grid Margin="10">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>

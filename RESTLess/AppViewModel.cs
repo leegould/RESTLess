@@ -6,6 +6,7 @@ using System.Windows;
 
 using Caliburn.Micro;
 
+using Raven.Abstractions.Extensions;
 using Raven.Client;
 
 using RESTLess.Controls;
@@ -148,19 +149,19 @@ namespace RESTLess
             }
         }
 
-        public void DeleteAllFavouritesConfirm()
+        public void ClearAllFavouritesConfirm()
         {
             dynamic settings = new ExpandoObject();
             settings.Width = 300;
             settings.Height = 150;
             settings.WindowStartupLocation = WindowStartupLocation.Manual;
-            settings.Title = "Confirm - Delete Favourites";
+            settings.Title = "Confirm - Clear Favourites";
 
             var result = windowManager.ShowDialog(new ConfirmViewModel(), null, settings);
 
             if (result)
             {
-                DeleteAllFavourites();
+                ClearAllFavourites();
             }
         }
 
@@ -182,13 +183,14 @@ namespace RESTLess
             }
         }
 
-        private void DeleteAllFavourites()
+        private void ClearAllFavourites()
         {
             using (var conn = DocumentStore.OpenSession())
             {
                 try
                 {
-                    conn.ClearWhere(x => x.Favourite);
+                    conn.Query<Request>().Where(x => x.Favourite).ForEach(x => x.Favourite = false);
+                    conn.SaveChanges();
                     eventAggregator.PublishOnUIThread(new DeleteAllFavouritesMessage());
                 }
                 catch (Exception)
