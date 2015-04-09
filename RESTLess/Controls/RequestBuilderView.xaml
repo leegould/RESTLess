@@ -26,7 +26,7 @@
 
             <ContentControl Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="0" x:Name="MethodViewModel"></ContentControl>
 
-            <TextBox FontSize="20" Name="UrlTextBox" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4" HorizontalAlignment="Stretch">
+            <TextBox FontSize="20" Name="UrlTextBox" Text="{Binding Path=UrlTextBox, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4" HorizontalAlignment="Stretch">
                 <TextBox.Style>
                     <Style TargetType="TextBox" xmlns:sys="clr-namespace:System;assembly=mscorlib">
                         <Style.Resources>
@@ -103,7 +103,7 @@
 
                 <Button Name="ClearButton" Margin="5,10,5,5" Content="Clear" Background="{StaticResource BgLightBlueBrush}"></Button>
                 <Button Name="StopButton" Margin="5" Content="Stop" Background="{StaticResource BgRedBrush}"></Button>
-                <Button Name="SendButton" Margin="5" Content="Send" Background="{StaticResource BgDarkGreenBrush}"></Button>
+                <Button Name="SendButton" Margin="5" Content="Send" Background="{StaticResource BgDarkGreenBrush}" IsDefault="True"></Button>
             </StackPanel>
         </Grid>
     </StackPanel>
