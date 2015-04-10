@@ -109,7 +109,7 @@ namespace RESTLess.Controls
 
         public void Handle(DeleteAllHistoryMessage message)
         {
-            FavouriteRequests = new BindableCollection<Request>();
+            FavouriteRequests.Clear();
         }
 
         public void Handle(DeleteAllFavouritesMessage message)

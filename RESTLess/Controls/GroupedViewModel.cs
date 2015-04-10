@@ -105,7 +105,7 @@ namespace RESTLess.Controls
 
         public void Handle(DeleteAllHistoryMessage message)
         {
-            GroupedRequests = new BindableCollection<RequestGrouped>();
+            GroupedRequests.Clear();
         }
     }
 }

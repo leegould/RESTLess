@@ -130,6 +130,7 @@ namespace RESTLess.Controls
 
         public void Handle(DeleteAllHistoryMessage message)
         {
+            HistoryRequests.Clear();
             HistoryRequests = new BindableCollection<Request>();
         }
     }
