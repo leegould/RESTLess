@@ -149,33 +149,36 @@ namespace RESTLess.Controls
 
         public void Handle(HistorySelectedMessage message)
         {
-            var method = (Method)Enum.Parse(typeof(Method), message.Request.Method);
-            switch (method)
+            if (message != null && message.Request != null)
             {
-                case Method.GET:
-                    GetChecked = true;
-                    break;
-                case Method.POST:
-                    PostChecked = true;
-                    break;
-                case Method.PUT:
-                    PutChecked = true;
-                    break;
-                case Method.DELETE:
-                    DeleteChecked = true;
-                    break;
-                case Method.PATCH:
-                    PatchChecked = true;
-                    break;
-                case Method.HEAD:
-                    HeadChecked = true;
-                    break;
-                case Method.OPTIONS:
-                    OptionsChecked = true;
-                    break;
-                case Method.MERGE:
-                    MergeChecked = true;
-                    break;
+                var method = (Method) Enum.Parse(typeof (Method), message.Request.Method);
+                switch (method)
+                {
+                    case Method.GET:
+                        GetChecked = true;
+                        break;
+                    case Method.POST:
+                        PostChecked = true;
+                        break;
+                    case Method.PUT:
+                        PutChecked = true;
+                        break;
+                    case Method.DELETE:
+                        DeleteChecked = true;
+                        break;
+                    case Method.PATCH:
+                        PatchChecked = true;
+                        break;
+                    case Method.HEAD:
+                        HeadChecked = true;
+                        break;
+                    case Method.OPTIONS:
+                        OptionsChecked = true;
+                        break;
+                    case Method.MERGE:
+                        MergeChecked = true;
+                        break;
+                }
             }
         }
     }

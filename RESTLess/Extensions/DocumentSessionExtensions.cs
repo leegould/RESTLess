@@ -9,15 +9,13 @@ namespace RESTLess.Extensions
         public static void ClearDocuments<T>(this IDocumentSession session)
         {
             var objects = session.Query<T>().ToList();
-            while (objects.Any())
+            
+            foreach (var obj in objects)
             {
-                foreach (var obj in objects)
-                {
-                    session.Delete(obj);
-                }
-
-                session.SaveChanges();
+                session.Delete(obj);
             }
+
+            session.SaveChanges();
         }
     }
 }

@@ -15,7 +15,7 @@ using RESTLess.Models.Messages;
 
 namespace RESTLess.Controls
 {
-    public class RequestBuilderViewModel : PropertyChangedBase, IHandle<MethodSelectedMessage>, IHandle<HistorySelectedMessage>, IHandle<AppSettingsChangedMessage>, IHandle<FavouriteSelectedMessage>, IHandle<GroupedSelectedMessage>, IHandle<SearchSelectedMessage>, IHandle<AddHeaderMessage>
+    public class RequestBuilderViewModel : PropertyChangedBase, IHandle<MethodSelectedMessage>, IHandle<HistorySelectedMessage>, IHandle<AppSettingsChangedMessage>, IHandle<FavouriteSelectedMessage>, IHandle<GroupedSelectedMessage>, IHandle<SearchSelectedMessage>, IHandle<AddHeaderMessage>, IHandle<DeleteAllHistoryMessage>
     {
         #region Private members
 
@@ -177,6 +177,10 @@ namespace RESTLess.Controls
             HeadersDataGrid.Add(new HttpHeader { Name = message.Header, Value = message.Value });
         }
 
+        public void Handle(DeleteAllHistoryMessage message)
+        {
+            ClearButton();
+        }
         #endregion
 
         #region Buttons

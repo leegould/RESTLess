@@ -14,7 +14,7 @@ using RESTLess.Models.Messages;
 
 namespace RESTLess.Controls
 {
-    public class ResponseViewModel: PropertyChangedBase, IHandle<HistorySelectedMessage>, IHandle<GroupedSelectedMessage>, IHandle<AppSettingsChangedMessage>, IHandle<FavouriteSelectedMessage>, IHandle<SearchSelectedMessage>, IHandle<ResponseReceivedMessage>
+    public class ResponseViewModel: PropertyChangedBase, IHandle<HistorySelectedMessage>, IHandle<GroupedSelectedMessage>, IHandle<AppSettingsChangedMessage>, IHandle<FavouriteSelectedMessage>, IHandle<SearchSelectedMessage>, IHandle<ResponseReceivedMessage>, IHandle<DeleteAllHistoryMessage>
     {
         private readonly Color defaultColor = Color.FromArgb(180, 255, 200, 0);
 
@@ -260,6 +260,11 @@ namespace RESTLess.Controls
         }
 
         #endregion
+
+        public void Handle(DeleteAllHistoryMessage message)
+        {
+            DisplayOrClear(null);
+        }
     }
 }
 
