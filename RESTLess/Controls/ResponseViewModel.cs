@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Windows.Controls;
@@ -16,6 +17,8 @@ namespace RESTLess.Controls
 {
     public class ResponseViewModel: PropertyChangedBase, IHandle<HistorySelectedMessage>, IHandle<GroupedSelectedMessage>, IHandle<AppSettingsChangedMessage>, IHandle<FavouriteSelectedMessage>, IHandle<SearchSelectedMessage>, IHandle<ResponseReceivedMessage>, IHandle<DeleteAllHistoryMessage>
     {
+        private const string defaultHtmlDisplay = "Controls/Help.html";
+
         private readonly Color defaultColor = Color.FromArgb(180, 255, 200, 0);
 
         private readonly Color defaultEndColor = Color.FromArgb(100, 150, 100, 0);
@@ -48,6 +51,10 @@ namespace RESTLess.Controls
             eventAggregator.Subscribe(this);
             DocumentStore = documentStore;
             appSettings = appsettings;
+            if (File.Exists(defaultHtmlDisplay))
+            {
+                HtmlResultsBox = File.ReadAllText(defaultHtmlDisplay);
+            }
         }
 
         #region Properties
