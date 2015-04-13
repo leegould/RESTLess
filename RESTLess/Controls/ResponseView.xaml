@@ -50,7 +50,7 @@
 			</WrapPanel>
 		</Grid>
 
-		<TabControl Background="Gray" Grid.Column="0" Grid.Row="1" Padding="0">
+		<TabControl Background="Gray" Grid.Column="0" Grid.Row="1" Padding="0" SelectedIndex="{Binding SelectedIndex}">
 
 			<TabItem>
 				<TabItem.Header>

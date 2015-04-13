@@ -4,7 +4,6 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Windows.Controls;
 using System.Windows.Media;
 using Caliburn.Micro;
 using Newtonsoft.Json;
@@ -17,6 +16,8 @@ namespace RESTLess.Controls
 {
     public class ResponseViewModel: PropertyChangedBase, IHandle<HistorySelectedMessage>, IHandle<GroupedSelectedMessage>, IHandle<AppSettingsChangedMessage>, IHandle<FavouriteSelectedMessage>, IHandle<SearchSelectedMessage>, IHandle<ResponseReceivedMessage>, IHandle<DeleteAllHistoryMessage>
     {
+        private int selectedIndex;
+
         private const string defaultHtmlDisplay = "Controls/Help.html";
 
         private readonly Color defaultColor = Color.FromArgb(180, 255, 200, 0);
@@ -55,9 +56,23 @@ namespace RESTLess.Controls
             {
                 HtmlResultsBox = File.ReadAllText(defaultHtmlDisplay);
             }
+            selectedIndex = 2;
         }
 
         #region Properties
+
+        public int SelectedIndex
+        {
+            get
+            {
+                return selectedIndex;
+            }
+            set
+            {
+                selectedIndex = value;
+                NotifyOfPropertyChange(() => SelectedIndex);
+            }
+        }
 
         public Brush ResultColor
         {
