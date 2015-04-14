@@ -50,7 +50,7 @@
 			</WrapPanel>
 		</Grid>
 
-		<TabControl Background="Gray" Grid.Column="0" Grid.Row="1" Padding="0" SelectedIndex="{Binding SelectedIndex}">
+		<TabControl Background="Gray" Grid.Column="0" Grid.Row="1" Padding="0">
 
 			<TabItem>
 				<TabItem.Header>
@@ -63,7 +63,7 @@
 				</ScrollViewer>
 			</TabItem>
 
-			<TabItem>
+			<TabItem IsSelected="True">
 				<TabItem.Header>
 					<StackPanel Orientation="Horizontal">
 						<TextBlock Text="Html" Foreground="DarkSlateGray" />

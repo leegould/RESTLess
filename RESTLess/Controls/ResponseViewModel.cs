@@ -16,9 +16,7 @@ namespace RESTLess.Controls
 {
     public class ResponseViewModel: PropertyChangedBase, IHandle<HistorySelectedMessage>, IHandle<GroupedSelectedMessage>, IHandle<AppSettingsChangedMessage>, IHandle<FavouriteSelectedMessage>, IHandle<SearchSelectedMessage>, IHandle<ResponseReceivedMessage>, IHandle<DeleteAllHistoryMessage>
     {
-        private int selectedIndex;
-
-        private const string defaultHtmlDisplay = "Controls/Help.html";
+        private const string DefaultHtmlDisplay = "Controls/Help.html";
 
         private readonly Color defaultColor = Color.FromArgb(180, 255, 200, 0);
 
@@ -52,27 +50,13 @@ namespace RESTLess.Controls
             eventAggregator.Subscribe(this);
             DocumentStore = documentStore;
             appSettings = appsettings;
-            if (File.Exists(defaultHtmlDisplay))
+            if (File.Exists(DefaultHtmlDisplay))
             {
-                HtmlResultsBox = File.ReadAllText(defaultHtmlDisplay);
+                HtmlResultsBox = File.ReadAllText(DefaultHtmlDisplay);
             }
-            selectedIndex = 2;
         }
 
         #region Properties
-
-        public int SelectedIndex
-        {
-            get
-            {
-                return selectedIndex;
-            }
-            set
-            {
-                selectedIndex = value;
-                NotifyOfPropertyChange(() => SelectedIndex);
-            }
-        }
 
         public Brush ResultColor
         {
