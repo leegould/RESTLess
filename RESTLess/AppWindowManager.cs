@@ -1,5 +1,7 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Windows;
+using System.Windows.Media.Imaging;
 using Caliburn.Micro;
 using RESTLess.Models;
 
@@ -33,6 +35,7 @@ namespace RESTLess
             }
 
             window.Title = "RESTLess";
+            window.Icon = new BitmapImage(new Uri("pack://application:,,,/RESTLess;component/Assets/Images/arrows.ico"));
 
             return window;
         }

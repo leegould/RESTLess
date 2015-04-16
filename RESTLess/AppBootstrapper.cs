@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Reflection;
 using System.Windows;
-
+using System.Windows.Media.Imaging;
 using Caliburn.Micro;
 
 using Raven.Client;
@@ -63,7 +63,12 @@ namespace RESTLess
 
         protected override void OnStartup(object sender, StartupEventArgs e)
         {
-            DisplayRootViewFor<IApp>();
+            //var settings = new Dictionary<string, object>
+            //{
+            //    {"Icon", new BitmapImage(new Uri("pack://application:,,,/RESTLess;component/Assets/Images/arrows.ico"))}
+            //};
+
+            DisplayRootViewFor<IApp>(); //settings);
         }
     }
 }

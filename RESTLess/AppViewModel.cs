@@ -3,7 +3,7 @@ using System.ComponentModel.Composition;
 using System.Dynamic;
 using System.Linq;
 using System.Windows;
-
+using System.Windows.Media.Imaging;
 using Caliburn.Micro;
 
 using Raven.Abstractions.Extensions;
@@ -138,6 +138,8 @@ namespace RESTLess
             settings.Height = 150;
             settings.WindowStartupLocation = WindowStartupLocation.Manual;
             settings.Title = "Confirm - Delete All";
+            settings.Icon = new BitmapImage(new Uri("pack://application:,,,/RESTLess;component/Assets/Images/arrows.ico"));
+
             //settings.WindowStyle = WindowStyle.None;
             //settings.AllowsTransparency = true;
 
