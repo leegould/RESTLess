@@ -18,9 +18,7 @@ namespace RESTLess.Controls
     {
         private const string DefaultHtmlDisplay = "Controls/Help.html";
 
-        private readonly Color defaultColor = Color.FromArgb(180, 255, 200, 0);
-
-        private readonly Color defaultEndColor = Color.FromArgb(100, 150, 100, 0);
+        private readonly Brush defaultColor = Brushes.DarkGray;
 
         private readonly Dictionary<int, Color> resultColors = new Dictionary<int, Color>
         {
@@ -54,6 +52,7 @@ namespace RESTLess.Controls
             {
                 HtmlResultsBox = File.ReadAllText(DefaultHtmlDisplay);
             }
+            ResultColor = defaultColor;
         }
 
         #region Properties
@@ -237,7 +236,7 @@ namespace RESTLess.Controls
                 }
                 else
                 {
-                    ResultColor = new RadialGradientBrush(defaultColor, defaultEndColor);
+                    ResultColor = defaultColor;
                 }
 
                 var whentext = response.When.ToString(CultureInfo.InvariantCulture);
