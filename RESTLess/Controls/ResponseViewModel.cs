@@ -14,7 +14,7 @@ using RESTLess.Models.Messages;
 
 namespace RESTLess.Controls
 {
-    public class ResponseViewModel: PropertyChangedBase, IHandle<HistorySelectedMessage>, IHandle<GroupedSelectedMessage>, IHandle<AppSettingsChangedMessage>, IHandle<FavouriteSelectedMessage>, IHandle<SearchSelectedMessage>, IHandle<ResponseReceivedMessage>, IHandle<DeleteAllHistoryMessage>
+    public class ResponseViewModel: PropertyChangedBase, IHandle<HistorySelectedMessage>, IHandle<GroupedSelectedMessage>, IHandle<AppSettingsChangedMessage>, IHandle<FavouriteSelectedMessage>, IHandle<SearchSelectedMessage>, IHandle<ResponseReceivedMessage>, IHandle<DeleteAllHistoryMessage>, IHandle<ViewStartMessage>
     {
         private const string DefaultHtmlDisplay = "Controls/Help.html";
 
@@ -172,6 +172,16 @@ namespace RESTLess.Controls
             DisplayOrClear(message.Response);
         }
 
+        public void Handle(DeleteAllHistoryMessage message)
+        {
+            DisplayOrClear(null);
+        }
+
+        public void Handle(ViewStartMessage message)
+        {
+            HtmlResultsBox = File.ReadAllText(DefaultHtmlDisplay);
+        }
+
         #endregion
 
         #region Private Methods
@@ -265,11 +275,6 @@ namespace RESTLess.Controls
         }
 
         #endregion
-
-        public void Handle(DeleteAllHistoryMessage message)
-        {
-            DisplayOrClear(null);
-        }
     }
 }
 

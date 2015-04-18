@@ -28,6 +28,8 @@
             
             <MenuItem Header="Help">
                 <MenuItem x:Name="About" Header="_About"></MenuItem>
+                <Separator></Separator>
+                <MenuItem x:Name="ViewStart" Header="_View Start Page"></MenuItem>
             </MenuItem>
         </Menu>
         

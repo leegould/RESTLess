@@ -131,6 +131,11 @@ namespace RESTLess
             windowManager.ShowWindow(new AboutViewModel(), null, settings);
         }
 
+        public void ViewStart()
+        {
+            eventAggregator.PublishOnUIThread(new ViewStartMessage());
+        }
+
         public void DeleteAllConfirm()
         {
             dynamic settings = new ExpandoObject();
