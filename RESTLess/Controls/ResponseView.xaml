@@ -63,6 +63,17 @@
 				</ScrollViewer>
 			</TabItem>
 
+            <TabItem>
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Headers" Foreground="DarkSlateGray"/>
+                    </StackPanel>
+                </TabItem.Header>
+                <ScrollViewer VerticalScrollBarVisibility="Auto" VerticalAlignment="Stretch">
+                    <TextBox IsReadOnly="True" Name="HeadersTextBox" Background="DarkGray" VerticalAlignment="Stretch"></TextBox>
+                </ScrollViewer>
+            </TabItem>
+            
 			<TabItem IsSelected="True">
 				<TabItem.Header>
 					<StackPanel Orientation="Horizontal">

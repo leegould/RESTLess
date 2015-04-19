@@ -8,6 +8,7 @@ using System.Windows.Media;
 using Caliburn.Micro;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Raven.Abstractions.Extensions;
 using Raven.Client;
 using RESTLess.Models;
 using RESTLess.Models.Messages;
@@ -35,6 +36,7 @@ namespace RESTLess.Controls
         public readonly IDocumentStore DocumentStore;
 
         private string rawResultsTextBox;
+        private string headersTextBox;
         private string htmlResultsBox;
         private Brush resultColor;
 
@@ -78,6 +80,16 @@ namespace RESTLess.Controls
             {
                 rawResultsTextBox = value;
                 NotifyOfPropertyChange(() => RawResultsTextBox);
+            }
+        }
+
+        public string HeadersTextBox
+        {
+            get { return headersTextBox; }
+            set
+            {
+                headersTextBox = value;
+                NotifyOfPropertyChange(() => HeadersTextBox);
             }
         }
 
@@ -210,6 +222,7 @@ namespace RESTLess.Controls
                 ResponseStatusTextBlock = string.Empty;
                 ResponseWhenTextBlock = string.Empty;
                 RawResultsTextBox = "No Response";
+                HeadersTextBox = "No Response";
                 HtmlResultsBox = "<p>No Response</p>";
             }
         }
@@ -224,17 +237,20 @@ namespace RESTLess.Controls
                     {
                         var formattedjson = JObject.Parse(response.Content).ToString(Formatting.Indented);
                         RawResultsTextBox = formattedjson;
+                        HeadersTextBox = string.Join("\n", response.Headers.Select(x => x.Key + ": " + x.Value));
                         HtmlResultsBox = "<pre>" + WebUtility.HtmlEncode(formattedjson) + "</pre>";
                     }
                     catch (JsonReaderException)
                     {
                         RawResultsTextBox = response.Content;
+                        HeadersTextBox = response.Headers.Count.ToString();
                         HtmlResultsBox = response.Content;
                     }
                 }
                 else
                 {
                     RawResultsTextBox = string.Empty;
+                    HeadersTextBox = string.Empty;
                 }
 
                 ResponseElapsedTextBlock = response.Elapsed + " ms.";
