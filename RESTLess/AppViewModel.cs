@@ -156,6 +156,26 @@ namespace RESTLess
             }
         }
 
+        public void DeleteAllBeforeToday()
+        {
+            dynamic settings = new ExpandoObject();
+            settings.Width = 300;
+            settings.Height = 150;
+            settings.WindowStartupLocation = WindowStartupLocation.Manual;
+            settings.Title = "Confirm - Delete Prior to Today";
+            settings.Icon = new BitmapImage(new Uri("pack://application:,,,/RESTLess;component/Assets/Images/arrows.ico"));
+
+            //settings.WindowStyle = WindowStyle.None;
+            //settings.AllowsTransparency = true;
+
+            var result = windowManager.ShowDialog(new ConfirmViewModel(), null, settings);
+
+            if (result)
+            {
+                DeleteAllPriorToToday();
+            }
+        }
+
         public void ClearAllFavouritesConfirm()
         {
             dynamic settings = new ExpandoObject();
@@ -181,6 +201,24 @@ namespace RESTLess
                     conn.ClearDocuments<Request>();
                     conn.ClearDocuments<Response>();
                     eventAggregator.PublishOnUIThread(new DeleteAllHistoryMessage());
+                }
+                catch (Exception)
+                {
+                    // TODO : pass exception messages to main window - add to event aggregator
+                    // eventAggregator.PublishOnUIThread(ex); // <- Wrap in a specific exception class
+                }
+            }
+        }
+
+        private void DeleteAllPriorToToday()
+        {
+            using (var conn = DocumentStore.OpenSession())
+            {
+                try
+                {
+                    conn.ClearDocumentsWhere<Request>(x => x.When < DateTime.Now.Date);
+                    conn.ClearDocumentsWhere<Response>(x => x.When < DateTime.Now.Date);
+                    eventAggregator.PublishOnUIThread(new DeleteHistoryBeforeTodayMessage());
                 }
                 catch (Exception)
                 {
