@@ -12,7 +12,7 @@ using RESTLess.Models.Messages;
 
 namespace RESTLess.Controls
 {
-    public sealed class GroupedViewModel : Screen, ITabItem, IHandle<DeleteAllHistoryMessage>
+    public sealed class GroupedViewModel : Screen, ITabItem, IHandle<DeleteAllHistoryMessage>, IHandle<DeleteHistoryBeforeTodayMessage>
     {
         private const string IndexName = "Requests/Grouped/All";
 
@@ -104,6 +104,11 @@ namespace RESTLess.Controls
         }
 
         public void Handle(DeleteAllHistoryMessage message)
+        {
+            GroupedRequests.Clear();
+        }
+
+        public void Handle(DeleteHistoryBeforeTodayMessage message)
         {
             GroupedRequests.Clear();
         }

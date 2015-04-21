@@ -8,7 +8,7 @@ using RESTLess.Models.Messages;
 
 namespace RESTLess.Controls
 {
-    public class SearchViewModel : Screen, ITabItem, IHandle<DeleteAllHistoryMessage>
+    public class SearchViewModel : Screen, ITabItem, IHandle<DeleteAllHistoryMessage>, IHandle<DeleteHistoryBeforeTodayMessage>
     {
         private const string RequestsIndexName = "Requests/All";
 
@@ -77,6 +77,12 @@ namespace RESTLess.Controls
         }
 
         public void Handle(DeleteAllHistoryMessage message)
+        {
+            SearchRequests.Clear();
+            SearchRequests = new BindableCollection<Request>();
+        }
+
+        public void Handle(DeleteHistoryBeforeTodayMessage message)
         {
             SearchRequests.Clear();
             SearchRequests = new BindableCollection<Request>();

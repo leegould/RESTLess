@@ -9,7 +9,7 @@ using RESTLess.Models.Messages;
 
 namespace RESTLess.Controls
 {
-    public sealed class HistoryViewModel : Screen, ITabItem, IHandle<RequestSavedMessage>, IHandle<DeleteAllHistoryMessage>
+    public sealed class HistoryViewModel : Screen, ITabItem, IHandle<RequestSavedMessage>, IHandle<DeleteAllHistoryMessage>, IHandle<DeleteHistoryBeforeTodayMessage>
     {
         private const string RequestsIndexName = "Requests/All";
 
@@ -132,6 +132,13 @@ namespace RESTLess.Controls
         {
             HistoryRequests.Clear();
             HistoryRequests = new BindableCollection<Request>();
+        }
+
+        public void Handle(DeleteHistoryBeforeTodayMessage message)
+        {
+            HistoryRequests.Clear();
+            HistoryRequests = new BindableCollection<Request>();
+            LoadHistory();
         }
     }
 }

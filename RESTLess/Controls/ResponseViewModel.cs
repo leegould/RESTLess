@@ -8,7 +8,6 @@ using System.Windows.Media;
 using Caliburn.Micro;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using Raven.Abstractions.Extensions;
 using Raven.Client;
 using RESTLess.Models;
 using RESTLess.Models.Messages;
