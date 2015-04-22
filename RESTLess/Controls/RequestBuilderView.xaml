@@ -97,7 +97,7 @@
 
             <GridSplitter Grid.Column="3" Grid.Row="0" Grid.RowSpan="4" Width="2" HorizontalAlignment="Right" VerticalAlignment="Stretch" ResizeBehavior="CurrentAndNext"/>
 
-            <StackPanel Grid.Row="0" Grid.Column="4" Grid.RowSpan="5" Margin="0" MinWidth="50" Background="Gray">
+            <StackPanel Grid.Row="0" Grid.Column="4" Grid.RowSpan="5" Margin="0" MinWidth="50" Background="{StaticResource BgGreyFadeBrush}">
 
                 <Button Name="AddAuth" Margin="5" Content="Auth" Background="{StaticResource BgGreyBrush}"></Button>
 

@@ -53,6 +53,11 @@
         <GradientStop Offset="0" Color="#ADD8E6"/>
         <GradientStop Offset="1" Color="#7D98b6"/>
     </LinearGradientBrush>
+    
+    <LinearGradientBrush x:Key="BgGreyFadeBrush" StartPoint="0,0" EndPoint="0,1">
+        <GradientStop Offset="0" Color="Gray"/>
+        <GradientStop Offset="1" Color="LightGray"/>
+    </LinearGradientBrush>
 
     <SolidColorBrush x:Key="RedBrush" Color="#ff0000"/>
     <SolidColorBrush x:Key="BlueBrush" Color="#0000ff"/>
