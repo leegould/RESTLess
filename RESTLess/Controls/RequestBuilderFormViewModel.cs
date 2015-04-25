@@ -7,7 +7,7 @@ using AutoMapper;
 using Caliburn.Micro;
 
 using Raven.Client;
-
+using Raven.Database.Server;
 using RestSharp;
 
 using RESTLess.Models;
@@ -63,6 +63,17 @@ namespace RESTLess.Controls
 
             selectedMethod = Method.GET;
             BodyIsVisible = false;
+        }
+
+        protected override void OnDeactivate(bool close)
+        {
+            var uri = new Uri(UrlTextBox);
+            var restRequest = GetRestRequest(uri);
+            var request = new Request(uri, restRequest, BodyTextBox, appSettings.RequestSettings);
+
+            eventAggregator.BeginPublishOnUIThread(new CreateRequestMessage{ Request = request });
+
+            base.OnDeactivate(close);
         }
 
         #region properties

@@ -32,46 +32,13 @@ namespace RESTLess.Controls
 
         //private bool isWaiting;
 
-        private string requestRawText;
-
         #endregion
-
-        //static RequestBuilderViewModel()
-        //{
-        //    Mapper.CreateMap<Request, RequestBuilderViewModel>()
-        //        .ForMember(d => d.HeadersDataGrid, o => o.MapFrom(s => CreateHeadersFromDict(s.Headers)))
-        //        .ForMember(d => d.UrlTextBox, o => o.MapFrom(s => s.Url + s.Path.Substring(1)))
-        //        .ForMember(d => d.BodyTextBox, o => o.MapFrom(s => s.Body));
-        //}
 
         public RequestBuilderViewModel(IEventAggregator eventAggregator, IDocumentStore documentStore, IWindowManager windowManager, AppSettings appsettings)
         {
-            //this.eventAggregator = eventAggregator;
-            //eventAggregator.Subscribe(this);
-            //this.documentStore = documentStore;
-            //this.windowManager = windowManager;
-            //appSettings = appsettings;
             Items.Add(new RequestBuilderFormViewModel(eventAggregator, documentStore, windowManager, appsettings));
-            //MethodViewModel = new MethodViewModel(eventAggregator);
-            //HeadersDataGrid = new BindableCollection<HttpHeader>();
-
-            //selectedMethod = Method.GET;
-            //BodyIsVisible = false;
+            Items.Add(new RequestBuilderRawViewModel(eventAggregator, documentStore, windowManager, appsettings));
         }
-
-        #region Properties
-        
-        public string RequestRawText
-        {
-            get { return requestRawText; }
-            set
-            {
-                requestRawText = value;
-                NotifyOfPropertyChange(() => RequestRawText);
-            }
-        }
-
-        #endregion
 
         //#region Buttons
 

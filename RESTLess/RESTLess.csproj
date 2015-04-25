@@ -130,6 +130,10 @@
       <DependentUpon>RequestBuilderFormView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\RequestBuilderFormViewModel.cs" />
+    <Compile Include="Controls\RequestBuilderRawView.xaml.cs">
+      <DependentUpon>RequestBuilderRawView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\RequestBuilderRawViewModel.cs" />
     <Compile Include="Controls\RequestBuilderView.xaml.cs">
       <DependentUpon>RequestBuilderView.xaml</DependentUpon>
     </Compile>
@@ -154,6 +158,7 @@
     <Compile Include="Models\Messages\AppSettingsChangedMessage.cs" />
     <Compile Include="Models\Messages\AuthenticationHeaderMessage.cs" />
     <Compile Include="Models\Messages\ChangeMethodMessage.cs" />
+    <Compile Include="Models\Messages\CreateRequestMessage.cs" />
     <Compile Include="Models\Messages\DeleteAllFavouritesMessage.cs" />
     <Compile Include="Models\Messages\DeleteAllHistoryMessage.cs" />
     <Compile Include="Models\Messages\DeleteHistoryBeforeTodayMessage.cs" />
@@ -255,6 +260,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\RequestBuilderFormView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\RequestBuilderRawView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
