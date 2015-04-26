@@ -24,7 +24,7 @@
 
         <ContentControl Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="0" x:Name="MethodViewModel"></ContentControl>
 
-        <TextBox FontSize="20" Name="UrlTextBox" Text="{Binding Path=UrlTextBox, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4" HorizontalAlignment="Stretch">
+        <TextBox FontSize="20" Name="Url" Text="{Binding Path=Url, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4" HorizontalAlignment="Stretch">
             <TextBox.Style>
                 <Style TargetType="TextBox" xmlns:sys="clr-namespace:System;assembly=mscorlib">
                     <Style.Resources>
@@ -49,7 +49,7 @@
             </TextBox.Style>
         </TextBox>
 
-        <DataGrid x:Name="HeadersDataGrid" AutoGenerateColumns="False" RowHeaderWidth="0" HorizontalAlignment="Stretch"
+        <DataGrid x:Name="Headers" AutoGenerateColumns="False" RowHeaderWidth="0" HorizontalAlignment="Stretch"
                                             CanUserAddRows="True" MinColumnWidth="150" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="4" HorizontalScrollBarVisibility="Hidden">
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding Path=Name}" Header="Header" Width="*">
@@ -67,7 +67,7 @@
         </DataGrid>
 
         <StackPanel x:Name="BodyIsVisible" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="4" CanHorizontallyScroll="True" CanVerticallyScroll="True">
-            <TextBox Name="BodyTextBox" MinHeight="100" TextWrapping="Wrap" AcceptsReturn="True" Height="Auto" BorderThickness="1" BorderBrush="SlateGray">
+            <TextBox Name="Body" MinHeight="100" TextWrapping="Wrap" AcceptsReturn="True" Height="Auto" BorderThickness="1" BorderBrush="SlateGray">
                 <TextBox.Style>
                     <Style TargetType="TextBox" xmlns:sys="clr-namespace:System;assembly=mscorlib">
                         <Style.Resources>

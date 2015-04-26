@@ -7,7 +7,6 @@ using AutoMapper;
 using Caliburn.Micro;
 
 using Raven.Client;
-using Raven.Database.Server;
 using RestSharp;
 
 using RESTLess.Models;
@@ -46,9 +45,9 @@ namespace RESTLess.Controls
         static RequestBuilderFormViewModel()
         {
             Mapper.CreateMap<Request, RequestBuilderFormViewModel>()
-                .ForMember(d => d.HeadersDataGrid, o => o.MapFrom(s => CreateHeadersFromDict(s.Headers)))
-                .ForMember(d => d.UrlTextBox, o => o.MapFrom(s => s.Url + s.Path.Substring(1)))
-                .ForMember(d => d.BodyTextBox, o => o.MapFrom(s => s.Body));
+                .ForMember(d => d.Headers, o => o.MapFrom(s => CreateHeadersFromDict(s.Headers)))
+                .ForMember(d => d.Url, o => o.MapFrom(s => s.Url + s.Path.Substring(1)))
+                .ForMember(d => d.Body, o => o.MapFrom(s => s.Body));
         }
 
         public RequestBuilderFormViewModel(IEventAggregator eventAggregator, IDocumentStore documentStore, IWindowManager windowManager, AppSettings appsettings)
@@ -59,45 +58,55 @@ namespace RESTLess.Controls
             this.windowManager = windowManager;
             appSettings = appsettings;
             MethodViewModel = new MethodViewModel(eventAggregator);
-            HeadersDataGrid = new BindableCollection<HttpHeader>();
+            Headers = new BindableCollection<HttpHeader>();
 
-            selectedMethod = Method.GET;
+            SelectedMethod = Method.GET;
             BodyIsVisible = false;
         }
 
-        protected override void OnDeactivate(bool close)
-        {
-            var uri = new Uri(UrlTextBox);
-            var restRequest = GetRestRequest(uri);
-            var request = new Request(uri, restRequest, BodyTextBox, appSettings.RequestSettings);
+        //protected override void OnDeactivate(bool close)
+        //{
+        //    var uri = new Uri(UrlTextBox);
+        //    var restRequest = GetRestRequest(uri);
+        //    var request = new Request(uri, restRequest, BodyTextBox, appSettings.RequestSettings);
 
-            eventAggregator.BeginPublishOnUIThread(new CreateRequestMessage{ Request = request });
+        //    eventAggregator.BeginPublishOnUIThread(new CreateRequestMessage{ Request = request });
 
-            base.OnDeactivate(close);
-        }
+        //    base.OnDeactivate(close);
+        //}
 
         #region properties
 
         public MethodViewModel MethodViewModel { get; set; }
 
-        public string UrlTextBox
+        public Method SelectedMethod
+        {
+            get {  return selectedMethod; }
+            set
+            {
+                selectedMethod = value;
+                NotifyOfPropertyChange(() => SelectedMethod);
+            }
+        }
+
+        public string Url
         {
             get { return url; }
             set
             {
                 url = value;
-                NotifyOfPropertyChange(() => UrlTextBox);
+                NotifyOfPropertyChange(() => Url);
                 NotifyOfPropertyChange(() => CanSendButton);
             }
         }
 
-        public string BodyTextBox
+        public string Body
         {
             get { return body; }
             set
             {
                 body = value;
-                NotifyOfPropertyChange(BodyTextBox);
+                NotifyOfPropertyChange(Body);
             }
         }
 
@@ -109,19 +118,19 @@ namespace RESTLess.Controls
                 bodyIsVisible = value;
                 if (!bodyIsVisible)
                 {
-                    BodyTextBox = string.Empty;
+                    Body = string.Empty;
                 }
                 NotifyOfPropertyChange(() => BodyIsVisible);
             }
         }
 
-        public IObservableCollection<HttpHeader> HeadersDataGrid
+        public IObservableCollection<HttpHeader> Headers
         {
             get { return headers; }
             set
             {
                 headers = value;
-                NotifyOfPropertyChange(() => HeadersDataGrid);
+                NotifyOfPropertyChange(() => Headers);
             }
         }
 
@@ -129,7 +138,7 @@ namespace RESTLess.Controls
         {
             get
             {
-                return !string.IsNullOrWhiteSpace(UrlTextBox) && !isWaiting;
+                return !string.IsNullOrWhiteSpace(Url) && !isWaiting;
             }
         }
 
@@ -147,7 +156,7 @@ namespace RESTLess.Controls
 
         public void Handle(MethodSelectedMessage message)
         {
-            selectedMethod = message.Method;
+            SelectedMethod = message.Method;
             BodyIsVisible = UseBody(message.Method);
         }
 
@@ -186,14 +195,14 @@ namespace RESTLess.Controls
 
         public void Handle(AddHeaderMessage message)
         {
-            HeadersDataGrid.Add(new HttpHeader { Name = message.Header, Value = message.Value });
+            Headers.Add(new HttpHeader { Name = message.Header, Value = message.Value });
         }
 
         public void Handle(DeleteAllHistoryMessage message)
         {
-            UrlTextBox = string.Empty;
-            BodyTextBox = string.Empty;
-            HeadersDataGrid.Clear();
+            Url = string.Empty;
+            Body = string.Empty;
+            Headers.Clear();
         }
 
         #endregion
@@ -203,47 +212,20 @@ namespace RESTLess.Controls
             Mapper.Map(request, this);
         }
 
-        private void StopSending()
-        {
-            if (stopWatch.IsRunning)
-            {
-                stopWatch.Stop();
-                stopWatch.Reset();
-            }
+        //private void StopSending()
+        //{
+        //    if (stopWatch.IsRunning)
+        //    {
+        //        stopWatch.Stop();
+        //        stopWatch.Reset();
+        //    }
 
-            isWaiting = false;
-            NotifyOfPropertyChange(() => CanStopButton);
-            NotifyOfPropertyChange(() => CanSendButton);
-        }
+        //    isWaiting = false;
+        //    NotifyOfPropertyChange(() => CanStopButton);
+        //    NotifyOfPropertyChange(() => CanSendButton);
+        //}
 
-        private RestRequest GetRestRequest(Uri uri)
-        {
-            var method = selectedMethod;
 
-            var request = new RestRequest(uri, method);
-
-            //request.AddHeader("nocache", DateTime.UtcNow.ToString(CultureInfo.InvariantCulture));
-            foreach (var header in HeadersDataGrid)
-            {
-                request.AddHeader(header.Name, header.Value);
-            }
-
-            if (UseBody(method) && !string.IsNullOrWhiteSpace(BodyTextBox))
-            {
-                request.AddJsonBody(BodyTextBox);
-            }
-
-            return request;
-        }
-
-        private RestClient GetRestClient(Uri uri)
-        {
-            RestClient client = new RestClient(uri.GetLeftPart(UriPartial.Authority))
-            {
-                Timeout = appSettings.RequestSettings.Timeout
-            };
-            return client;
-        }
 
         #region Static Methods
 
@@ -257,7 +239,7 @@ namespace RESTLess.Controls
             return items;
         }
 
-        private static bool UseBody(Method method)
+        public static bool UseBody(Method method)
         {
             return method != Method.GET && method != Method.HEAD && method != Method.OPTIONS;
         }
