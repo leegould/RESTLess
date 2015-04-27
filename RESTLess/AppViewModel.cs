@@ -52,13 +52,22 @@ namespace RESTLess
             }
 
             RequestBuilderViewModel = new RequestBuilderViewModel(eventAggregator, documentStore, windowManager, appSettings);
+            RequestBuilderViewModel.ConductWith(this);
             ResponseViewModel = new ResponseViewModel(eventAggregator, documentStore, appSettings);
 
             // Add tabs. TODO : can add these via bootstrapper;
-            Items.Add(new HistoryViewModel(eventAggregator, documentStore));
-            Items.Add(new GroupedViewModel(eventAggregator, documentStore));
-            Items.Add(new FavouritesViewModel(eventAggregator, documentStore));
-            Items.Add(new SearchViewModel(eventAggregator, documentStore));
+            var historyTab = new HistoryViewModel(eventAggregator, documentStore);
+            var groupedTab = new GroupedViewModel(eventAggregator, documentStore);
+            var favTab = new FavouritesViewModel(eventAggregator, documentStore);
+            var searchTab = new SearchViewModel(eventAggregator, documentStore);
+            historyTab.ConductWith(this);
+            groupedTab.ConductWith(this);
+            favTab.ConductWith(this);
+            searchTab.ConductWith(this);
+            Items.Add(historyTab);
+            Items.Add(groupedTab);
+            Items.Add(favTab);
+            Items.Add(searchTab);
         }
 
         //http://caliburnmicro.codeplex.com/discussions/394099

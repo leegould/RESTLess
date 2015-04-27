@@ -64,6 +64,12 @@ namespace RESTLess.Controls
             BodyIsVisible = false;
         }
 
+        protected override void OnActivate()
+        {
+            Headers.Add(new HttpHeader{ Name = "ACTIVATED!",Value = "ACTIVATED!"});
+            base.OnActivate();
+        }
+
         //protected override void OnDeactivate(bool close)
         //{
         //    var uri = new Uri(UrlTextBox);
@@ -224,9 +230,7 @@ namespace RESTLess.Controls
         //    NotifyOfPropertyChange(() => CanStopButton);
         //    NotifyOfPropertyChange(() => CanSendButton);
         //}
-
-
-
+        
         #region Static Methods
 
         private static IObservableCollection<HttpHeader> CreateHeadersFromDict(Dictionary<string, string> dictionary)

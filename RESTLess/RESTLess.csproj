@@ -169,6 +169,7 @@
     <Compile Include="Models\Messages\HistoryDeletedMessage.cs" />
     <Compile Include="Models\Messages\HistorySelectedMessage.cs" />
     <Compile Include="Models\Messages\MethodSelectedMessage.cs" />
+    <Compile Include="Models\Messages\RequestBuilderTabChangeMessage.cs" />
     <Compile Include="Models\Messages\RequestSavedMessage.cs" />
     <Compile Include="Models\Messages\ResponseReceivedMessage.cs" />
     <Compile Include="Models\Messages\SearchSelectedMessage.cs" />

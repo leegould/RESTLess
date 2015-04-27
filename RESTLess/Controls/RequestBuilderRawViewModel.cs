@@ -38,6 +38,8 @@ namespace RESTLess.Controls
 
         #region Properties
 
+        
+
         public string RequestRawText
         {
             get { return requestRawText; }
@@ -49,6 +51,12 @@ namespace RESTLess.Controls
         }
 
         #endregion
+
+        protected override void OnActivate()
+        {
+            RequestRawText = "ACTIVATED";
+            base.OnActivate();
+        }
 
         public void Handle(CreateRequestMessage message)
         {

@@ -30,6 +30,8 @@ namespace RESTLess.Controls
 
         private RequestBuilderFormViewModel rbFormViewModel { get; set; }
 
+        private RequestBuilderRawViewModel rbRawViewModel { get; set; }
+
         #endregion
 
         public RequestBuilderViewModel(IEventAggregator eventAggregator, IDocumentStore documentStore, IWindowManager windowManager, AppSettings appSettings)
@@ -39,8 +41,12 @@ namespace RESTLess.Controls
             appsettings = appSettings;
 
             rbFormViewModel = new RequestBuilderFormViewModel(eventAggregator, documentStore, windowManager, appsettings);
+            rbFormViewModel.ConductWith(this);
             Items.Add(rbFormViewModel);
-            Items.Add(new RequestBuilderRawViewModel(eventAggregator, documentStore, windowManager, appsettings));
+
+            rbRawViewModel = new RequestBuilderRawViewModel(eventAggregator, documentStore, windowManager, appsettings);
+            rbRawViewModel.ConductWith(this);
+            Items.Add(rbRawViewModel);
         }
 
         //#region Buttons

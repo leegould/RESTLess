@@ -14,7 +14,7 @@ using RESTLess.Models.Messages;
 
 namespace RESTLess.Controls
 {
-    public class ResponseViewModel: PropertyChangedBase, IHandle<HistorySelectedMessage>, IHandle<GroupedSelectedMessage>, IHandle<AppSettingsChangedMessage>, IHandle<FavouriteSelectedMessage>, IHandle<SearchSelectedMessage>, IHandle<ResponseReceivedMessage>, IHandle<DeleteAllHistoryMessage>, IHandle<ViewStartMessage>
+    public class ResponseViewModel : PropertyChangedBase, IHandle<HistorySelectedMessage>, IHandle<GroupedSelectedMessage>, IHandle<AppSettingsChangedMessage>, IHandle<FavouriteSelectedMessage>, IHandle<SearchSelectedMessage>, IHandle<ResponseReceivedMessage>, IHandle<DeleteAllHistoryMessage>, IHandle<ViewStartMessage>
     {
         private const string DefaultHtmlDisplay = "Controls/Help.html";
 
