@@ -64,22 +64,21 @@ namespace RESTLess.Controls
             BodyIsVisible = false;
         }
 
-        protected override void OnActivate()
-        {
-            Headers.Add(new HttpHeader{ Name = "ACTIVATED!",Value = "ACTIVATED!"});
-            base.OnActivate();
-        }
-
-        //protected override void OnDeactivate(bool close)
+        //protected override void OnActivate()
         //{
-        //    var uri = new Uri(UrlTextBox);
-        //    var restRequest = GetRestRequest(uri);
-        //    var request = new Request(uri, restRequest, BodyTextBox, appSettings.RequestSettings);
-
-        //    eventAggregator.BeginPublishOnUIThread(new CreateRequestMessage{ Request = request });
-
-        //    base.OnDeactivate(close);
+        //    base.OnActivate();
         //}
+
+        protected override void OnDeactivate(bool close)
+        {
+            var uri = new Uri(Url);
+            var restRequest = RequestBuilderViewModel.GetRestRequest(uri, SelectedMethod, Body, Headers);
+            var request = new Request(uri, restRequest, Body, appSettings.RequestSettings);
+
+            eventAggregator.BeginPublishOnUIThread(new CreateRequestMessage { Request = request });
+
+            base.OnDeactivate(close);
+        }
 
         #region properties
 

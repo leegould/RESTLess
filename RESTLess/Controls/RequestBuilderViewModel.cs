@@ -157,7 +157,7 @@ namespace RESTLess.Controls
 
         //#endregion
 
-        private RestRequest GetRestRequest(Uri uri, Method selectedMethod, string body, IObservableCollection<HttpHeader> headers)
+        public static RestRequest GetRestRequest(Uri uri, Method selectedMethod, string body, IObservableCollection<HttpHeader> headers)
         {
             var method = selectedMethod;
 

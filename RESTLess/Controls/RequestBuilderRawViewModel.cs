@@ -52,11 +52,10 @@ namespace RESTLess.Controls
 
         #endregion
 
-        protected override void OnActivate()
-        {
-            RequestRawText = "ACTIVATED";
-            base.OnActivate();
-        }
+        //protected override void OnActivate()
+        //{
+        //    base.OnActivate();
+        //}
 
         public void Handle(CreateRequestMessage message)
         {
