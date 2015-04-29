@@ -15,7 +15,7 @@ using RESTLess.Models.Messages;
 
 namespace RESTLess.Controls
 {
-    public class RequestBuilderFormViewModel : Screen, ITabItem, IHandle<MethodSelectedMessage>, IHandle<HistorySelectedMessage>, IHandle<AppSettingsChangedMessage>, IHandle<FavouriteSelectedMessage>, IHandle<GroupedSelectedMessage>, IHandle<SearchSelectedMessage>, IHandle<AddHeaderMessage>, IHandle<DeleteAllHistoryMessage>
+    public class RequestBuilderFormViewModel : Screen, ITabItem, IHandle<MethodSelectedMessage>, IHandle<HistorySelectedMessage>, IHandle<AppSettingsChangedMessage>, IHandle<FavouriteSelectedMessage>, IHandle<GroupedSelectedMessage>, IHandle<SearchSelectedMessage>, IHandle<AddHeaderMessage>, IHandle<DeleteAllHistoryMessage>, IHandle<CreateRequestMessage>
     {
         #region Private members
 
@@ -63,11 +63,6 @@ namespace RESTLess.Controls
             SelectedMethod = Method.GET;
             BodyIsVisible = false;
         }
-
-        //protected override void OnActivate()
-        //{
-        //    base.OnActivate();
-        //}
 
         protected override void OnDeactivate(bool close)
         {
@@ -208,6 +203,11 @@ namespace RESTLess.Controls
             Url = string.Empty;
             Body = string.Empty;
             Headers.Clear();
+        }
+
+        public void Handle(CreateRequestMessage message)
+        {
+            LoadSelected(message.Request);
         }
 
         #endregion
