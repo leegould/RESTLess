@@ -1,20 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices.ComTypes;
-using System.Security.Policy;
-using System.Windows.Forms.VisualStyles;
+using System.Text.RegularExpressions;
+
 using Caliburn.Micro;
+
 using Raven.Client;
-using Raven.Database.Server.Controllers;
-using RestSharp;
+
 using RESTLess.Models;
 using RESTLess.Models.Interface;
 using RESTLess.Models.Messages;
 
 namespace RESTLess.Controls
 {
-    public class RequestBuilderRawViewModel : Screen, ITabItem, IHandle<CreateRequestMessage>
+    public sealed class RequestBuilderRawViewModel : Screen, ITabItem, IHandle<CreateRequestMessage>
     {
         #region Private members
 
@@ -32,6 +31,7 @@ namespace RESTLess.Controls
 
         public RequestBuilderRawViewModel(IEventAggregator eventAggregator, IDocumentStore documentStore, IWindowManager windowManager, AppSettings appsettings)
         {
+            DisplayName = "Raw Request";
             this.eventAggregator = eventAggregator;
             eventAggregator.Subscribe(this);
             this.documentStore = documentStore;
@@ -64,7 +64,7 @@ namespace RESTLess.Controls
                 if (!string.IsNullOrEmpty(str))
                 {
                     // Method + Url
-                    var lines = str.Split('\n').ToList();
+                    var lines = str.Split(new [] { "\n" }, StringSplitOptions.RemoveEmptyEntries).ToList();
                     var firstline = lines.FirstOrDefault();
                     lines.Remove(firstline);
                     if (firstline != null)
@@ -73,22 +73,33 @@ namespace RESTLess.Controls
                         if (flinesplit.Length == 2)
                         {
                             request.Method = flinesplit[0];
-                            request.Url = new Uri(flinesplit[1]);
+
+                            var uri = new Uri(flinesplit[1]);
+                            request.Url = new Uri(uri.Scheme + Uri.SchemeDelimiter + uri.Authority);
+                            request.Path = uri.PathAndQuery;
                         }
                     }
 
                     // Headers
-                    if (lines.Any(x => x.Contains(": ")))
+                    const string Headerpattern = @"([-\w]+):\s*([-\w]+)\n*";
+                    var headerregex = new Regex(Headerpattern, RegexOptions.Compiled | RegexOptions.IgnoreCase);
+                    request.Headers = new Dictionary<string, string>();
+
+                    var linesToRemove = new List<string>();
+
+                    foreach (var hline in lines.Where(x => headerregex.IsMatch(x)))
                     {
-                        request.Headers = new Dictionary<string, string>();
-                        foreach (var headerline in lines.Where(x => x.Contains(": ")))
+                        var headerMatches = headerregex.Match(hline);
+                        request.Headers.Add(headerMatches.Groups[0].ToString(), headerMatches.Groups[1].ToString());
+
+                        linesToRemove.Add(hline);
+                    }
+
+                    if (linesToRemove.Any())
+                    {
+                        foreach (var rline in linesToRemove)
                         {
-                            lines.Remove(headerline);
-                            var headersplit = headerline.Split(new[] {": "}, StringSplitOptions.RemoveEmptyEntries);
-                            if (headersplit.Length == 2)
-                            {
-                                request.Headers.Add(headersplit[0], headersplit[1]);
-                            }
+                            lines.Remove(rline);
                         }
                     }
 
@@ -127,11 +138,16 @@ namespace RESTLess.Controls
 
         private void DisplayRequest(Request request)
         {
-            RequestRawText = request.Method + " " + request.Url + "\n";
-            foreach (var header in request.Headers)
+            RequestRawText = request.Method + " " + request.Url + request.Path.Substring(1) + "\n";
+            
+            if (request.Headers != null)
             {
-                RequestRawText += header.Key + ": " + header.Value + "\n";
+                foreach (var header in request.Headers)
+                {
+                    RequestRawText += header.Key + ": " + header.Value + "\n";
+                }
             }
+
             RequestRawText += "\n" + request.Body + "\n";
         }
     }

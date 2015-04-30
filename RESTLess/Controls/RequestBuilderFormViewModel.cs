@@ -15,7 +15,7 @@ using RESTLess.Models.Messages;
 
 namespace RESTLess.Controls
 {
-    public class RequestBuilderFormViewModel : Screen, ITabItem, IHandle<MethodSelectedMessage>, IHandle<HistorySelectedMessage>, IHandle<AppSettingsChangedMessage>, IHandle<FavouriteSelectedMessage>, IHandle<GroupedSelectedMessage>, IHandle<SearchSelectedMessage>, IHandle<AddHeaderMessage>, IHandle<DeleteAllHistoryMessage>, IHandle<CreateRequestMessage>
+    public sealed class RequestBuilderFormViewModel : Screen, ITabItem, IHandle<MethodSelectedMessage>, IHandle<HistorySelectedMessage>, IHandle<AppSettingsChangedMessage>, IHandle<FavouriteSelectedMessage>, IHandle<GroupedSelectedMessage>, IHandle<SearchSelectedMessage>, IHandle<AddHeaderMessage>, IHandle<DeleteAllHistoryMessage>, IHandle<CreateRequestMessage>
     {
         #region Private members
 
@@ -52,6 +52,7 @@ namespace RESTLess.Controls
 
         public RequestBuilderFormViewModel(IEventAggregator eventAggregator, IDocumentStore documentStore, IWindowManager windowManager, AppSettings appsettings)
         {
+            DisplayName = "Request Builder";
             this.eventAggregator = eventAggregator;
             eventAggregator.Subscribe(this);
             this.documentStore = documentStore;
@@ -68,8 +69,9 @@ namespace RESTLess.Controls
         {
             var uri = new Uri(Url);
             var restRequest = RequestBuilderViewModel.GetRestRequest(uri, SelectedMethod, Body, Headers);
-            var request = new Request(uri, restRequest, Body, appSettings.RequestSettings);
-
+            var request = new Request(new Uri(uri.Scheme + Uri.SchemeDelimiter + uri.Authority), restRequest, Body, appSettings.RequestSettings);
+            
+            
             eventAggregator.BeginPublishOnUIThread(new CreateRequestMessage { Request = request });
 
             base.OnDeactivate(close);
@@ -234,6 +236,11 @@ namespace RESTLess.Controls
 
         private static IObservableCollection<HttpHeader> CreateHeadersFromDict(Dictionary<string, string> dictionary)
         {
+            if (dictionary == null)
+            {
+                return null;
+            }
+
             var items = new BindableCollection<HttpHeader>();
             foreach (var item in dictionary)
             {
