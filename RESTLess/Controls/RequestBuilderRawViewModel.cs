@@ -90,7 +90,7 @@ namespace RESTLess.Controls
                     foreach (var hline in lines.Where(x => headerregex.IsMatch(x)))
                     {
                         var headerMatches = headerregex.Match(hline);
-                        request.Headers.Add(headerMatches.Groups[0].ToString(), headerMatches.Groups[1].ToString());
+                        request.Headers.Add(headerMatches.Groups[1].ToString(), headerMatches.Groups[2].ToString());
 
                         linesToRemove.Add(hline);
                     }

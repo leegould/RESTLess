@@ -71,7 +71,6 @@ namespace RESTLess.Controls
             var restRequest = RequestBuilderViewModel.GetRestRequest(uri, SelectedMethod, Body, Headers);
             var request = new Request(new Uri(uri.Scheme + Uri.SchemeDelimiter + uri.Authority), restRequest, Body, appSettings.RequestSettings);
             
-            
             eventAggregator.BeginPublishOnUIThread(new CreateRequestMessage { Request = request });
 
             base.OnDeactivate(close);
@@ -217,6 +216,8 @@ namespace RESTLess.Controls
         private void LoadSelected(Request request)
         {
             Mapper.Map(request, this);
+            SelectedMethod = (Method)Enum.Parse(typeof(Method), request.Method);
+            BodyIsVisible = UseBody(SelectedMethod);
         }
 
         //private void StopSending()
