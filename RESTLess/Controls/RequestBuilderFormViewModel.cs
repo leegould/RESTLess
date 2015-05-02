@@ -67,11 +67,14 @@ namespace RESTLess.Controls
 
         protected override void OnDeactivate(bool close)
         {
-            var uri = new Uri(Url);
-            var restRequest = RequestBuilderViewModel.GetRestRequest(uri, SelectedMethod, Body, Headers);
-            var request = new Request(new Uri(uri.Scheme + Uri.SchemeDelimiter + uri.Authority), restRequest, Body, appSettings.RequestSettings);
-            
-            eventAggregator.BeginPublishOnUIThread(new CreateRequestMessage { Request = request });
+            if (!string.IsNullOrEmpty(Url))
+            {
+                var uri = new Uri(Url);
+                var restRequest = RequestBuilderViewModel.GetRestRequest(uri, SelectedMethod, Body, Headers);
+                var request = new Request(new Uri(uri.Scheme + Uri.SchemeDelimiter + uri.Authority), restRequest, Body, appSettings.RequestSettings);
+
+                eventAggregator.BeginPublishOnUIThread(new CreateRequestMessage {Request = request});
+            }
 
             base.OnDeactivate(close);
         }
@@ -218,6 +221,7 @@ namespace RESTLess.Controls
             Mapper.Map(request, this);
             SelectedMethod = (Method)Enum.Parse(typeof(Method), request.Method);
             BodyIsVisible = UseBody(SelectedMethod);
+            //Body = request.Body;
         }
 
         //private void StopSending()
