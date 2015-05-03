@@ -110,7 +110,7 @@ namespace RESTLess.Controls
             set
             {
                 body = value;
-                NotifyOfPropertyChange(Body);
+                NotifyOfPropertyChange(() => Body);
             }
         }
 

@@ -67,7 +67,7 @@
         </DataGrid>
 
         <StackPanel x:Name="BodyIsVisible" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="4" CanHorizontallyScroll="True" CanVerticallyScroll="True">
-            <TextBox x:Name="Body" MinHeight="100" TextWrapping="Wrap" AcceptsReturn="True" Height="Auto" BorderThickness="1" BorderBrush="SlateGray">
+            <TextBox x:Name="Body" Text="{Binding Path=Body, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" MinHeight="100" TextWrapping="Wrap" AcceptsReturn="True" Height="Auto" BorderThickness="1" BorderBrush="SlateGray">
                 <TextBox.Style>
                     <Style TargetType="TextBox" xmlns:sys="clr-namespace:System;assembly=mscorlib">
                         <Style.Resources>
