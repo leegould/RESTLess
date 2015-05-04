@@ -126,6 +126,10 @@
       <DependentUpon>PreferencesView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\PreferencesViewModel.cs" />
+    <Compile Include="Controls\RequestBuilderBasicAuthViewModel.cs" />
+    <Compile Include="Controls\RequestBuilderBasicAuthView.xaml.cs">
+      <DependentUpon>RequestBuilderBasicAuthView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\RequestBuilderFormView.xaml.cs">
       <DependentUpon>RequestBuilderFormView.xaml</DependentUpon>
     </Compile>
@@ -257,6 +261,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\PreferencesView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\RequestBuilderBasicAuthView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
