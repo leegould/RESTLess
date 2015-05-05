@@ -138,17 +138,20 @@ namespace RESTLess.Controls
 
         private void DisplayRequest(Request request)
         {
-            RequestRawText = request.Method + " " + request.Url + request.Path.Substring(1) + "\n";
-            
-            if (request.Headers != null)
+            if (request != null)
             {
-                foreach (var header in request.Headers)
-                {
-                    RequestRawText += header.Key + ": " + header.Value + "\n";
-                }
-            }
+                RequestRawText = request.Method + " " + request.Url + request.Path.Substring(1) + "\n";
 
-            RequestRawText += "\n" + request.Body + "\n";
+                if (request.Headers != null)
+                {
+                    foreach (var header in request.Headers)
+                    {
+                        RequestRawText += header.Key + ": " + header.Value + "\n";
+                    }
+                }
+
+                RequestRawText += "\n" + request.Body + "\n";
+            }
         }
     }
 }

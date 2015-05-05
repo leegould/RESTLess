@@ -218,10 +218,12 @@ namespace RESTLess.Controls
 
         private void LoadSelected(Request request)
         {
-            Mapper.Map(request, this);
-            SelectedMethod = (Method)Enum.Parse(typeof(Method), request.Method);
-            BodyIsVisible = UseBody(SelectedMethod);
-            //Body = request.Body;
+            if (request != null)
+            {
+                Mapper.Map(request, this);
+                SelectedMethod = (Method)Enum.Parse(typeof(Method), request.Method);
+                BodyIsVisible = UseBody(SelectedMethod);
+            }
         }
 
         //private void StopSending()
