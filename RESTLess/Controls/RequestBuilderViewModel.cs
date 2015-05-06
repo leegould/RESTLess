@@ -50,7 +50,7 @@ namespace RESTLess.Controls
             rbRawViewModel.ConductWith(this);
             Items.Add(rbRawViewModel);
 
-            rbBasicAuthVM = new RequestBuilderBasicAuthViewModel(eventaggregator, documentstore, windowManager, appsettings);
+            rbBasicAuthVM = new RequestBuilderBasicAuthViewModel(eventaggregator);
             rbBasicAuthVM.ConductWith(this);
             Items.Add(rbBasicAuthVM);
         }

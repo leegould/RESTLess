@@ -13,7 +13,7 @@ using RESTLess.Models.Messages;
 
 namespace RESTLess.Controls
 {
-    public sealed class RequestBuilderRawViewModel : Screen, ITabItem, IHandle<CreateRequestMessage>
+    public sealed class RequestBuilderRawViewModel : Screen, ITabItem, IHandle<CreateRequestMessage>, IHandle<AddHeaderMessage>
     {
         #region Private members
 
@@ -152,6 +152,11 @@ namespace RESTLess.Controls
 
                 RequestRawText += "\n" + request.Body + "\n";
             }
+        }
+
+        public void Handle(AddHeaderMessage message)
+        {
+            RequestRawText.Insert(requestRawText.IndexOf('\n') + 1, message.Header + ": " + message.Value); // add after first line.
         }
     }
 }
