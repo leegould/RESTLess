@@ -73,6 +73,11 @@ namespace RESTLess.Controls
 
                 if (request != null)
                 {
+                    if (request.Headers.ContainsKey("Authorization"))
+                    {
+                        request.Headers.Remove("Authorization");
+                    }
+
                     request.Headers.Add("Authorization", basicvalue);
                 }
             }
