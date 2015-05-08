@@ -81,7 +81,7 @@ namespace RESTLess.Controls
                     }
 
                     // Headers
-                    const string Headerpattern = @"([-\w]+):\s*([-\w]+)\n*";
+                    const string Headerpattern = @"([-\w]+)\s*:\s*(.+)$";
                     var headerregex = new Regex(Headerpattern, RegexOptions.Compiled | RegexOptions.IgnoreCase);
                     request.Headers = new Dictionary<string, string>();
 

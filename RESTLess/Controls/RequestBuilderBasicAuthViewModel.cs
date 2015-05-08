@@ -70,11 +70,6 @@ namespace RESTLess.Controls
             if (!string.IsNullOrEmpty(UsernameTextBox) && !string.IsNullOrEmpty(PasswordTextBox))
             {
                 var basicvalue = "Basic " + Convert.ToBase64String(Encoding.Unicode.GetBytes(UsernameTextBox + ":" + PasswordTextBox));
-                //eventAggregator.PublishOnUIThread(new AddHeaderMessage
-                //{
-                //    Header = "Authorization",
-                //    Value = basicvalue
-                //});
 
                 if (request != null)
                 {
