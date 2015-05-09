@@ -10,6 +10,8 @@ namespace RESTLess.Controls
 {
     public class RequestBuilderBasicAuthViewModel : Screen, ITabItem, IHandle<CreateRequestMessage>
     {
+        private const string AuthorizationHeaderString = "Authorization";
+
         #region Private members
 
         private readonly IEventAggregator eventAggregator;
@@ -17,6 +19,8 @@ namespace RESTLess.Controls
         private string usernameTextBox;
 
         private string passwordTextBox;
+
+        private string actionLabel;
 
         private Request request;
 
@@ -41,6 +45,16 @@ namespace RESTLess.Controls
             {
                 passwordTextBox = value;
                 NotifyOfPropertyChange(() => PasswordTextBox);
+            }
+        }
+
+        public string ActionLabel
+        {
+            get { return actionLabel; }
+            set
+            {
+                actionLabel = value;
+                NotifyOfPropertyChange(() => ActionLabel);
             }
         }
 
@@ -73,12 +87,13 @@ namespace RESTLess.Controls
 
                 if (request != null)
                 {
-                    if (request.Headers.ContainsKey("Authorization"))
+                    if (request.Headers.ContainsKey(AuthorizationHeaderString))
                     {
-                        request.Headers.Remove("Authorization");
+                        request.Headers.Remove(AuthorizationHeaderString);
                     }
 
-                    request.Headers.Add("Authorization", basicvalue);
+                    request.Headers.Add(AuthorizationHeaderString, basicvalue);
+                    ActionLabel = "Added!";
                 }
             }
         }
@@ -87,6 +102,12 @@ namespace RESTLess.Controls
         {
             UsernameTextBox = string.Empty;
             PasswordTextBox = string.Empty;
+
+            if (request != null && request.Headers.ContainsKey(AuthorizationHeaderString))
+            {
+                request.Headers.Remove(AuthorizationHeaderString);
+                ActionLabel = "Removed!";
+            }
         }
 
         #endregion
