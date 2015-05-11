@@ -136,7 +136,6 @@ namespace RESTLess.Controls
             NotifyOfPropertyChange(() => rbFormViewModel.CanSendButton);
         }
 
-
         //public void StopButton()
         //{
         //    StopSending();
@@ -148,19 +147,7 @@ namespace RESTLess.Controls
         //    BodyTextBox = string.Empty;
         //    HeadersDataGrid.Clear();
         //}
-
-        //public void AddAuth()
-        //{
-        //    dynamic settings = new ExpandoObject();
-        //    settings.Width = 300;
-        //    settings.Height = 200;
-        //    settings.WindowStartupLocation = WindowStartupLocation.Manual;
-        //    settings.Title = "Add Authentication";
-        //    //settings.SizeToContent = "WidthAndHeight";
-
-        //    windowManager.ShowWindow(new AuthenticationViewModel(eventAggregator, documentStore), null, settings);
-        //}
-
+        
         //#endregion
 
         public static RestRequest GetRestRequest(Uri uri, Method selectedMethod, string body, IObservableCollection<HttpHeader> headers)

@@ -21,9 +21,7 @@
 
             <StackPanel Grid.Row="0" Grid.Column="1" Margin="0" MinWidth="50" Background="{StaticResource BgGreyFadeBrush}">
 
-                <Button Name="AddAuth" Margin="5" Content="Auth" Background="{StaticResource BgGreyBrush}"></Button>
-
-                <Button Name="ClearButton" Margin="5,10,5,5" Content="Clear" Background="{StaticResource BgLightBlueBrush}"></Button>
+                <Button Name="ClearButton" Margin="5" Content="Clear" Background="{StaticResource BgLightBlueBrush}"></Button>
                 <Button Name="StopButton" Margin="5" Content="Stop" Background="{StaticResource BgRedBrush}"></Button>
                 <Button Name="SendButton" Margin="5" Content="Send" Background="{StaticResource BgDarkGreenBrush}" IsDefault="True"></Button>
             </StackPanel>
