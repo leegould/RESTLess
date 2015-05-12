@@ -8,7 +8,7 @@ using RESTLess.Models.Messages;
 
 namespace RESTLess.Controls
 {
-    public class RequestBuilderBasicAuthViewModel : Screen, ITabItem, IHandle<CreateRequestMessage>
+    public class RequestBuilderBasicAuthViewModel : Screen, ITabItem, IHandle<CreateRequestMessage>, IHandle<ClearMessage>
     {
         private const string AuthorizationHeaderString = "Authorization";
 
@@ -119,6 +119,15 @@ namespace RESTLess.Controls
             request = message.Request;
         }
 
+
+        public void Handle(ClearMessage message)
+        {
+            UsernameTextBox = string.Empty;
+            PasswordTextBox = string.Empty;
+            ActionLabel = string.Empty;
+        }
+
         #endregion
+
     }
 }

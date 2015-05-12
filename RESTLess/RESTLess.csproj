@@ -162,6 +162,7 @@
     <Compile Include="Models\Messages\AppSettingsChangedMessage.cs" />
     <Compile Include="Models\Messages\AuthenticationHeaderMessage.cs" />
     <Compile Include="Models\Messages\ChangeMethodMessage.cs" />
+    <Compile Include="Models\Messages\ClearMessage.cs" />
     <Compile Include="Models\Messages\CreateRequestMessage.cs" />
     <Compile Include="Models\Messages\DeleteAllFavouritesMessage.cs" />
     <Compile Include="Models\Messages\DeleteAllHistoryMessage.cs" />

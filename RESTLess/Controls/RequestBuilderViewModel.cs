@@ -136,17 +136,15 @@ namespace RESTLess.Controls
             NotifyOfPropertyChange(() => rbFormViewModel.CanSendButton);
         }
 
-        //public void StopButton()
-        //{
-        //    StopSending();
-        //}
+        public void StopButton()
+        {
+            StopSending();
+        }
 
-        //public void ClearButton()
-        //{
-        //    UrlTextBox = string.Empty;
-        //    BodyTextBox = string.Empty;
-        //    HeadersDataGrid.Clear();
-        //}
+        public void ClearButton()
+        {
+            eventaggregator.PublishOnUIThread(new ClearMessage());
+        }
         
         //#endregion
 

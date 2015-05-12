@@ -15,7 +15,7 @@ using RESTLess.Models.Messages;
 
 namespace RESTLess.Controls
 {
-    public sealed class RequestBuilderFormViewModel : Screen, ITabItem, IHandle<MethodSelectedMessage>, IHandle<HistorySelectedMessage>, IHandle<AppSettingsChangedMessage>, IHandle<FavouriteSelectedMessage>, IHandle<GroupedSelectedMessage>, IHandle<SearchSelectedMessage>, IHandle<AddHeaderMessage>, IHandle<DeleteAllHistoryMessage>, IHandle<CreateRequestMessage>
+    public sealed class RequestBuilderFormViewModel : Screen, ITabItem, IHandle<MethodSelectedMessage>, IHandle<HistorySelectedMessage>, IHandle<AppSettingsChangedMessage>, IHandle<FavouriteSelectedMessage>, IHandle<GroupedSelectedMessage>, IHandle<SearchSelectedMessage>, IHandle<AddHeaderMessage>, IHandle<DeleteAllHistoryMessage>, IHandle<CreateRequestMessage>, IHandle<ClearMessage>
     {
         #region Private members
 
@@ -204,14 +204,18 @@ namespace RESTLess.Controls
 
         public void Handle(DeleteAllHistoryMessage message)
         {
-            Url = string.Empty;
-            Body = string.Empty;
-            Headers.Clear();
+            Clear();
         }
 
         public void Handle(CreateRequestMessage message)
         {
             LoadSelected(message.Request);
+        }
+
+
+        public void Handle(ClearMessage message)
+        {
+            Clear();
         }
 
         #endregion
@@ -221,8 +225,11 @@ namespace RESTLess.Controls
             if (request != null)
             {
                 Mapper.Map(request, this);
-                SelectedMethod = (Method)Enum.Parse(typeof(Method), request.Method);
-                BodyIsVisible = UseBody(SelectedMethod);
+                if (request.Method != null)
+                {
+                    SelectedMethod = (Method)Enum.Parse(typeof(Method), request.Method);
+                    BodyIsVisible = UseBody(SelectedMethod);
+                }
             }
         }
 
@@ -238,7 +245,14 @@ namespace RESTLess.Controls
         //    NotifyOfPropertyChange(() => CanStopButton);
         //    NotifyOfPropertyChange(() => CanSendButton);
         //}
-        
+
+        private void Clear()
+        {
+            Url = string.Empty;
+            Body = string.Empty;
+            Headers.Clear();
+        }
+
         #region Static Methods
 
         private static IObservableCollection<HttpHeader> CreateHeadersFromDict(Dictionary<string, string> dictionary)
