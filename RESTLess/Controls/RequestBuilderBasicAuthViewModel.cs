@@ -125,6 +125,7 @@ namespace RESTLess.Controls
             UsernameTextBox = string.Empty;
             PasswordTextBox = string.Empty;
             ActionLabel = string.Empty;
+            request = null;
         }
 
         #endregion

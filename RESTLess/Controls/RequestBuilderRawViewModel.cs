@@ -41,17 +41,14 @@ namespace RESTLess.Controls
 
         protected override void OnDeactivate(bool close)
         {
-            var parsedRequest = ParseRequest(RequestRawText);
-            if (parsedRequest != null)
+            if (!string.IsNullOrEmpty(RequestRawText))
             {
-                //var uri = new Uri(Url);
-                //var restRequest = RequestBuilderViewModel.GetRestRequest(uri, SelectedMethod, VisualStyleElement.Tab.Body, Headers);
-                //var request = new Request(uri, restRequest, VisualStyleElement.Tab.Body, appSettings.RequestSettings);
-                //var restRequest = RequestBuilderViewModel.GetRestRequest(request.Url, (RestSharp.Method)Enum.Parse(typeof(RestSharp.Method), request.Method), request.Body, new BindableCollection<HttpHeader>(request.Headers.Select(x => new HttpHeader { Name = x.Key, Value = x.Value })));
-
-                eventAggregator.BeginPublishOnUIThread(new CreateRequestMessage { Request = parsedRequest });
+                var parsedRequest = ParseRequest(RequestRawText);
+                if (parsedRequest != null)
+                {
+                    eventAggregator.BeginPublishOnUIThread(new CreateRequestMessage { Request = parsedRequest });
+                }
             }
-
             base.OnDeactivate(close);
         }
 
@@ -138,9 +135,12 @@ namespace RESTLess.Controls
 
         private void DisplayRequest(Request request)
         {
-            if (request != null)
+            if (request != null && request.Method != null && request.Url != null)
             {
-                RequestRawText = request.Method + " " + request.Url + request.Path.Substring(1) + "\n";
+                RequestRawText = request.Method ?? string.Empty +
+                                 request.Url ?? string.Empty +
+                                (request.Path.Length > 0 ? request.Path.Substring(1) : string.Empty)
+                                + "\n";
 
                 if (request.Headers != null)
                 {
