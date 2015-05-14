@@ -10,7 +10,7 @@ using RESTLess.Models.Messages;
 
 namespace RESTLess.Controls
 {
-    public class RequestBuilderViewModel : Conductor<ITabItem>.Collection.OneActive
+    public class RequestBuilderViewModel : Conductor<ITabItem>.Collection.OneActive, IHandle<CanSendMessage>
     {
         #region Private members
 
@@ -28,6 +28,8 @@ namespace RESTLess.Controls
 
         private bool isWaiting;
 
+        private bool canSend;
+
         private RequestBuilderFormViewModel rbFormViewModel { get; set; }
 
         private RequestBuilderRawViewModel rbRawViewModel { get; set; }
@@ -40,6 +42,7 @@ namespace RESTLess.Controls
         {
             documentstore = documentStore;
             eventaggregator = eventAggregator;
+            eventAggregator.Subscribe(this);
             appsettings = appSettings;
 
             rbFormViewModel = new RequestBuilderFormViewModel(eventAggregator, documentStore, windowManager, appsettings);
@@ -53,9 +56,56 @@ namespace RESTLess.Controls
             rbBasicAuthVM = new RequestBuilderBasicAuthViewModel(eventaggregator);
             rbBasicAuthVM.ConductWith(this);
             Items.Add(rbBasicAuthVM);
+
+            canSend = false;
+            isWaiting = false;
         }
 
-        //#region Buttons
+        #region Properties
+
+        public bool IsWaiting
+        {
+            get { return isWaiting; }
+            set
+            {
+                isWaiting = value;
+                NotifyOfPropertyChange(() => IsWaiting);
+                NotifyOfPropertyChange(() => CanStopButton);
+                NotifyOfPropertyChange(() => CanSendButton);
+            }
+        }
+
+        public bool CanSend
+        {
+            get {  return canSend; }
+            set
+            {
+                canSend = value;
+                NotifyOfPropertyChange(() => CanSend);
+                NotifyOfPropertyChange(() => CanSendButton);
+            }
+        }
+
+        public bool CanSendButton
+        {
+            get
+            {
+                return CanSend && !IsWaiting;
+            }
+        }
+
+        public bool CanStopButton
+        {
+            get
+            {
+                return IsWaiting;
+            }
+        }
+
+        #endregion
+
+
+        #region Buttons
 
         public void SendButton()
         {
@@ -68,8 +118,8 @@ namespace RESTLess.Controls
             stopWatch = new Stopwatch();
             stopWatch.Start();
 
-            isWaiting = true;
-            NotifyOfPropertyChange(() => rbFormViewModel.CanStopButton);
+            IsWaiting = true;
+            NotifyOfPropertyChange(() => CanStopButton);
 
             Request req = null;
             using (var conn = documentstore.OpenSession())
@@ -91,7 +141,7 @@ namespace RESTLess.Controls
             client.ExecuteAsync(request,
                 r =>
                 {
-                    if (isWaiting)
+                    if (IsWaiting)
                     {
                         stopWatch.Stop();
                         //StatusBarTextBlock = "Status: " + r.ResponseStatus + ". Code:" + r.StatusCode + ". Elapsed: " + stopWatch.ElapsedMilliseconds.ToString() + " ms.";
@@ -122,20 +172,7 @@ namespace RESTLess.Controls
                     }
                 });
         }
-
-        private void StopSending()
-        {
-            if (stopWatch.IsRunning)
-            {
-                stopWatch.Stop();
-                stopWatch.Reset();
-            }
-
-            isWaiting = false;
-            NotifyOfPropertyChange(() => rbFormViewModel.CanStopButton);
-            NotifyOfPropertyChange(() => rbFormViewModel.CanSendButton);
-        }
-
+        
         public void StopButton()
         {
             StopSending();
@@ -146,7 +183,7 @@ namespace RESTLess.Controls
             eventaggregator.PublishOnUIThread(new ClearMessage());
         }
         
-        //#endregion
+        #endregion
 
         public static RestRequest GetRestRequest(Uri uri, Method selectedMethod, string body, IObservableCollection<HttpHeader> headers)
         {
@@ -175,6 +212,24 @@ namespace RESTLess.Controls
                 Timeout = appsettings.RequestSettings.Timeout
             };
             return client;
+        }
+
+        private void StopSending()
+        {
+            if (stopWatch.IsRunning)
+            {
+                stopWatch.Stop();
+                stopWatch.Reset();
+            }
+
+            IsWaiting = false;
+            //NotifyOfPropertyChange(() => CanStopButton);
+            //NotifyOfPropertyChange(() => CanSendButton);
+        }
+
+        public void Handle(CanSendMessage message)
+        {
+            CanSend = message.Enabled;
         }
     }
 }

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 
 using AutoMapper;
 
@@ -34,11 +33,11 @@ namespace RESTLess.Controls
 
         private Method selectedMethod;
 
-        private Stopwatch stopWatch;
+        //private Stopwatch stopWatch;
 
         private bool bodyIsVisible;
 
-        private bool isWaiting;
+        //private bool isWaiting;
 
         #endregion
 
@@ -98,9 +97,9 @@ namespace RESTLess.Controls
             get { return url; }
             set
             {
+                eventAggregator.BeginPublishOnUIThread(new CanSendMessage { Enabled = !string.IsNullOrWhiteSpace(value) });
                 url = value;
                 NotifyOfPropertyChange(() => Url);
-                NotifyOfPropertyChange(() => CanSendButton);
             }
         }
 
@@ -138,21 +137,21 @@ namespace RESTLess.Controls
             }
         }
 
-        public bool CanSendButton
-        {
-            get
-            {
-                return !string.IsNullOrWhiteSpace(Url) && !isWaiting;
-            }
-        }
+        //public bool CanSendButton
+        //{
+        //    get
+        //    {
+        //        return !string.IsNullOrWhiteSpace(Url) && !isWaiting;
+        //    }
+        //}
 
-        public bool CanStopButton
-        {
-            get
-            {
-                return isWaiting;
-            }
-        }
+        //public bool CanStopButton
+        //{
+        //    get
+        //    {
+        //        return isWaiting;
+        //    }
+        //}
         
         #endregion
 
