@@ -109,6 +109,7 @@ namespace RESTLess.Controls
         public void Handle(RequestSavedMessage message)
         {
             HistoryRequests.Insert(0, message.Request);
+            SelectedItem = message.Request;
         }
 
         private async void LoadHistory()
