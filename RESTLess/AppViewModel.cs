@@ -57,15 +57,18 @@ namespace RESTLess
 
             // Add tabs. TODO : can add these via bootstrapper;
             var historyTab = new HistoryViewModel(eventAggregator, documentStore);
-            var groupedTab = new GroupedViewModel(eventAggregator, documentStore);
+            var groupedTab = new GroupedUrlViewModel(eventAggregator, documentStore);
+            var gResponseTab = new GroupedResponseViewModel(eventAggregator, documentStore);
             var favTab = new FavouritesViewModel(eventAggregator, documentStore);
             var searchTab = new SearchViewModel(eventAggregator, documentStore);
             historyTab.ConductWith(this);
             groupedTab.ConductWith(this);
+            gResponseTab.ConductWith(this);
             favTab.ConductWith(this);
             searchTab.ConductWith(this);
             Items.Add(historyTab);
             Items.Add(groupedTab);
+            Items.Add(gResponseTab);
             Items.Add(favTab);
             Items.Add(searchTab);
         }

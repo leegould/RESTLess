@@ -114,10 +114,14 @@
     <Compile Include="Controls\FavouritesView.xaml.cs">
       <DependentUpon>FavouritesView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\GroupedView.xaml.cs">
-      <DependentUpon>GroupedView.xaml</DependentUpon>
+    <Compile Include="Controls\GroupedResponseView.xaml.cs">
+      <DependentUpon>GroupedResponseView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\GroupedViewModel.cs" />
+    <Compile Include="Controls\GroupedResponseViewModel.cs" />
+    <Compile Include="Controls\GroupedUrlView.xaml.cs">
+      <DependentUpon>GroupedUrlView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\GroupedUrlViewModel.cs" />
     <Compile Include="Controls\HistoryView.xaml.cs">
       <DependentUpon>HistoryView.xaml</DependentUpon>
     </Compile>
@@ -182,6 +186,7 @@
     <Compile Include="Models\Messages\ViewStartMessage.cs" />
     <Compile Include="Models\Request.cs" />
     <Compile Include="Models\RequestGrouped.cs" />
+    <Compile Include="Models\RequestGroupedByResponse.cs" />
     <Compile Include="Models\RequestSettings.cs" />
     <Compile Include="Models\Response.cs" />
   </ItemGroup>
@@ -250,7 +255,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\GroupedView.xaml">
+    <Page Include="Controls\GroupedResponseView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\GroupedUrlView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

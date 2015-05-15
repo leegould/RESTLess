@@ -12,7 +12,7 @@ using RESTLess.Models.Messages;
 
 namespace RESTLess.Controls
 {
-    public sealed class GroupedViewModel : Screen, ITabItem, IHandle<DeleteAllHistoryMessage>, IHandle<DeleteHistoryBeforeTodayMessage>
+    public sealed class GroupedUrlViewModel : Screen, ITabItem, IHandle<DeleteAllHistoryMessage>, IHandle<DeleteHistoryBeforeTodayMessage>
     {
         private const string IndexName = "Requests/Grouped/All";
 
@@ -32,7 +32,7 @@ namespace RESTLess.Controls
             }
         }
 
-        public GroupedViewModel(IEventAggregator eventAggregator, IDocumentStore documentStore)
+        public GroupedUrlViewModel(IEventAggregator eventAggregator, IDocumentStore documentStore)
         {
             DisplayName = "Grouped";
             this.eventAggregator = eventAggregator;
