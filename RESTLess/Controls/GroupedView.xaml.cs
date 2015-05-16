@@ -18,9 +18,9 @@ namespace RESTLess.Controls
     /// <summary>
     /// Interaction logic for GroupedView.xaml
     /// </summary>
-    public partial class GroupedUrlView : UserControl
+    public partial class GroupedView : UserControl
     {
-        public GroupedUrlView()
+        public GroupedView()
         {
             InitializeComponent();
         }

@@ -12,9 +12,9 @@ using RESTLess.Models.Messages;
 
 namespace RESTLess.Controls
 {
-    public sealed class GroupedUrlViewModel : Screen, ITabItem, IHandle<DeleteAllHistoryMessage>, IHandle<DeleteHistoryBeforeTodayMessage>
+    public sealed class GroupedViewModel : Screen, ITabItem, IHandle<DeleteAllHistoryMessage>, IHandle<DeleteHistoryBeforeTodayMessage>
     {
-        private const string IndexName = "Requests/Grouped/All";
+        private const string UrlIndexName = "Requests/Grouped/All";
 
         private readonly IEventAggregator eventAggregator;
 
@@ -32,7 +32,7 @@ namespace RESTLess.Controls
             }
         }
 
-        public GroupedUrlViewModel(IEventAggregator eventAggregator, IDocumentStore documentStore)
+        public GroupedViewModel(IEventAggregator eventAggregator, IDocumentStore documentStore)
         {
             DisplayName = "Grouped";
             this.eventAggregator = eventAggregator;
@@ -53,7 +53,7 @@ namespace RESTLess.Controls
             {
                 try
                 {
-                    var items = await conn.Query<ResultGrouped>(IndexName).ToListAsync();
+                    var items = await conn.Query<ResultGrouped>(UrlIndexName).ToListAsync();
                     foreach(var item in items)
                     {
                         RequestGrouped requestgrouped = GroupedRequests.FirstOrDefault(x => x.Part == item.Url);
