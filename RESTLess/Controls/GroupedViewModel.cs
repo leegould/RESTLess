@@ -20,6 +20,9 @@ namespace RESTLess.Controls
 
         private readonly IDocumentStore documentStore;
 
+        private bool urlGroupedChecked;
+        private bool responseGroupedChecked;
+
         private BindableCollection<RequestGrouped> groupedRequests;
 
         public BindableCollection<RequestGrouped> GroupedRequests
@@ -39,16 +42,50 @@ namespace RESTLess.Controls
             eventAggregator.Subscribe(this);
             this.documentStore = documentStore;
             GroupedRequests = new BindableCollection<RequestGrouped>();
-            LoadGrouped();
+            UrlGroupedChecked = true;
+            //LoadUrlGrouped();
         }
+
+        public bool UrlGroupedChecked
+        {
+            get { return urlGroupedChecked; }
+            set
+            {
+                if (value.Equals(urlGroupedChecked)) return;
+                urlGroupedChecked = value;
+                LoadUrlGrouped();
+                NotifyOfPropertyChange(() => UrlGroupedChecked);
+            }
+        }
+
+        public bool ResponseGroupedChecked
+        {
+            get { return responseGroupedChecked; }
+            set
+            {
+                if (value.Equals(responseGroupedChecked)) return;
+                responseGroupedChecked = value;
+                LoadResponseGrouped();
+                NotifyOfPropertyChange(() => ResponseGroupedChecked);
+            }
+        }
+
 
         public void SetSelectedItem(RequestGrouped item)
         {
             eventAggregator.PublishOnUIThread(new GroupedSelectedMessage { Request = item });
         }
 
-        private async void LoadGrouped()
+        private async void LoadResponseGrouped()
         {
+            GroupedRequests.Clear();
+
+            // TODO
+        }
+
+        private async void LoadUrlGrouped()
+        {
+            GroupedRequests.Clear();
             using (var conn = documentStore.OpenAsyncSession())
             {
                 try

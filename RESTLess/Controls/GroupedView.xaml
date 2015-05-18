@@ -17,10 +17,78 @@
             <RowDefinition Height="25"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        
+
         <StackPanel Orientation="Horizontal" Grid.Row="0">
-            <RadioButton Name="UrlGrouped" GroupName="GroupType" Padding="2">Url</RadioButton>
-            <RadioButton Name="ResponseGrouped" GroupName="GroupType" Padding="2">Response</RadioButton>
+
+            <Grid MinWidth="150" MinHeight="25">
+                <Grid.Resources>
+
+                    <!-- Left Button Template -->
+                    <ControlTemplate x:Key="ToggleButtonLeft" TargetType="{x:Type ToggleButton}">
+                        <Border
+                            Name="Border"
+                            Background="{StaticResource CheckedBrush}"
+                            BorderBrush="{StaticResource BlueBrush}"
+                            BorderThickness="1,1,0,1"
+                            CornerRadius="0">
+                            <ContentPresenter
+                                HorizontalAlignment="Center"
+                                Margin="{TemplateBinding Padding}"
+                                VerticalAlignment="Center"
+                                Content="{TemplateBinding Content}"
+                                TextBlock.FontWeight="Normal"
+                                TextBlock.Foreground="{StaticResource FontBrush}"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="ToggleButton.IsMouseOver" Value="true">
+                                <Setter TargetName="Border" Property="Background" Value="#808080"/>
+                            </Trigger>
+                            <Trigger Property="IsChecked" Value="true">
+                                <Setter TargetName="Border" Property="Background" Value="{StaticResource BgBlueBrush}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+
+                    <!-- Right Button Template -->
+                    <ControlTemplate x:Key="ToggleButtonRight" TargetType="{x:Type ToggleButton}">
+                        <Border
+                            Name="Border"
+                            Background="{StaticResource CheckedBrush}"
+                            BorderBrush="{StaticResource GreenBrush}"
+                            BorderThickness="0,1,1,1"
+                            CornerRadius="0">
+                            <ContentPresenter
+                                    HorizontalAlignment="Center"
+                                    Margin="{TemplateBinding Padding}"
+                                    VerticalAlignment="Center"
+                                    Content="{TemplateBinding Content}"
+                                    TextBlock.FontWeight="Normal"
+                                    TextBlock.Foreground="{StaticResource FontBrush}"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="ToggleButton.IsMouseOver" Value="true">
+                                <Setter TargetName="Border" Property="Background" Value="#808080"/>
+                            </Trigger>
+                            <Trigger Property="IsChecked" Value="true">
+                                <Setter TargetName="Border" Property="Background" Value="{StaticResource BgGreenBrush}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+
+                </Grid.Resources>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"></RowDefinition>
+                </Grid.RowDefinitions>
+
+                <RadioButton Name="UrlGroupedChecked" GroupName="GroupType" Padding="2" Grid.Column="0" Template="{DynamicResource ToggleButtonLeft}">Url</RadioButton>
+                <RadioButton Name="ResponseGroupedChecked" GroupName="GroupType" Padding="2" Grid.Column="1" Template="{DynamicResource ToggleButtonRight}">Response</RadioButton>
+                
+            </Grid>
         </StackPanel>
 
         <TreeView ItemsSource="{Binding GroupedRequests}" Grid.Row="1"
