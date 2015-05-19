@@ -137,8 +137,7 @@ namespace RESTLess.Controls
         {
             if (request != null && request.Method != null && request.Url != null)
             {
-                RequestRawText = request.Method ?? string.Empty +
-                                 request.Url ?? string.Empty +
+                RequestRawText = (request.Method ?? string.Empty) + " " + (request.Url != null ? request.Url.AbsoluteUri : string.Empty) +
                                 (request.Path.Length > 0 ? request.Path.Substring(1) : string.Empty)
                                 + "\n";
 
