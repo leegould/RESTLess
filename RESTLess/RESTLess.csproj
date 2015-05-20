@@ -154,6 +154,7 @@
     <Compile Include="Indexes\RequestsFavouriteAll.cs" />
     <Compile Include="Indexes\Requests_All.cs" />
     <Compile Include="Indexes\RequestsGroupedAll.cs" />
+    <Compile Include="Indexes\RequestsGroupedStatus.cs" />
     <Compile Include="Indexes\Responses_All.cs" />
     <Compile Include="Models\AppSettings.cs" />
     <Compile Include="Models\Interface\IMenu.cs" />
