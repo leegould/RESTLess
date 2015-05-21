@@ -16,6 +16,8 @@ namespace RESTLess.Controls
     {
         private const string UrlIndexName = "Requests/Grouped/All";
 
+        private const string StatusIndexName = "Requests/Grouped/Status";
+
         private readonly IEventAggregator eventAggregator;
 
         private readonly IDocumentStore documentStore;
@@ -79,6 +81,47 @@ namespace RESTLess.Controls
         private async void LoadResponseGrouped()
         {
             GroupedRequests.Clear();
+            GroupedRequests = new BindableCollection<RequestGrouped>();
+
+            using (var conn = documentStore.OpenAsyncSession())
+            {
+                try
+                {
+                    var items = await conn.Query<ResponseStatusGrouped>(StatusIndexName).ToListAsync();
+                    foreach (var item in items)
+                    {
+                        if (item != null)
+                        {
+                            RequestGrouped requestgrouped = GroupedRequests.FirstOrDefault(x => x.Part == item.Url);
+
+                            if (requestgrouped == null)
+                            {
+                                requestgrouped = new RequestGrouped { Id = item.RequestId, Part = item.StatusCode.ToString() };
+                                GroupedRequests.Add(requestgrouped);
+                            }
+                            
+                            var pathparts = new Queue<string>();
+
+                            pathparts.Enqueue(item.Url);
+
+                            foreach (var p in item.Path.Split(new[] { '/' }, StringSplitOptions.RemoveEmptyEntries))
+                            {
+                                pathparts.Enqueue(p);
+                            }
+
+                            if (pathparts.Count > 0)
+                            {
+                                PopulateChildren(requestgrouped, pathparts, item.Id);
+                            }
+                        }
+                    }
+                }
+                catch (Exception)
+                {
+                    // TODO : pass exception messages to main window - add to event aggregator
+                    // eventAggregator.PublishOnUIThread(ex); // <- Wrap in a specific exception class
+                }
+            }
 
             // TODO
         }
@@ -86,6 +129,8 @@ namespace RESTLess.Controls
         private async void LoadUrlGrouped()
         {
             GroupedRequests.Clear();
+            GroupedRequests = new BindableCollection<RequestGrouped>();
+
             using (var conn = documentStore.OpenAsyncSession())
             {
                 try
