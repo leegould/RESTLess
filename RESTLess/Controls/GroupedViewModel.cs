@@ -75,7 +75,10 @@ namespace RESTLess.Controls
 
         public void SetSelectedItem(RequestGrouped item)
         {
-            eventAggregator.PublishOnUIThread(new GroupedSelectedMessage { Request = item });
+            if (item != null)
+            {
+                eventAggregator.PublishOnUIThread(new GroupedSelectedMessage { Request = item });
+            }
         }
 
         private async void LoadResponseGrouped()
@@ -111,7 +114,7 @@ namespace RESTLess.Controls
 
                             if (pathparts.Count > 0)
                             {
-                                PopulateChildren(requestgrouped, pathparts, item.Id);
+                                PopulateChildren(requestgrouped, pathparts, item.RequestId);
                             }
                         }
                     }
