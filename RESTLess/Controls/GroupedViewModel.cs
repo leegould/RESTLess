@@ -95,7 +95,7 @@ namespace RESTLess.Controls
                     {
                         if (item != null)
                         {
-                            RequestGrouped requestgrouped = GroupedRequests.FirstOrDefault(x => x.Part == item.Url);
+                            RequestGrouped requestgrouped = GroupedRequests.FirstOrDefault(x => x.Part == item.StatusCode.ToString());
 
                             if (requestgrouped == null)
                             {
