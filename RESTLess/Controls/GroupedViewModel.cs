@@ -83,6 +83,11 @@ namespace RESTLess.Controls
 
         private async void LoadResponseGrouped()
         {
+            if (!ResponseGroupedChecked)
+            {
+                return;
+            }
+
             GroupedRequests.Clear();
             GroupedRequests = new BindableCollection<RequestGrouped>();
 
@@ -131,6 +136,11 @@ namespace RESTLess.Controls
 
         private async void LoadUrlGrouped()
         {
+            if (!UrlGroupedChecked)
+            {
+                return;
+            }
+
             GroupedRequests.Clear();
             GroupedRequests = new BindableCollection<RequestGrouped>();
 
