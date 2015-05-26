@@ -130,6 +130,10 @@
     <Compile Include="Controls\RequestBuilderBasicAuthView.xaml.cs">
       <DependentUpon>RequestBuilderBasicAuthView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\RequestBuilderDigestAuthView.xaml.cs">
+      <DependentUpon>RequestBuilderDigestAuthView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\RequestBuilderDigestAuthViewModel.cs" />
     <Compile Include="Controls\RequestBuilderFormView.xaml.cs">
       <DependentUpon>RequestBuilderFormView.xaml</DependentUpon>
     </Compile>
@@ -270,6 +274,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\RequestBuilderBasicAuthView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\RequestBuilderDigestAuthView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
