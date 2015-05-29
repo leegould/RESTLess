@@ -36,6 +36,8 @@ namespace RESTLess.Controls
 
         private RequestBuilderBasicAuthViewModel rbBasicAuthVM { get; set; }
 
+        private RequestBuilderDigestAuthViewModel rbDigestAuthVM { get; set; }
+
         #endregion
 
         public RequestBuilderViewModel(IEventAggregator eventAggregator, IDocumentStore documentStore, IWindowManager windowManager, AppSettings appSettings)
@@ -56,6 +58,10 @@ namespace RESTLess.Controls
             rbBasicAuthVM = new RequestBuilderBasicAuthViewModel(eventaggregator);
             rbBasicAuthVM.ConductWith(this);
             Items.Add(rbBasicAuthVM);
+
+            rbDigestAuthVM = new RequestBuilderDigestAuthViewModel(eventaggregator);
+            rbDigestAuthVM.ConductWith(this);
+            Items.Add(rbDigestAuthVM);
 
             canSend = false;
             isWaiting = false;
