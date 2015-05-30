@@ -11,7 +11,7 @@ using RESTLess.Models.Messages;
 
 namespace RESTLess.Controls
 {
-    public class RequestBuilderDigestAuthViewModel : Screen, ITabItem //, IHandle<CreateRequestMessage>, IHandle<ClearMessage>
+    public class RequestBuilderDigestAuthViewModel : Screen, ITabItem, IHandle<CreateRequestMessage>, IHandle<ClearMessage>
     {
         private readonly IEventAggregator eventAggregator;
 
@@ -32,6 +32,10 @@ namespace RESTLess.Controls
         private string clientNonceTextBox;
 
         private string opaqueTextBox;
+
+        private string actionLabel;
+
+        private Request request;
 
         #region Properties
 
@@ -125,7 +129,27 @@ namespace RESTLess.Controls
             }
         }
 
+        public string ActionLabel
+        {
+            get { return actionLabel; }
+            set
+            {
+                actionLabel = value;
+                NotifyOfPropertyChange(() => ActionLabel);
+            }
+        }
+
         #endregion
+
+        protected override void OnDeactivate(bool close)
+        {
+            if (request != null)
+            {
+                eventAggregator.BeginPublishOnUIThread(new CreateRequestMessage { Request = request });
+            }
+
+            base.OnDeactivate(close);
+        }
 
         public RequestBuilderDigestAuthViewModel(IEventAggregator eventAggregator)
         {
@@ -133,5 +157,43 @@ namespace RESTLess.Controls
             this.eventAggregator = eventAggregator;
             eventAggregator.Subscribe(this);
         }
+
+        #region Button Actions
+
+        // TODO
+
+        public void AddButton()
+        {
+            if (!string.IsNullOrEmpty(UsernameTextBox) && !string.IsNullOrEmpty(PasswordTextBox))
+            {
+                
+            }
+        }
+
+        public void ClearButton()
+        {
+            UsernameTextBox = string.Empty;
+            PasswordTextBox = string.Empty;
+        }
+
+        #endregion
+
+        #region Handlers
+
+        public void Handle(CreateRequestMessage message)
+        {
+            request = message.Request;
+        }
+
+
+        public void Handle(ClearMessage message)
+        {
+            UsernameTextBox = string.Empty;
+            PasswordTextBox = string.Empty;
+            ActionLabel = string.Empty;
+            request = null;
+        }
+
+        #endregion
     }
 }
