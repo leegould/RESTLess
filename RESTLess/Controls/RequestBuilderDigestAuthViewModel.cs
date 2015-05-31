@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -13,6 +14,19 @@ namespace RESTLess.Controls
 {
     public class RequestBuilderDigestAuthViewModel : Screen, ITabItem, IHandle<CreateRequestMessage>, IHandle<ClearMessage>
     {
+        private enum AlgoType
+        {
+            MD5,
+            MD5sess,
+        }
+
+        private enum QopType
+        {
+            none,
+            auth,
+            authint,
+        }
+
         private readonly IEventAggregator eventAggregator;
 
         private string usernameTextBox;
@@ -164,9 +178,25 @@ namespace RESTLess.Controls
 
         public void AddButton()
         {
-            if (!string.IsNullOrEmpty(UsernameTextBox) && !string.IsNullOrEmpty(PasswordTextBox))
+            // http://en.wikipedia.org/wiki/Digest_access_authentication
+
+            var algoType = AlgoType.MD5;
+            if (!string.IsNullOrEmpty(AlgoTextBox))
             {
-                
+                Enum.TryParse(AlgoTextBox.Replace("-", string.Empty), out algoType);
+            }
+
+            var qopType = QopType.none;
+            if (!string.IsNullOrEmpty(QopTextBox))
+            {
+                Enum.TryParse(QopTextBox.Replace("-", string.Empty), out qopType);
+            }
+
+            string HA1;
+            if (algoType == AlgoType.MD5 && !string.IsNullOrEmpty(UsernameTextBox) && !string.IsNullOrEmpty(RealmTextBox) && !string.IsNullOrEmpty(PasswordTextBox))
+            {
+                // TODO :
+                //HA1 = MD5.Create().Hash()..
             }
         }
 
