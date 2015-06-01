@@ -14,6 +14,8 @@ namespace RESTLess.Controls
 {
     public class RequestBuilderDigestAuthViewModel : Screen, ITabItem, IHandle<CreateRequestMessage>, IHandle<ClearMessage>
     {
+        private const string AuthorizationHeaderString = "Authorization";
+
         private enum AlgoType
         {
             MD5,
@@ -192,21 +194,48 @@ namespace RESTLess.Controls
                 Enum.TryParse(QopTextBox.Replace("-", string.Empty), out qopType);
             }
 
-            string HA1;
-            if (algoType == AlgoType.MD5 && !string.IsNullOrEmpty(UsernameTextBox) && !string.IsNullOrEmpty(RealmTextBox) && !string.IsNullOrEmpty(PasswordTextBox))
+            string ha1;
+            if (!string.IsNullOrEmpty(UsernameTextBox) && !string.IsNullOrEmpty(RealmTextBox) && !string.IsNullOrEmpty(PasswordTextBox))
             {
-                // TODO :
-                //HA1 = MD5.Create().Hash()..
+                ha1 = GetMD5HashData(UsernameTextBox + ":" + RealmTextBox + ":" + PasswordTextBox);
+                
+                if (algoType == AlgoType.MD5sess && !string.IsNullOrEmpty(NonceTextBox) && !string.IsNullOrEmpty(ClientNonceTextBox))
+                {
+                    ha1 = GetMD5HashData(ha1 + ":" + NonceTextBox + ":" + ClientNonceTextBox);
+                }
             }
+
+
         }
 
         public void ClearButton()
         {
             UsernameTextBox = string.Empty;
             PasswordTextBox = string.Empty;
+
+            if (request != null && request.Headers.ContainsKey(AuthorizationHeaderString))
+            {
+                request.Headers.Remove(AuthorizationHeaderString);
+                ActionLabel = "Removed!";
+            }
         }
 
         #endregion
+
+        private string GetMD5HashData(string data)
+        {
+            MD5 md5 = MD5.Create();
+            byte[] hashData = md5.ComputeHash(Encoding.Default.GetBytes(data));
+            StringBuilder returnValue = new StringBuilder();
+
+            for (int i = 0; i < hashData.Length; i++)
+            {
+                returnValue.Append(i.ToString());
+            }
+
+            // return hexadecimal string
+            return returnValue.ToString();
+        }
 
         #region Handlers
 
