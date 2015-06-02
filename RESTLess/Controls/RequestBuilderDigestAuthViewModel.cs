@@ -205,7 +205,17 @@ namespace RESTLess.Controls
                 }
             }
 
-
+            string ha2;
+            if (qopType == QopType.none || qopType == QopType.auth)
+            {
+                ha2 = GetMD5HashData(request.Method + request.Url);
+            }
+            else if (qopType == QopType.authint)
+            {
+                // TODO : if no body?
+                ha2 = GetMD5HashData(request.Method + request.Url + GetMD5HashData(request.Body));
+            }
+            
         }
 
         public void ClearButton()
