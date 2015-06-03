@@ -194,7 +194,7 @@ namespace RESTLess.Controls
                 Enum.TryParse(QopTextBox.Replace("-", string.Empty), out qopType);
             }
 
-            string ha1;
+            string ha1 = null;
             if (!string.IsNullOrEmpty(UsernameTextBox) && !string.IsNullOrEmpty(RealmTextBox) && !string.IsNullOrEmpty(PasswordTextBox))
             {
                 ha1 = GetMD5HashData(UsernameTextBox + ":" + RealmTextBox + ":" + PasswordTextBox);
@@ -205,7 +205,7 @@ namespace RESTLess.Controls
                 }
             }
 
-            string ha2;
+            string ha2 = null;
             if (qopType == QopType.none || qopType == QopType.auth)
             {
                 ha2 = GetMD5HashData(request.Method + request.Url);
@@ -215,7 +215,14 @@ namespace RESTLess.Controls
                 // TODO : if no body?
                 ha2 = GetMD5HashData(request.Method + request.Url + GetMD5HashData(request.Body));
             }
-            
+
+            if (!string.IsNullOrEmpty(ha1) && !string.IsNullOrEmpty(ha2))
+            {
+                var response = qopType != QopType.none ? GetMD5HashData(ha1 + ":" + NonceTextBox + ":" + NonceCount + ":" + clientNonceTextBox + ":" + QopTextBox + ":" + ha2) : GetMD5HashData(ha1 + ":" + NonceTextBox + ":" + ha2);
+
+                request.Headers.Add(AuthorizationHeaderString, response);
+                ActionLabel = "Added!";
+            }
         }
 
         public void ClearButton()
