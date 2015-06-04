@@ -229,7 +229,14 @@ namespace RESTLess.Controls
         {
             UsernameTextBox = string.Empty;
             PasswordTextBox = string.Empty;
-
+            RealmTextBox = string.Empty;
+            QopTextBox = string.Empty;
+            AlgoTextBox = string.Empty;
+            NonceTextBox = string.Empty;
+            ClientNonceTextBox = string.Empty;
+            OpaqueTextBox = string.Empty;
+            NonceCount = 0;
+            
             if (request != null && request.Headers.ContainsKey(AuthorizationHeaderString))
             {
                 request.Headers.Remove(AuthorizationHeaderString);
