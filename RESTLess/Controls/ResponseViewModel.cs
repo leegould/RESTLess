@@ -239,9 +239,9 @@ namespace RESTLess.Controls
                         HeadersTextBox = string.Join("\n", response.Headers.Select(x => x.Key + ": " + x.Value));
                         HtmlResultsBox = "<pre>" + WebUtility.HtmlEncode(formattedjson) + "</pre>";
                     }
-                    catch (JsonReaderException)
+                    catch (JsonReaderException jex)
                     {
-                        RawResultsTextBox = response.Content;
+                        RawResultsTextBox = "There was a problem displaying the response: " + jex + "\n" + response.Content;
                         HeadersTextBox = response.Headers.Count.ToString();
                         HtmlResultsBox = response.Content;
                     }
