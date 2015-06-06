@@ -236,15 +236,15 @@ namespace RESTLess.Controls
                     {
                         var formattedjson = JObject.Parse(response.Content).ToString(Formatting.Indented);
                         RawResultsTextBox = formattedjson;
-                        HeadersTextBox = string.Join("\n", response.Headers.Select(x => x.Key + ": " + x.Value));
                         HtmlResultsBox = "<pre>" + WebUtility.HtmlEncode(formattedjson) + "</pre>";
                     }
-                    catch (JsonReaderException jex)
+                    catch (JsonReaderException)
                     {
-                        RawResultsTextBox = "There was a problem displaying the response: " + jex + "\n" + response.Content;
-                        HeadersTextBox = response.Headers.Count.ToString();
+                        RawResultsTextBox = "The result was not in a json format.\n\n" + response.Content;
                         HtmlResultsBox = response.Content;
                     }
+
+                    HeadersTextBox = string.Join("\n", response.Headers.Select(x => x.Key + ": " + x.Value));
                 }
                 else
                 {
