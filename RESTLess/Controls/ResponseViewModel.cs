@@ -37,6 +37,7 @@ namespace RESTLess.Controls
         private string rawResultsTextBox;
         private string headersTextBox;
         private string htmlResultsBox;
+        private string jsonResultsTextBox;
         private Brush resultColor;
 
         private string responseStatusTextBlock;
@@ -99,6 +100,16 @@ namespace RESTLess.Controls
             {
                 htmlResultsBox = value;
                 NotifyOfPropertyChange(() => HtmlResultsBox);
+            }
+        }
+
+        public string JSONResultsTextBox
+        {
+            get { return jsonResultsTextBox; }
+            set
+            {
+                jsonResultsTextBox = value;
+                NotifyOfPropertyChange(() => JSONResultsTextBox);
             }
         }
 
