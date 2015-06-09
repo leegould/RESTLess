@@ -52,16 +52,6 @@
 
 		<TabControl Background="Gray" Grid.Column="0" Grid.Row="1" Padding="0">
 
-            <TabItem>
-                <TabItem.Header>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="JSON" Foreground="DarkSlateGray"/>
-                    </StackPanel>
-                </TabItem.Header>
-                <ScrollViewer VerticalScrollBarVisibility="Auto" VerticalAlignment="Stretch">
-                    <TextBox IsReadOnly="True" Name="JSONResultsTextBox" Background="DarkGray" VerticalAlignment="Stretch"/>
-                </ScrollViewer>
-            </TabItem>
             
 			<TabItem>
 				<TabItem.Header>
@@ -74,6 +64,17 @@
 				</ScrollViewer>
 			</TabItem>
 
+            <TabItem>
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="JSON" Foreground="DarkSlateGray"/>
+                    </StackPanel>
+                </TabItem.Header>
+                <ScrollViewer VerticalScrollBarVisibility="Auto" VerticalAlignment="Stretch">
+                    <TextBox IsReadOnly="True" Name="JSONResultsTextBox" Background="DarkGray" VerticalAlignment="Stretch"/>
+                </ScrollViewer>
+            </TabItem>
+            
             <TabItem>
                 <TabItem.Header>
                     <StackPanel Orientation="Horizontal">

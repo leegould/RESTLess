@@ -232,6 +232,7 @@ namespace RESTLess.Controls
                 ResponseStatusTextBlock = string.Empty;
                 ResponseWhenTextBlock = string.Empty;
                 RawResultsTextBox = "No Response";
+                JSONResultsTextBox = "No Response";
                 HeadersTextBox = "No Response";
                 HtmlResultsBox = "<p>No Response</p>";
             }
@@ -246,20 +247,23 @@ namespace RESTLess.Controls
                     try
                     {
                         var formattedjson = JObject.Parse(response.Content).ToString(Formatting.Indented);
-                        RawResultsTextBox = formattedjson;
+                        JSONResultsTextBox = formattedjson;
                         HtmlResultsBox = "<pre>" + WebUtility.HtmlEncode(formattedjson) + "</pre>";
                     }
                     catch (JsonReaderException)
                     {
-                        RawResultsTextBox = "The result was not in a json format.\n\n" + response.Content;
+                        JSONResultsTextBox = "The result was not in a json format.\n\n" + response.Content;
                         HtmlResultsBox = response.Content;
                     }
 
+                    RawResultsTextBox = response.Content;
                     HeadersTextBox = string.Join("\n", response.Headers.Select(x => x.Key + ": " + x.Value));
                 }
                 else
                 {
                     RawResultsTextBox = string.Empty;
+                    JSONResultsTextBox = string.Empty;
+                    HtmlResultsBox = string.Empty;
                     HeadersTextBox = string.Empty;
                 }
 
